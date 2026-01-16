@@ -1,1 +1,1 @@
-# iCSC-Git-talk
+Git for collaboration slides
