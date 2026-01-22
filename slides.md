@@ -106,19 +106,21 @@ gitGraph
 # How Git Actually Works
 ## (Mental Model)
 
-
 <!-- commmit as a change set (not strictly true, but makes things simple) -->
 
 ---
 
 ## Commits Are Basis
 
-- A commit is a snapshot
+- A commit is a snapshot on the state of all files with some attached metadata
+- That pointer is what makes a commit unique
 - Each commit points to a parent
+  - Each commit remembers which commit came before it
+- Actions that change the parent (rebasing, cherry-pick) need a new ID
 - History forms a **graph**, not a line
 
-For the sake of this talk we will be treating commits as a change set 
-Essentially the outcome of a git diff 
+<!-- Drawings are wrong arrows should point to the parent -->
+<!-- diagram showing they're before me  -->
 
 <!-- Diagram slide -->
 
@@ -127,6 +129,7 @@ Essentially the outcome of a git diff
 ## Branches Are Just Pointers
 
 - A branch = movable label
+- Moves along whenever there is a new commit
 - No copies, no magic
 - Multiple branches can point to the same commit
 
@@ -135,26 +138,24 @@ Essentially the outcome of a git diff
 ## HEAD and Your Position
 
 - `HEAD` = where you are now
-- Detached HEAD explained briefly
+- `HEAD` is just a label 
+- Detached `HEAD` just means that it is pointing at a commit that has no other labels
 - Why this matters for rebase/reset
+- Checking out a branch is just passing on the `HEAD` label
 
 ---
 
 ## How does git merge 
 
+<!-- Find a suitable merge base B - a version of the file that is an ancestor of both of the new versions (X and Y), and usually the most recent such base (although there are cases where it will have to go back further, which is one of the features of gits default recursive merge)
+Perform diffs of X with B and Y with B.
+Walk through the change blocks identified in the two diffs. If both sides introduce the same change in the same spot, accept either one; if one introduces a change and the other leaves that region alone, introduce the change in the final; if both introduce changes in a spot, but they don't match, mark a conflict to be resolved manually. -->
+
 --- 
 
 ## Where do conflicts come from
 
----
-
-## Why This Model Matters
-
-- Explains merges and rebases
-- Explains conflicts
-- Explains “dangerous” commands
-
-<!-- Git only feels dangerous when the model is missing -->
+<!-- ^^^^^^ -->
 
 --- 
 
@@ -204,8 +205,6 @@ etc
 - Initially (before gitlab github) everyone would have their own remote
 - Push and pull to each others
 - Where the term "pull request" came from. 
-
-
 
 ---
 
@@ -312,8 +311,6 @@ git rebase -i HEAD~5
 - Just dont squash
 <!-- Sam: if commits just undo previous commits then would squash  
 Telling the useful story -->
-
---- 
 
 
 ---
