@@ -1,7 +1,7 @@
 ---
 theme: default
 title: Git in Practice — Techniques for Collaborative Development
-author: Your Name
+author: Lizzie Salmon
 hideInToc: true
 layout: cover
 ---
@@ -9,31 +9,20 @@ layout: cover
 # Git in Practice  
 ## Techniques for Collaborative Development
 
-Control • Confidence • Collaboration
-
 ---
 hideInToc: true
 --- 
 ## Contents
-<Toc columns=2>
+<Toc columns=2 maxDepth=1>
 </Toc>
 
 ---
-layout: two-cols
----
-
-<template v-slot:default>
 
 # Why Git Hurts in Teams
-
-“Git is easy alone, hard together”
 
 - Works great on solo projects
 
 ```mermaid
----
-title: Single Developer
----
 gitGraph
    commit
    branch new-feat
@@ -45,16 +34,13 @@ gitGraph
    commit
    commit
 ```
+<!-- Git is easy alone, hard together -->
+
+---
 
 - Becomes painful with multiple developers
 
-</template>
-<template v-slot:right>
-
 ```mermaid
----
-title: Multiple Developers
----
 gitGraph
   commit
   commit
@@ -97,10 +83,10 @@ gitGraph
   checkout lizzie-feat 
   commit
 ```
-</template>
----
 
-## Common Pain Points
+--- 
+
+## Common Pain Points When Working in a Team
 
 - Messy, unreadable commit history
 - Long-lived branches that never merge cleanly
@@ -113,23 +99,26 @@ gitGraph
 
 - Not Memorizing commands
 - Not Git internals trivia
-- Learning how to work as a team *safely*
+- Learning how to work in a team <strong> *safely* </strong>
 
 ---
 
 # How Git Actually Works
-
 ## (Mental Model)
 
-<!-- This section is non-negotiable -->
+
+<!-- commmit as a change set (not strictly true, but makes things simple) -->
 
 ---
 
-## Commits Are the Core Unit
+## Commits Are Basis
 
 - A commit is a snapshot
 - Each commit points to a parent
 - History forms a **graph**, not a line
+
+For the sake of this talk we will be treating commits as a change set 
+Essentially the outcome of a git diff 
 
 <!-- Diagram slide -->
 
@@ -151,19 +140,72 @@ gitGraph
 
 ---
 
+## How does git merge 
+
+--- 
+
+## Where do conflicts come from
+
+---
+
 ## Why This Model Matters
 
 - Explains merges and rebases
 - Explains conflicts
 - Explains “dangerous” commands
 
-> Git only feels dangerous when the model is missing
+<!-- Git only feels dangerous when the model is missing -->
+
+--- 
+
+# Power Tools (Without Breaking Things)
+## Advanced Commands with Escape Plans
 
 ---
 
-# How Teams Organize Change
+## `git reset`
+- `--soft`
+etc 
+- which bits move (HEAD Index Workign Tree) Make sure that these are defined
 
+--- 
+
+## `git reflog`
+
+---
+
+## `git cherry-pick`
+- Apply a specific commit elsewhere
+- Great for quick fix
+- Dangerous when overused
+
+---
+
+## `git rebase`
+-- Applying lots of cherry-picks at once 
+
+--- 
+
+## `git bisect`
+- underused! 
+  
+---
+
+# How Teams Organize Change
 ## Collaboration Workflows
+
+- Depends very much on numerous things: 
+  - Infrastructure vs software 
+  - Length of time it takes for CI to run 
+
+--- 
+
+## Using remotes
+- Initially (before gitlab github) everyone would have their own remote
+- Push and pull to each others
+- Where the term "pull request" came from. 
+
+
 
 ---
 
@@ -190,9 +232,9 @@ gitGraph
 
 - `develop`, `release`, `hotfix`
 - Popular historically
-- Often too heavy today
-
-<!-- Be opinionated but fair -->
+- Often too heavy 
+- Designed to solve problems that are not so big anymore 
+<!-- Releases used to be ~2 years, now two weeks ish (the problem that it was designed to fix) -->
 
 ---
 
@@ -202,17 +244,23 @@ gitGraph
 - Not a workflow by themselves
 - History quality affects review quality
 
-> Your workflow determines your pain.
-
 ---
 
-# Shaping History Intentionally
+## Other tools to help teams that could be a whole talk
 
+- Merge queue
+- Linters and formatting checkers to remove conflicts
+  
+---
+
+
+
+# Shaping History Intentionally
 ## Branching, Merging, Rebasing
 
+<!-- Having good git history is really useful - being able to jump anywhere and run tests  -->
 > Git history is nothing but air
 
-<!-- Technical core -->
 
 ---
 
@@ -222,7 +270,6 @@ gitGraph
 - Shows when work diverged
 - Can create noisy graphs
 
-<!-- Diagram slide -->
 
 ---
 
@@ -232,7 +279,6 @@ gitGraph
 - Creates linear history
 - Changes commit hashes
 
-<!-- Diagram slide -->
 
 ---
 
@@ -251,6 +297,80 @@ gitGraph
 - Reorder commits
 - Squash commits
 - Edit commit messages
+- fixup (This is a new feature)
 
 ```bash
 git rebase -i HEAD~5
+```
+
+--- 
+
+## Squashing Strategies
+- Squash before merge
+- Squash during rebase 
+- Squash in GitHub/GitLab
+- Just dont squash
+<!-- Sam: if commits just undo previous commits then would squash  
+Telling the useful story -->
+
+--- 
+
+
+---
+
+# Conflicts Happen 
+## Don't panic
+
+--- 
+
+## Why conflicts occur 
+- Parallel changes to the same lines
+- Formatting tools
+- Long-lived branches
+
+--- 
+
+## Tools that can help 
+- IDE merge tools 
+- `git mergetool`
+
+--- 
+
+# Scaling beyond the individual
+## Automation and Reviews 
+
+---
+
+## Git Hooks 
+- pre-commit 
+- commit-msg
+
+--- 
+
+## CI/CD Integration
+- Tests on every push 
+- As enforcement  
+
+--- 
+
+## Code Reviews
+- Small MR/PRs 
+- Clear intent 
+- History cear 
+
+--- 
+
+# Exercise overview 
+WHATEVER THIS MAY BE
+
+--- 
+
+# Practical Rules to take away 
+- Rebase your own 
+- Merge together
+- Keep PRs small
+- Write (published) commits for everyone else/future you
+
+<!-- Git is a communication tool and its the history that tells the story -->
+
+--- 
