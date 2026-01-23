@@ -84,7 +84,7 @@ gitGraph
   commit
 ```
 
---- 
+---
 
 ## Common Pain Points When Working in a Team
 
@@ -108,21 +108,82 @@ gitGraph
 
 <!-- commmit as a change set (not strictly true, but makes things simple) -->
 
----
+--- 
 
-## Commits Are Basis
+<div class="grid grid-rows-2 gap-4">
 
-- A commit is a snapshot on the state of all files with some attached metadata
-- That pointer is what makes a commit unique
-- Each commit points to a parent
-  - Each commit remembers which commit came before it
+<div>
+<h2 class="m-2"> Commits Are the Basis </h2>
+
+<v-click> 
+
+- a snapshot of the state of all files
+</v-click>
+
+<div v-click.show="2">
+
+- with some extra metadata 
+</div>
+
+<div v-click.show="3">
+
+- and a pointer to a parent
+</div>
+</div>
+ 
+<div>
+<div v-click.show="1" v-click.hide="2" class="flex justify-around">
+```ts
+This is file one
+```
+```python
+This is file two
+```
+```java
+This is file three
+```
+</div>
+<div v-click.show="2" class="flex justify-around">
+<div class="bg-blue rounded-lg p-2">
+```ts
+This is file one
+```
+
+- Author: Lizzie 
+- Time: Yesterday
+- Comment: "Testing 2"
+
+</div>
+
+<div class="bg-red rounded-lg p-2">
+```ts
+This is file two
+```
+
+- Author: Lizzie 
+- Time: Yesterday
+- Comment: "Testing 1"
+
+</div>
+<div class="bg-yellow rounded-lg p-2">
+```ts
+This is file three
+```
+
+- Author: Lizzie 
+- Time: Yesterday
+- Comment: "Testing 3"
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- A commit is a snapshot on the state of all files with some attached metadata 
+- Each commit points to a parent 
+- Each commit remembers which commit came before it 
 - Actions that change the parent (rebasing, cherry-pick) need a new ID
-- History forms a **graph**, not a line
-
-<!-- Drawings are wrong arrows should point to the parent -->
-<!-- diagram showing they're before me  -->
-
-<!-- Diagram slide -->
+- History forms a **DAG** -->
 
 ---
 
@@ -151,13 +212,13 @@ gitGraph
 Perform diffs of X with B and Y with B.
 Walk through the change blocks identified in the two diffs. If both sides introduce the same change in the same spot, accept either one; if one introduces a change and the other leaves that region alone, introduce the change in the final; if both introduce changes in a spot, but they don't match, mark a conflict to be resolved manually. -->
 
---- 
+---
 
 ## Where do conflicts come from
 
 <!-- ^^^^^^ -->
 
---- 
+---
 
 # Power Tools (Without Breaking Things)
 ## Advanced Commands with Escape Plans
@@ -169,7 +230,7 @@ Walk through the change blocks identified in the two diffs. If both sides introd
 etc 
 - which bits move (HEAD Index Workign Tree) Make sure that these are defined
 
---- 
+---
 
 ## `git reflog`
 
@@ -185,7 +246,7 @@ etc
 ## `git rebase`
 -- Applying lots of cherry-picks at once 
 
---- 
+---
 
 ## `git bisect`
 - underused! 
@@ -199,7 +260,7 @@ etc
   - Infrastructure vs software 
   - Length of time it takes for CI to run 
 
---- 
+---
 
 ## Using remotes
 - Initially (before gitlab github) everyone would have their own remote
@@ -302,7 +363,7 @@ etc
 git rebase -i HEAD~5
 ```
 
---- 
+---
 
 ## Squashing Strategies
 - Squash before merge
@@ -318,20 +379,20 @@ Telling the useful story -->
 # Conflicts Happen 
 ## Don't panic
 
---- 
+---
 
 ## Why conflicts occur 
 - Parallel changes to the same lines
 - Formatting tools
 - Long-lived branches
 
---- 
+---
 
 ## Tools that can help 
 - IDE merge tools 
 - `git mergetool`
 
---- 
+---
 
 # Scaling beyond the individual
 ## Automation and Reviews 
@@ -342,25 +403,25 @@ Telling the useful story -->
 - pre-commit 
 - commit-msg
 
---- 
+---
 
 ## CI/CD Integration
 - Tests on every push 
 - As enforcement  
 
---- 
+---
 
 ## Code Reviews
 - Small MR/PRs 
 - Clear intent 
 - History cear 
 
---- 
+---
 
 # Exercise overview 
 WHATEVER THIS MAY BE
 
---- 
+---
 
 # Practical Rules to take away 
 - Rebase your own 
@@ -369,5 +430,3 @@ WHATEVER THIS MAY BE
 - Write (published) commits for everyone else/future you
 
 <!-- Git is a communication tool and its the history that tells the story -->
-
---- 
