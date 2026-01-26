@@ -108,260 +108,98 @@ gitGraph
 
 <!-- commmit as a change set (not strictly true, but makes things simple) -->
 
---- 
 
-<div class="grid grid-rows-2 gap-4">
-
-<div>
-<h2 class="m-2"> Commits Are the Basis </h2>
-
-<v-click> 
-
-- a snapshot of the state of all files
-</v-click>
-
-<div v-click.show="2">
-
-- with some extra metadata 
-</div>
-
-<div v-click.show="3">
-
-- and a pointer to a parent
-</div>
-</div>
- 
-<div>
-<div v-click.show="1" v-click.hide="2" class="flex justify-around">
-```ts
-This is file one
-```
-```python
-This is file two
-```
-```java
-This is file three
-```
-</div>
-<div v-click.show="2" class="flex justify-around">
-<div class="bg-blue rounded-lg p-2">
-```ts
-This is file one
-```
-
-- Author: Lizzie 
-- Time: Yesterday
-- Comment: "Testing 2"
-
-</div>
-
-<div class="bg-red rounded-lg p-2">
-```ts
-This is file two
-```
-
-- Author: Lizzie 
-- Time: Yesterday
-- Comment: "Testing 1"
-
-</div>
-<div class="bg-yellow rounded-lg p-2">
-```ts
-This is file three
-```
-
-- Author: Lizzie 
-- Time: Yesterday
-- Comment: "Testing 3"
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- A commit is a snapshot on the state of all files with some attached metadata 
-- Each commit points to a parent 
-- Each commit remembers which commit came before it 
-- Actions that change the parent (rebasing, cherry-pick) need a new ID
-- History forms a **DAG** -->
+---
+src: ./pages/commit.md
+---
 
 ---
 
-## Branches Are Just Pointers
+<div class="h-full flex justify-center items-center scale-300">
 
-- A branch = movable label
-- Moves along whenever there is a new commit
-- No copies, no magic
+```mermaid
+stateDiagram-v2
+  direction RL
+
+  state "Commit C3 (HEAD, main)" as C3
+  state "Commit C2 " as C2
+  state "Commit C1 " as C1
+
+  C3 --> C2 : parent
+  C2 --> C1 : parent
+```
+
+</div>
+
+---
+
+<div class="grid grid-cols-2 gap-6">
+<div>
+
+
+<h2 class="mb-4">Branches Are Just Pointers</h2>
+
+- A branch is just an extra piece of metadata that gets passed along from parent to child 
+- No copies, no magic 
 - Multiple branches can point to the same commit
 
----
 
-## HEAD and Your Position
+</div>
+<div>
 
-- `HEAD` = where you are now
-- `HEAD` is just a label 
-- Detached `HEAD` just means that it is pointing at a commit that has no other labels
-- Why this matters for rebase/reset
-- Checking out a branch is just passing on the `HEAD` label
+```mermaid
+stateDiagram-v2
+  direction RL
 
----
+  state "Commit C3" as C3
 
-## How does git merge 
+  state "main" as main
+  state "feature-x" as fx
+  state "bugfix" as bf
 
-<!-- Find a suitable merge base B - a version of the file that is an ancestor of both of the new versions (X and Y), and usually the most recent such base (although there are cases where it will have to go back further, which is one of the features of gits default recursive merge)
-Perform diffs of X with B and Y with B.
-Walk through the change blocks identified in the two diffs. If both sides introduce the same change in the same spot, accept either one; if one introduces a change and the other leaves that region alone, introduce the change in the final; if both introduce changes in a spot, but they don't match, mark a conflict to be resolved manually. -->
+  main --> C3
+  fx --> C3
+  bf --> C3
 
----
+  %% Styling
+  class main,fx,bf branch
+  class C4,C3 parent
 
-## Where do conflicts come from
-
-<!-- ^^^^^^ -->
-
----
-
-# Power Tools (Without Breaking Things)
-## Advanced Commands with Escape Plans
-
----
-
-## `git reset`
-- `--soft`
-etc 
-- which bits move (HEAD Index Workign Tree) Make sure that these are defined
-
----
-
-## `git reflog`
-
----
-
-## `git cherry-pick`
-- Apply a specific commit elsewhere
-- Great for quick fix
-- Dangerous when overused
-
----
-
-## `git rebase`
--- Applying lots of cherry-picks at once 
-
----
-
-## `git bisect`
-- underused! 
-  
----
-
-# How Teams Organize Change
-## Collaboration Workflows
-
-- Depends very much on numerous things: 
-  - Infrastructure vs software 
-  - Length of time it takes for CI to run 
-
----
-
-## Using remotes
-- Initially (before gitlab github) everyone would have their own remote
-- Push and pull to each others
-- Where the term "pull request" came from. 
-
----
-
-## Feature Branch Workflow
-
-- One branch per change
-- Pull / merge requests
-- Pros: isolation, review
-- Cons: long-lived branches
-
----
-
-## Trunk-Based Development
-
-- Short-lived branches
-- Frequent integration
-- Heavy use of CI
-- Pros: fewer conflicts
-- Cons: requires discipline
-
----
-
-## Gitflow (Briefly)
-
-- `develop`, `release`, `hotfix`
-- Popular historically
-- Often too heavy 
-- Designed to solve problems that are not so big anymore 
-<!-- Releases used to be ~2 years, now two weeks ish (the problem that it was designed to fix) -->
-
----
-
-## Pull Requests Fit *On Top*
-
-- PRs are a collaboration layer
-- Not a workflow by themselves
-- History quality affects review quality
-
----
-
-## Other tools to help teams that could be a whole talk
-
-- Merge queue
-- Linters and formatting checkers to remove conflicts
-  
----
-
-
-
-# Shaping History Intentionally
-## Branching, Merging, Rebasing
-
-<!-- Having good git history is really useful - being able to jump anywhere and run tests  -->
-> Git history is nothing but air
-
-
----
-
-## Merge: Preserving History
-
-- Keeps all branches visible
-- Shows when work diverged
-- Can create noisy graphs
-
-
----
-
-## Rebase: Rewriting History
-
-- Replays commits on a new base
-- Creates linear history
-- Changes commit hashes
-
-
----
-
-## Rebase vs Merge
-
-- Merge: record *what happened*
-- Rebase: show *what you want others to see*
-
-> Rebase your own work.  
-> Merge shared work.
-
----
-
-## Interactive Rebase
-
-- Reorder commits
-- Squash commits
-- Edit commit messages
-- fixup (This is a new feature)
-
-```bash
-git rebase -i HEAD~5
+  classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
+  classDef parent stroke:#2563eb,color:#2563eb
 ```
+
+```mermaid
+stateDiagram-v2
+  direction RL
+
+  state "Commit C3" as C3
+  state "Commit C4" as C4
+
+  state "main" as main
+  state "feature-x" as fx
+  state "bugfix" as bf
+
+  C4 --> C3 : parent
+
+  %% Branch pointers (dashed, colored)
+  main --> C3 : branch
+  bf --> C3 : branch
+  fx --> C4 : branch
+
+  %% Styling
+  class main,fx,bf branch
+  class C4,C3 parent
+
+  classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
+  classDef parent stroke:#2563eb,color:#2563eb
+
+```
+
+</div>
+</div>
+
+<!-- branches arent folders -->
 
 ---
 
