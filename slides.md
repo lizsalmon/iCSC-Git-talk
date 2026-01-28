@@ -13,98 +13,150 @@ layout: cover
 hideInToc: true
 --- 
 ## Contents
-<Toc columns=2 maxDepth=1>
-</Toc>
+<!-- <Toc columns=2 maxDepth=1>
+</Toc> -->
 
+---
+layout: cover
 ---
 
 # Why Git Hurts in Teams
 
-- Works great on solo projects
-
-```mermaid
-gitGraph
-   commit
-   branch new-feat
-   checkout new-feat
-   commit
-   commit
-   checkout main
-   merge new-feat
-   commit
-   commit
-```
-<!-- Git is easy alone, hard together -->
-
+---
+layout: two-cols
 ---
 
-- Becomes painful with multiple developers
+::left:: 
+
+
+# The Solo Experience
+
+<ul>
+  <li>Linear history</li>
+  <li>Zero conflicts</li>
+  <li>Total control</li>
+</ul>
+
+
+::right:: 
+
+<div v-click class="bg-white/5 p-4 rounded-lg shadow-xl">
+<p class="text-xs text-gray-500 mb-2 font-mono">// This is what we expect</p>
+<div class="scale-90 origin-top">
 
 ```mermaid
 gitGraph
-  commit
+  commit id: "Init"
+  branch feature
+  checkout feature
+  commit id: "Work"
+  commit id: "More work"
+  checkout main
+  merge feature
+  commit id: "Deploy"
+```
+
+</div>
+</div>
+
+---
+layout: default
+---
+
+# The Team Reality
+
+<div class="flex gap-4">
+<div class="w-1/3">
+<ul class>
+<li v-click class="font-bold">You are 4 commits ahead</li>
+<li v-click class="font-bold">John force-pushed his hotfix</li>
+<li v-click class="font-bold">Richard's refactor has been approved</li>
+<li v-click class="font-bold italic">Nobody has pulled in 3 days</li>
+</ul>
+</div>
+
+<div class="bg-black/20 rounded-lg p-2 border border-white/5">
+<div v-click class="scale-200 origin-top-left transition-all duration-500">
+```mermaid
+gitGraph
   commit
   branch lizzie-feat
-  checkout lizzie-feat
-  commit
-  commit
-  branch lizzie-wip
-  checkout lizzie-wip
-  commit
-  checkout lizzie-feat
-  merge lizzie-wip
-  commit
-  checkout main
-
   branch john-feat
-  checkout john-feat
-  commit
-  commit
-  branch john-hotfix
-  checkout john-hotfix
+  checkout lizzie-feat
   commit
   checkout john-feat
   commit
-
+  branch hotfix
+  checkout hotfix
+  commit
   checkout main
-
-  checkout lizzie-feat 
+  merge hotfix
+  checkout lizzie-feat
   commit
-
-  merge john-feat
+  branch wip-do-not-touch
+  checkout wip-do-not-touch
   commit
-
-  branch emergency-fix
-  checkout emergency-fix
+  checkout lizzie-feat
+  merge wip-do-not-touch
+  checkout john-feat
   commit
-
   checkout main
-  merge emergency-fix
-  checkout lizzie-feat 
+  commit
+  checkout lizzie-feat
   commit
 ```
+</div>
+
+<div v-click class="absolute inset-0 flex items-center justify-center bg-red-900/80 backdrop-blur-sm rounded-lg border-4 border-red-500 animate-shake">
+<div class="text-center">
+  <carbon-warning-alt-filled class="text-6xl mb-2" />
+  <h2 class="text-white">CONFLICT</h2>
+  <p class="font-mono text-xs">CONFLICT (content): Merge conflict in EVERYTHING.ts</p>
+</div>
+</div>
+</div>
+</div>
 
 ---
+layout: two-cols
+---
 
-## Common Pain Points When Working in a Team
+::left:: 
 
-- Messy, unreadable commit history
+<h2 class="mb-4">
+Common Pain Points When Working in a Team
+</h2>
+
+- A messy, unreadable commit history
 - Long-lived branches that never merge cleanly
 - Merge conflicts nobody understands
 - Fear of breaking `main`
 
+::right::
+
+<div class="relative w-full">
+  <div v-click v-show="$clicks <= 1" >
+    <BadGitHistory />
+  </div>
+  <div v-click v-show="$clicks > 1" >
+    <Merge />
+  </div>
+</div>
+
+---
+layout: default
+class:
 ---
 
-## What This Talk Is About
+# Sounds familiar?
 
-- Not Memorizing commands
-- Not Git internals trivia
-- Learning how to work in a team <strong> *safely* </strong>
+<SoundsFamiliar/>
 
+---
+layout: cover
 ---
 
 # How Git Actually Works
-## (Mental Model)
 
 <!-- commmit as a change set (not strictly true, but makes things simple) -->
 
@@ -142,7 +194,6 @@ stateDiagram-v2
 - A branch is just an extra piece of metadata that gets passed along from parent to child 
 - No copies, no magic 
 - Multiple branches can point to the same commit
-
 
 </div>
 <div>
@@ -232,6 +283,139 @@ Telling the useful story -->
 
 ---
 
+
+# Power Tools (Without Breaking Things)
+## Advanced Commands with Escape Plans
+
+---
+
+## `git reset`
+- `--soft`
+etc 
+- which bits move (HEAD Index Workign Tree) Make sure that these are defined
+
+---
+
+## `git reflog`
+
+---
+
+## `git cherry-pick`
+- Apply a specific commit elsewhere
+- Great for quick fix
+- Dangerous when overused
+
+---
+
+## `git rebase`
+-- Applying lots of cherry-picks at once 
+
+---
+
+## `git bisect`
+- underused! 
+  
+---
+
+# Shaping History Intentionally
+
+## Branching, Merging, Rebasing
+
+---
+
+## Merge: Preserving History
+
+- Keeps all branches visible
+- Shows when work diverged
+- Can create noisy graphs
+
+<!-- Diagram slide -->
+
+---
+
+## Rebase: Rewriting History
+
+- Replays commits on a new base
+- Creates linear history
+- Changes commit hashes
+
+<!-- Diagram slide -->
+
+---
+
+## Rebase vs Merge
+
+- Merge: record *what happened*
+- Rebase: show *what you want others to see*
+
+> Rebase your own work.  
+> Merge shared work.
+
+---
+
+## Interactive Rebase
+
+- Reorder commits
+- Squash commits
+- Edit commit messages
+
+---
+
+
+# How Teams Organize Change
+## Collaboration Workflows
+
+- Depends very much on numerous things: 
+  - Infrastructure vs software 
+  - Length of time it takes for CI to run 
+
+---
+
+## Using remotes
+- Initially (before gitlab github) everyone would have their own remote
+- Push and pull to each others
+- Where the term "pull request" came from. 
+
+---
+
+## Feature Branch Workflow
+
+- One branch per change
+- Pull / merge requests
+- Pros: isolation, review
+- Cons: long-lived branches
+
+---
+
+## Trunk-Based Development
+
+- Short-lived branches
+- Frequent integration
+- Heavy use of CI
+- Pros: fewer conflicts
+- Cons: requires discipline
+
+---
+
+## Gitflow (Briefly)
+
+- `develop`, `release`, `hotfix`
+- Popular historically
+- Often too heavy 
+- Designed to solve problems that are not so big anymore 
+<!-- Releases used to be ~2 years, now two weeks ish (the problem that it was designed to fix) -->
+
+---
+
+## Pull Requests Fit *On Top*
+
+- PRs are a collaboration layer
+- Not a workflow by themselves
+- History quality affects review quality
+
+---
+
+
 # Scaling beyond the individual
 ## Automation and Reviews 
 
@@ -260,6 +444,7 @@ Telling the useful story -->
 WHATEVER THIS MAY BE
 
 ---
+
 
 # Practical Rules to take away 
 - Rebase your own 
