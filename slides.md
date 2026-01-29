@@ -75,7 +75,6 @@ layout: default
 </ul>
 </div>
 
-<div class="bg-black/20 rounded-lg p-2 border border-white/5">
 <div v-click class="scale-200 origin-top-left transition-all duration-500">
 ```mermaid
 gitGraph
@@ -104,6 +103,7 @@ gitGraph
   commit
   checkout lizzie-feat
   commit
+  commit 
 ```
 </div>
 
@@ -112,7 +112,6 @@ gitGraph
   <carbon-warning-alt-filled class="text-6xl mb-2" />
   <h2 class="text-white">CONFLICT</h2>
   <p class="font-mono text-xs">CONFLICT (content): Merge conflict in EVERYTHING.ts</p>
-</div>
 </div>
 </div>
 </div>
@@ -190,14 +189,17 @@ stateDiagram-v2
 
 
 <h2 class="mb-4">Branches Are Just Pointers</h2>
+<v-clicks>
 
 - A branch is just an extra piece of metadata that gets passed along from parent to child 
 - No copies, no magic 
 - Multiple branches can point to the same commit
 
+</v-clicks>
 </div>
-<div>
 
+<div>
+<div v-click>
 ```mermaid
 stateDiagram-v2
   direction RL
@@ -219,6 +221,10 @@ stateDiagram-v2
   classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
   classDef parent stroke:#2563eb,color:#2563eb
 ```
+
+</div>
+<div v-click>
+
 
 ```mermaid
 stateDiagram-v2
@@ -248,6 +254,8 @@ stateDiagram-v2
 ```
 
 </div>
+
+</div>
 </div>
 
 <!-- branches arent folders -->
@@ -264,25 +272,35 @@ Telling the useful story -->
 
 
 ---
+layout: cover
+---
 
 # Conflicts Happen 
 ## Don't panic
 
 ---
+layout: default
+---
 
-## Why conflicts occur 
-- Parallel changes to the same lines
-- Formatting tools
-- Long-lived branches
+# Creation of a conflict
+
+<Conflicts />
 
 ---
 
-## Tools that can help 
+## Tools that can help prevent conflicts
+
+- linters
+- merge queue
+
+---
+
+## Tools that can help resolve conflicts
+
 - IDE merge tools 
 - `git mergetool`
 
 ---
-
 
 # Power Tools (Without Breaking Things)
 ## Advanced Commands with Escape Plans
