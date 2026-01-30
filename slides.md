@@ -31,17 +31,17 @@ layout: two-cols
 
 # The Solo Experience
 
-<ul>
-  <li>Linear history</li>
-  <li>Zero conflicts</li>
-  <li>Total control</li>
-</ul>
+<v-clicks>
 
+ - Linear history
+ - Zero conflicts
+ - Total control 
+</v-clicks>
 
 ::right:: 
 
 <div v-click class="bg-white/5 p-4 rounded-lg shadow-xl">
-<p class="text-xs text-gray-500 mb-2 font-mono">// This is what we expect</p>
+<p class="text-xs mb-2 font-mono">This is what we expect</p>
 <div class="scale-90 origin-top">
 
 ```mermaid
@@ -65,25 +65,30 @@ layout: default
 
 # The Team Reality
 
-<div class="flex gap-4">
-<div class="w-1/3">
-<ul class>
-<li v-click class="font-bold">You are 4 commits ahead</li>
-<li v-click class="font-bold">John force-pushed his hotfix</li>
-<li v-click class="font-bold">Richard's refactor has been approved</li>
-<li v-click class="font-bold italic">Nobody has pulled in 3 days</li>
-</ul>
+<div class="grid grid-cols-3 gap-4">
+<div class="col-span-1">
+
+- You are 4 commits ahead
+- John force-pushed his hotfix
+- Richard's refactor has been approved
+- Nobody has pulled in 3 days
+
 </div>
 
-<div v-click class="scale-200 origin-top-left transition-all duration-500">
+<div v-click class="col-span-2 transition-all duration-500">
 ```mermaid
 gitGraph
   commit
+  branch richard-refactor
   branch lizzie-feat
+  checkout lizzie-feat
+  commit
   branch john-feat
   checkout lizzie-feat
   commit
   checkout john-feat
+  commit
+  checkout richard-refactor
   commit
   branch hotfix
   checkout hotfix
@@ -92,11 +97,9 @@ gitGraph
   merge hotfix
   checkout lizzie-feat
   commit
-  branch wip-do-not-touch
-  checkout wip-do-not-touch
+  checkout richard-refactor
   commit
   checkout lizzie-feat
-  merge wip-do-not-touch
   checkout john-feat
   commit
   checkout main
@@ -106,13 +109,13 @@ gitGraph
   commit 
 ```
 </div>
+</div>
 
 <div v-click class="absolute inset-0 flex items-center justify-center bg-red-900/80 backdrop-blur-sm rounded-lg border-4 border-red-500 animate-shake">
 <div class="text-center">
   <carbon-warning-alt-filled class="text-6xl mb-2" />
   <h2 class="text-white">CONFLICT</h2>
   <p class="font-mono text-xs">CONFLICT (content): Merge conflict in EVERYTHING.ts</p>
-</div>
 </div>
 </div>
 
@@ -126,18 +129,21 @@ layout: two-cols
 Common Pain Points When Working in a Team
 </h2>
 
+<v-clicks>
+
 - A messy, unreadable commit history
 - Long-lived branches that never merge cleanly
 - Merge conflicts nobody understands
 - Fear of breaking `main`
+</v-clicks>
 
 ::right::
 
 <div class="relative w-full">
-  <div v-click v-show="$clicks <= 1" >
+  <div v-click v-show="$clicks <= 5" >
     <BadGitHistory />
   </div>
-  <div v-click v-show="$clicks > 1" >
+  <div v-click v-show="$clicks > 5" >
     <Merge />
   </div>
 </div>
@@ -287,11 +293,61 @@ layout: default
 <Conflicts />
 
 ---
+layout: default
+---
 
-## Tools that can help prevent conflicts
+# The Best Way to Prevent Conflicts
+<p class="opacity-50 -mt-2 mb-8">Stop them from happening in the first place</p>
 
-- linters
-- merge queue
+<div class="grid grid-cols-3 gap-4">
+
+<div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5 shadow-lg">
+  
+<h3 class="font-bold mb-1 flex items-center"> <carbon-paint-brush class="text-blue-400 text-3xl mb-1 mr-2" />Consistency</h3>
+
+- Have a standard:
+  - quotation marks
+  - indentation
+  - white space
+  - import order
+  - variable names
+  - ...
+
+</div>
+
+<div v-click class="p-4 rounded-xl border border-green-500/20 bg-green-500/5 shadow-lg">
+  
+<h3 class="font-bold mb-1 flex items-center"> <carbon-bot class="text-green-400 text-3xl mb-1 mr-2" />Automation</h3>
+
+- Enforce some standards using linters
+
+```js
+//from eslint.config
+stylistic: {
+  indent: 2,
+  quotes: 'single',
+},
+```
+
+- The diff will only show logic changes
+- Enforce those linters with git-hooks or CI/CD pipelines
+
+</div>
+
+<div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5 shadow-lg">
+
+<h3 class="font-bold mb-1 flex items-center">
+<carbon-chat class="text-purple-400 text-3xl mb-1 mr-2" />
+ Teamwork</h3>
+
+- **Communicate**
+- Small, atomic PRs
+- Culture changes:
+  - `git pull` and `git rebase` frequently
+  - `git fetch` is a friend 
+
+</div>
+</div>
 
 ---
 
@@ -301,9 +357,11 @@ layout: default
 - `git mergetool`
 
 ---
+layout: cover
+---
 
-# Power Tools (Without Breaking Things)
-## Advanced Commands with Escape Plans
+# Git Power Tools and How to Use Them
+## Without Breaking Things
 
 ---
 

@@ -24,7 +24,7 @@
       </div>
 
       <div class="pt-2 text-yellow-400">
-        error: could not apply 8c1e92d... please work
+        error: could not apply 8c1e92d...
       </div>
 
       <div class="bg-red-900/20 p-2 rounded border border-red-900/50">
