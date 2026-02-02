@@ -363,17 +363,143 @@ layout: cover
 # Git Power Tools and How to Use Them
 ## Without Breaking Things
 
+
+---
+layout: two-cols-header
+src: pages/reset.md
 ---
 
-## `git reset`
-- `--soft`
-etc 
-- which bits move (HEAD Index Workign Tree) Make sure that these are defined
-
+---
+layout: two-cols-header
 ---
 
 ## `git reflog`
 
+<p class="opacity-50 mt-2">
+
+The annoying truth-telling brother of `git log` 
+</p>
+
+::left::
+
+`git log`
+- Shows the current HEAD and where it has been
+- It prints the commit HEAD points to, then its parent, its parent, and so on.
+
+
+`git reflog`
+- Shows an ordered list of the commits that HEAD has pointed to
+- It's a fully comprehensive history for your *local* repo
+- It means that nothing is permanent
+
+::right:: 
+
+<div>
+PUT HERE WHAT THE NOTATION MEANS 
+</div>
+
+
+---
+layout: two-cols
+---
+
+<div>
+
+<div class="mb-4">
+
+## `git reflog` saving the day
+</div>
+
+
+```bash {all|1-2|4-6|7-9|10-12|13-17|18-20|21-24}
+$ git commit -m "feat: Initial To Do list"
+[main 9479df0] feat: Initial To Do list
+
+$ git commit -m "feat: new file (dont delete this)"
+[main f6e25d1] feat: new file (dont delete this)
+
+$ git reset --hard HEAD~1 # <--- disaster has struck!! 
+HEAD is now at 9479df0 feat: Initial To Do list
+
+$ git log --oneline
+9479df0 (HEAD -> main) feat: Initial To Do list
+
+$ git reflog
+9479df0 HEAD@{0}: reset: moving to HEAD~1
+f6e25d1 HEAD@{1}: commit: feat: new file (dont delete this) # <-- THERE IT IS!
+9479df0 HEAD@{2}: commit (initial): feat: Initial To Do list
+
+$ git reset --hard HEAD@{1}
+HEAD is now at f6e25d1 feat: new file (dont delete this)
+
+$ git log --oneline
+f6e25d1 (HEAD -> main) feat: new file (dont delete this)
+9479df0 feat: Initial To Do list
+```
+
+
+</div>
+::right::
+<div>
+You may be thinking - just dont hard reset 
+Well it can also be useful when ...
+</div>
+
+---
+layout: two-cols
+---
+
+## `git reflog`
+<p class="opacity-50 -mt-2 text-sm italic">The "Undo" for your "Undo"</p>
+
+<div class="mt-4 pr-4">
+  <p class="text-sm">If <code>git log</code> is your <b>public diary</b>, <code>reflog</code> is your <b>private browser history</b>.</p>
+  
+  <ul class="mt-4 space-y-4">
+    <li v-click>
+      <span class="text-orange-400 font-bold">The Black Box Recorder</span>
+      <p class="text-xs opacity-80 text-pretty">It records every single time your <code>HEAD</code> moves. Switched branches? Reset? Rebased? It's all there.</p>
+    </li>
+    <li v-click>
+      <span class="text-green-400 font-bold">Resurrection</span>
+      <p class="text-xs opacity-80 text-pretty">Lost a commit after a <code>--hard reset</code>? Find the SHA in the reflog and simply <code>git checkout</code> back to it.</p>
+    </li>
+    <li v-click>
+      <span class="text-blue-400 font-bold">Relative Time</span>
+      <p class="text-xs opacity-80 text-pretty">You can reference state by time: <br><code>git reset --hard head@{5.minutes.ago}</code></p>
+    </li>
+  </ul>
+</div>
+
+::right::
+
+<div class="space-y-4">
+
+  <div v-click="1" class="font-mono text-[9px] bg-gray-900 p-3 rounded border-l-4 border-blue-500">
+    <div class="text-blue-400 mb-1">$ git log --oneline</div>
+    <div class="opacity-50 italic">// Only shows current branch history</div>
+    <div class="text-white">f3a9c2e fix: login bug</div>
+    <div class="text-white">91bd2aa feat: auth</div>
+  </div>
+
+  <div v-click="2" class="font-mono text-[9px] bg-gray-900 p-3 rounded border-l-4 border-orange-500 animate-slide-in-right">
+    <div class="text-orange-400 mb-1">$ git reflog</div>
+    <div class="opacity-50 italic">// Shows EVERYTHING you did</div>
+    <div class="text-white">f3a9c2e HEAD@{0}: reset: moving to HEAD~1</div>
+    <div class="text-red-400">8c1e92d HEAD@{1}: commit: oops I deleted this</div>
+    <div class="text-white">91bd2aa HEAD@{2}: checkout: moving from main to dev</div>
+    <div class="text-white">e21a8bb HEAD@{3}: commit: feat: auth</div>
+  </div>
+
+  <div v-click="3" class="p-3 bg-green-500/10 border border-green-500/50 rounded flex items-center gap-3">
+    <!-- <carbon-ambulance class="text-green-400 text-2xl" /> -->
+    <div>
+      <div class="text-[10px] text-green-400 font-bold uppercase">The Rescue</div>
+      <div class="font-mono text-[10px] text-white">git reset --hard 8c1e92d</div>
+    </div>
+  </div>
+
+</div>
 ---
 
 ## `git cherry-pick`
@@ -384,7 +510,7 @@ etc
 ---
 
 ## `git rebase`
--- Applying lots of cherry-picks at once 
+- Applying lots of cherry-picks at once 
 
 ---
 
