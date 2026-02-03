@@ -66,14 +66,14 @@ layout: default
 # The Team Reality
 
 <div class="grid grid-cols-3 gap-4">
-<div class="col-span-1">
+<v-clicks class="col-span-1">
 
 - You are 4 commits ahead
 - John force-pushed his hotfix
 - Richard's refactor has been approved
 - Nobody has pulled in 3 days
 
-</div>
+</v-clicks>
 
 <div v-click class="col-span-2 transition-all duration-500">
 ```mermaid
@@ -370,45 +370,97 @@ src: pages/reset.md
 ---
 
 ---
-layout: two-cols-header
+layout: default
 ---
 
 ## `git reflog`
 
-<p class="opacity-50 mt-2">
+<span class="opacity-50 mt-2">The annoying truth-telling brother of `git log` 
+</span>
 
-The annoying truth-telling brother of `git log` 
-</p>
-
-::left::
+<div class="grid grid-cols-2 gap-2">
+<div class="">
+<div class="text-red">
 
 `git log`
+</div>
+
+<div v-if="$clicks <= 2" v-click>
+
 - Shows the current HEAD and where it has been
 - It prints the commit HEAD points to, then its parent, its parent, and so on.
 
+</div>
+<div v-click="3">
 
-`git reflog`
-- Shows an ordered list of the commits that HEAD has pointed to
-- It's a fully comprehensive history for your *local* repo
-- It means that nothing is permanent
+```bash
+commit e6edcdc (HEAD -> main, new-branch)
+Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
+Date:   Tue Feb 3 15:47:03 2026 +0000
 
-::right:: 
+    feat: Add to do
+
+commit f6e25d1
+Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
+Date:   Mon Feb 2 17:12:44 2026 +0000
+
+    feat: new file (dont delete this)
+
+commit 9479df0
+Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
+Date:   Mon Feb 2 17:11:40 2026 +0000
+
+    feat: Initial To Do list
+
+```
+</div>
+
+</div>
 
 <div>
-PUT HERE WHAT THE NOTATION MEANS 
+
+<div class="text-red">
+
+`git reflog`
+</div>
+
+<div v-if="$clicks <= 2" v-click="2" >
+
+- Shows an ordered list of the commits that HEAD has pointed to
+- It's a fully comprehensive history for your *local* repo
+- It means that nothing is permanently lost EVER
+
+</div>
+<div v-click="4">
+
+```bash
+e6edcdc (HEAD -> main, new-branch) HEAD@{0}: merge new-branch: Fast-forward
+f6e25d1 HEAD@{1}: checkout: moving from new-branch to main
+e6edcdc (HEAD -> main, new-branch) HEAD@{2}: commit (amend): feat: Add to do
+191f995 HEAD@{3}: commit: Add to do
+f6e25d1 HEAD@{4}: checkout: moving from main to new-branch
+f6e25d1 HEAD@{5}: reset: moving to f6e25d1
+9479df0 HEAD@{6}: reset: moving to HEAD~1
+f6e25d1 HEAD@{7}: commit: feat: new file (dont delete this)
+9479df0 HEAD@{8}: commit (initial): feat: Initial To Do list
+
+```
+</div>
+</div>
 </div>
 
 
 ---
-layout: two-cols
+layout: two-cols-header
 ---
 
-<div>
 
 <div class="mb-4">
 
 ## `git reflog` saving the day
 </div>
+
+::left::
 
 
 ```bash {all|1-2|4-6|7-9|10-12|13-17|18-20|21-24}
@@ -426,7 +478,7 @@ $ git log --oneline
 
 $ git reflog
 9479df0 HEAD@{0}: reset: moving to HEAD~1
-f6e25d1 HEAD@{1}: commit: feat: new file (dont delete this) # <-- THERE IT IS!
+f6e25d1 HEAD@{1}: commit: feat: new file (dont delete this)
 9479df0 HEAD@{2}: commit (initial): feat: Initial To Do list
 
 $ git reset --hard HEAD@{1}
@@ -437,69 +489,41 @@ f6e25d1 (HEAD -> main) feat: new file (dont delete this)
 9479df0 feat: Initial To Do list
 ```
 
-
-</div>
-::right::
-<div>
-You may be thinking - just dont hard reset 
-Well it can also be useful when ...
-</div>
-
----
-layout: two-cols
----
-
-## `git reflog`
-<p class="opacity-50 -mt-2 text-sm italic">The "Undo" for your "Undo"</p>
-
-<div class="mt-4 pr-4">
-  <p class="text-sm">If <code>git log</code> is your <b>public diary</b>, <code>reflog</code> is your <b>private browser history</b>.</p>
-  
-  <ul class="mt-4 space-y-4">
-    <li v-click>
-      <span class="text-orange-400 font-bold">The Black Box Recorder</span>
-      <p class="text-xs opacity-80 text-pretty">It records every single time your <code>HEAD</code> moves. Switched branches? Reset? Rebased? It's all there.</p>
-    </li>
-    <li v-click>
-      <span class="text-green-400 font-bold">Resurrection</span>
-      <p class="text-xs opacity-80 text-pretty">Lost a commit after a <code>--hard reset</code>? Find the SHA in the reflog and simply <code>git checkout</code> back to it.</p>
-    </li>
-    <li v-click>
-      <span class="text-blue-400 font-bold">Relative Time</span>
-      <p class="text-xs opacity-80 text-pretty">You can reference state by time: <br><code>git reset --hard head@{5.minutes.ago}</code></p>
-    </li>
-  </ul>
-</div>
-
 ::right::
 
-<div class="space-y-4">
+<div class="m-2">
 
-  <div v-click="1" class="font-mono text-[9px] bg-gray-900 p-3 rounded border-l-4 border-blue-500">
-    <div class="text-blue-400 mb-1">$ git log --oneline</div>
-    <div class="opacity-50 italic">// Only shows current branch history</div>
-    <div class="text-white">f3a9c2e fix: login bug</div>
-    <div class="text-white">91bd2aa feat: auth</div>
-  </div>
+<div v-click="5" class="text-sm">
 
-  <div v-click="2" class="font-mono text-[9px] bg-gray-900 p-3 rounded border-l-4 border-orange-500 animate-slide-in-right">
-    <div class="text-orange-400 mb-1">$ git reflog</div>
-    <div class="opacity-50 italic">// Shows EVERYTHING you did</div>
-    <div class="text-white">f3a9c2e HEAD@{0}: reset: moving to HEAD~1</div>
-    <div class="text-red-400">8c1e92d HEAD@{1}: commit: oops I deleted this</div>
-    <div class="text-white">91bd2aa HEAD@{2}: checkout: moving from main to dev</div>
-    <div class="text-white">e21a8bb HEAD@{3}: commit: feat: auth</div>
-  </div>
+- `9479df0`  is the 7-character short SHA of the commit.
 
-  <div v-click="3" class="p-3 bg-green-500/10 border border-green-500/50 rounded flex items-center gap-3">
-    <!-- <carbon-ambulance class="text-green-400 text-2xl" /> -->
-    <div>
-      <div class="text-[10px] text-green-400 font-bold uppercase">The Rescue</div>
-      <div class="font-mono text-[10px] text-white">git reset --hard 8c1e92d</div>
-    </div>
-  </div>
+
+- `HEAD@{2}:` explains that this is the second prior position of the head
+
+  - `@{0}` is the current position of the head
+  - `@{1}` is the previous step
+- `commit` / `checkout` / `reset`
+  - This is the action that caused the move
 
 </div>
+</div>
+
+
+
+<div v-click="6" class="p-3 bg-blue-500/10 rounded border-l-4 border-blue-500 m-2">
+<div class="text-sm leading-tight">
+  <b>Tip:</b> 
+  You can also use time-based notation: 
+
+- `main@{yesterday}`
+- `HEAD@{5.minutes.ago}`
+</div>
+</div>
+---
+
+Okay so just dont reset --hard 
+When else may we need to use ref log? 
+
 ---
 
 ## `git cherry-pick`

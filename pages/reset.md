@@ -78,7 +78,7 @@ Changes to be committed:
 
 
 Changes from e5f6g7h are now
-"Modified" but not staged.
+"modified" but not staged.
 
 <div class="text-red">
 
