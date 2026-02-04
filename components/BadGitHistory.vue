@@ -105,7 +105,7 @@
     </div>
 
     <div class="flex gap-2 text-red-600 font-bold animate-pulse">
-      <span>| | |</span><span class="text-[9px] ml-2">CRITICAL DRIFT DETECTED</span>
+      <span>| | |</span><span class="ml-2">CRITICAL DRIFT DETECTED</span>
     </div>
 
     <div class="flex gap-2">

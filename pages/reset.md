@@ -1,12 +1,14 @@
 ## `git reset`
 <p class="opacity-50 mt-2">Rewinding the clock</p>
 
-::left:: 
+<div class="grid grid-cols-3">
+
+<div>
 
 <div class="pr-4">
 
 - Moves the current branch pointer to a specific commit. Think of it as <b>"Undo"</b> with three levels of intensity:
-  
+
 <div v-if="$clicks <= 1" v-click class="mb-4 bg-yellow-700/20 p-3 rounded-lg m-2">
 
 `--soft` 
@@ -24,24 +26,20 @@
 <div v-if="$clicks <= 3" v-click="3" class="mb-4 bg-red-700/20 p-3 rounded-lg m-2">
 
 `--hard`
-- Wipe everything. No trace left. <b>Nuclear option.</b>
+- Wipe everything. <b>Nuclear option.</b>
 
 </div>
 </div>
+</div>
 
-::right::
+<div class="col-span-2">
 
-<div>
-<div class="font-mono text-sm bg-black/40 p-3 rounded border border-white/10">
-<div class="text-gray-500 mb-2">// Initial State</div>
-<div class="flex items-center gap-2">
-<carbon-commit /> <span class="text-blue-400">a1b2c3d</span> - feat: Initial ToDo list
-</div>
-<div class="flex items-center gap-2">
-<carbon-commit /> <span class="text-blue-400">e5f6g7h</span> - fix: typo
-<span class="bg-yellow-500 text-black px-1 rounded text-sm font-bold">HEAD</span>
-</div>
-</div>
+
+```bash
+789112f (HEAD -> main) fix: typo
+129bb28 feat: Initial ToDo list
+```
+
 
 <div v-if="$clicks === 1">
 <div class="text-red">
@@ -61,8 +59,8 @@ Changes from e5f6g7h are still in your Staging Area. Ready to be committed again
 ```bash
 On branch main
 Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        modified:   todo.md
+(use "git restore --staged <file>..." to unstage)
+      modified:   todo.md
 ```
 
 </div>
@@ -80,11 +78,11 @@ Changes to be committed:
 Changes from e5f6g7h are now
 "modified" but not staged.
 
-<div class="text-red">
+  <div class="text-red">
 
-`git status`
+  `git status`
 
-</div>
+  </div>
 
 ```bash
 On branch main
@@ -115,6 +113,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 HEAD is now at 129bb28 feat: Initial ToDo list
 ```
 
+</div>
 </div>
 </div>
 </div>

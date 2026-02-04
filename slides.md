@@ -202,10 +202,15 @@ stateDiagram-v2
 - Multiple branches can point to the same commit
 
 </v-clicks>
-</div>
+<br/>
+<div v-click="5">
 
+- `git checkout feature-x`
+- `git commit `
+</div>
+</div>
 <div>
-<div v-click>
+<div v-click="4">
 ```mermaid
 stateDiagram-v2
   direction RL
@@ -229,7 +234,7 @@ stateDiagram-v2
 ```
 
 </div>
-<div v-click>
+<div v-click="6">
 
 
 ```mermaid
@@ -258,24 +263,72 @@ stateDiagram-v2
   classDef parent stroke:#2563eb,color:#2563eb
 
 ```
-
 </div>
-
 </div>
 </div>
 
 <!-- branches arent folders -->
 
 ---
+layout: two-cols-header
+---
 
-## Squashing Strategies
-- Squash before merge
-- Squash during rebase 
-- Squash in GitHub/GitLab
-- Just dont squash
-<!-- Sam: if commits just undo previous commits then would squash  
-Telling the useful story -->
+<div class="mb-1">
 
+## `git branch`
+<p class="opacity-50 mt-2">Even when you're working solo</p>
+
+</div>
+
+::left::
+
+<v-clicks>
+
+- To separate your work from the `main` branch 
+- It's harder for unstable code to get merged into the main code base
+- Gives you a chance to clean up your future git history before merging it into the main branch
+
+- Make a new branch when you:
+  - Make a new feature 
+  - Fix a bug
+  - Just experiment
+
+</v-clicks>
+
+::right:: 
+
+<v-click>
+```mermaid
+gitGraph
+    commit id: "merge"
+    branch develop
+    checkout develop
+    commit id: "fun stuff"
+    commit id: "???"
+    branch idea
+    checkout idea
+    commit id: "It works!"
+    checkout develop
+    merge idea
+    checkout develop 
+    commit id: "typos"
+    checkout main
+    merge develop id: "merge develop"
+```
+
+</v-click>
+
+<div v-click class="p-2 mt-2 border border-red-500/30 bg-red-500/10 rounded text-md font-bold flex items-center justify-center flex-shrink">
+  <carbon-close-filled class="ma-1 text-red-500"/>
+
+Never commit to `main`
+</div>
+
+<!-- Okay maybe it is fine to commit to main if  
+- Solo projects with discipline
+- Tiny obvious changes (README, config)
+- True emergency hotfixes
+- -->
 
 ---
 layout: cover
@@ -301,7 +354,7 @@ layout: default
 
 <div class="grid grid-cols-3 gap-4">
 
-<div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5 shadow-lg">
+<div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
   
 <h3 class="font-bold mb-1 flex items-center"> <carbon-paint-brush class="text-blue-400 text-3xl mb-1 mr-2" />Consistency</h3>
 
@@ -315,7 +368,7 @@ layout: default
 
 </div>
 
-<div v-click class="p-4 rounded-xl border border-green-500/20 bg-green-500/5 shadow-lg">
+<div v-click class="p-4 rounded-xl border border-green-500/20 bg-green-500/5">
   
 <h3 class="font-bold mb-1 flex items-center"> <carbon-bot class="text-green-400 text-3xl mb-1 mr-2" />Automation</h3>
 
@@ -334,7 +387,7 @@ stylistic: {
 
 </div>
 
-<div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5 shadow-lg">
+<div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5">
 
 <h3 class="font-bold mb-1 flex items-center">
 <carbon-chat class="text-purple-400 text-3xl mb-1 mr-2" />
@@ -359,6 +412,152 @@ stylistic: {
 ---
 layout: cover
 ---
+
+--- 
+layout: cover
+class:
+---
+
+# How Teams Use Git
+## Collaboration Workflows
+
+<!-- - Depends very much on numerous things: 
+  - Infrastructure vs software 
+  - Length of time it takes for CI to run  -->
+
+---
+layout: two-cols-header
+---
+
+<div class="mb-2">
+
+## Remotes: the original model
+</div>
+
+::left::
+- Everyone had their **own remote**  
+- You pushed and pulled from *each other*
+
+This is where “pull request” comes from
+
+→ “I have pushed to my remote, please pull my changes”
+
+
+- As you can imagine - this doesnt scale well
+
+
+::right:: 
+
+put bad image here 
+
+---
+layout: two-cols-header
+---
+
+<div class="mb-2">
+
+## The common pattern today
+</div>
+
+
+::left:: 
+- GitHub / GitLab made this easy
+- One central source of truth
+
+
+::right::
+
+```mermaid
+graph TD
+  Hub["GitHub / GitLab<br/>(shared remote)"]
+
+  DevA["Alice"]
+  DevB["John"]
+  DevC["Carol"]
+
+  DevA <-->|git push / git pull| Hub
+
+  DevB <-->|git push / git pull| Hub
+
+  DevC <-->|git push / git pull| Hub
+```
+
+---
+
+## Basic workflow using git and a remote
+
+```bash 
+# Start from main
+git checkout main
+git pull origin main
+
+# Create a new feature branch
+git checkout -b feature/todo-item
+
+# Work locally: edit, add, commit
+git add files
+git commit -m "feat: add new todo item"
+
+# Update branch with main
+git fetch origin
+git merge origin/main   # or git rebase origin/main
+
+# Push branch to remote
+git push origin feature/todo-item
+
+```
+
+---
+
+## Feature Branch Workflow
+
+- One branch per change
+- Pull / merge requests
+- Pros: isolation, review
+- Cons: long-lived branches
+
+---
+
+## Trunk-Based Development
+
+- Short-lived branches
+- Frequent integration
+- Heavy use of CI
+- Pros: fewer conflicts
+- Cons: requires discipline
+
+---
+
+## Gitflow (Briefly)
+
+- `develop`, `release`, `hotfix`
+- Popular historically
+- Often too heavy 
+- Designed to solve problems that are not so big anymore 
+<!-- Releases used to be ~2 years, now two weeks ish (the problem that it was designed to fix) -->
+
+---
+
+## Pull Requests Fit *On Top*
+
+- PRs are a collaboration layer
+- Not a workflow by themselves
+- History quality affects review quality
+
+---
+
+## Squashing Strategies
+- Squash before merge
+- Squash during rebase 
+- Squash in GitHub/GitLab
+- Just dont squash
+<!-- Sam: if commits just undo previous commits then would squash  
+Telling the useful story -->
+
+---
+layout: cover
+---
+
 
 # Git Power Tools and How to Use Them
 ## Without Breaking Things
@@ -520,10 +719,63 @@ f6e25d1 (HEAD -> main) feat: new file (dont delete this)
 </div>
 </div>
 ---
+layout: default
+---
 
-Okay so just dont reset --hard 
-When else may we need to use ref log? 
+## Beyond undoing `reset`
+<div class="opacity-50 -mt-2 mb-8 text-sm">
 
+When `git log` can't tell you what happened, `git reflog` can.
+</div>
+
+<div class="grid grid-cols-3 gap-4">
+
+  <div v-click class="p-4 rounded-xl border border-orange-500/20 bg-orange-500/5">
+
+  <!--  -->
+  <h3 class="font-bold mb-1 flex items-center"> <carbon-branch class="text-orange-400 text-2xl" /> Deleted Branch</h3>
+
+  <div class="text-sm opacity-80 flex-grow">
+    You finished a feature, merged it, and <b>deleted the branch</b>. 
+    Suddenly, you realize you missed a file. 
+  </div>
+  <!-- <div class="mt-4 font-mono text-xs bg-black/40 p-2 rounded text-orange-200">
+    $ git reflog<br>
+    <span class="opacity-50">... checkout: moving from feature to main</span><br>
+    <b>f6e25d1</b> HEAD@{1}: commit: ...
+  </div> -->
+  </div>
+
+  <div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
+  <h3 class="font-bold mb-1 flex items-center"> <carbon-direction-merge class="text-blue-400 text-2xl" /> Messy Rebase</h3>
+  <div class="text-sm opacity-80">
+    
+  You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
+  </div>
+  <!-- <div class="mt-4 font-mono text-xs bg-black/40 p-2 rounded text-blue-200">
+    <span class="opacity-50">// Find the state BEFORE rebase</span><br>
+    $ git reset --hard HEAD@{15}
+  </div> -->
+  </div>
+
+  <div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5">
+
+  <h3 class="font-bold mb-1 flex items-center"><mdi-ghost-outline class="text-purple-400 text-2xl" />Lost Amend</h3>
+  
+  <div class="text-sm opacity-80">
+  
+  You used `git commit --amend` to fix a typo, but accidentally overwrote a bunch of good code in the process.
+  </div>
+  <!-- <div class="mt-4 font-mono text-xs bg-black/40 p-2 rounded text-purple-200">
+    <span class="opacity-50">// Reflog keeps the "pre-amend" hash</span><br>
+    $ git cherry-pick b1c2e3f
+  </div> -->
+  </div>
+
+</div>
+<div v-after class="p-4 text-center rounded-xl border border-purple-500/20 bg-pink-500/5 mt-4">
+    If you saw it on your screen once, it's in the reflog.
+</div>
 ---
 
 ## `git cherry-pick`
@@ -544,7 +796,6 @@ When else may we need to use ref log?
 ---
 
 # Shaping History Intentionally
-
 ## Branching, Merging, Rebasing
 
 ---
@@ -586,91 +837,6 @@ When else may we need to use ref log?
 - Edit commit messages
 
 ---
-
-
-# How Teams Organize Change
-## Collaboration Workflows
-
-- Depends very much on numerous things: 
-  - Infrastructure vs software 
-  - Length of time it takes for CI to run 
-
----
-
-## Using remotes
-- Initially (before gitlab github) everyone would have their own remote
-- Push and pull to each others
-- Where the term "pull request" came from. 
-
----
-
-## Feature Branch Workflow
-
-- One branch per change
-- Pull / merge requests
-- Pros: isolation, review
-- Cons: long-lived branches
-
----
-
-## Trunk-Based Development
-
-- Short-lived branches
-- Frequent integration
-- Heavy use of CI
-- Pros: fewer conflicts
-- Cons: requires discipline
-
----
-
-## Gitflow (Briefly)
-
-- `develop`, `release`, `hotfix`
-- Popular historically
-- Often too heavy 
-- Designed to solve problems that are not so big anymore 
-<!-- Releases used to be ~2 years, now two weeks ish (the problem that it was designed to fix) -->
-
----
-
-## Pull Requests Fit *On Top*
-
-- PRs are a collaboration layer
-- Not a workflow by themselves
-- History quality affects review quality
-
----
-
-
-# Scaling beyond the individual
-## Automation and Reviews 
-
----
-
-## Git Hooks 
-- pre-commit 
-- commit-msg
-
----
-
-## CI/CD Integration
-- Tests on every push 
-- As enforcement  
-
----
-
-## Code Reviews
-- Small MR/PRs 
-- Clear intent 
-- History cear 
-
----
-
-# Exercise overview 
-WHATEVER THIS MAY BE
-
----
-
 
 # Practical Rules to take away 
 - Rebase your own 
