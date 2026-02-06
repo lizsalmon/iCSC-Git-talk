@@ -482,144 +482,65 @@ graph TD
 
 ```
 ---
-layout: two-cols-header
----
-<div class="mb-8">
-
-## Centralised Workflow
-</div>
-
-::left::
-- One shared remote repository
-- Single branch: `main`
-- Everyone commits directly to `main`
-- Linear history
-- No long-lived branches
-
-::right::
-
-- Works best when:
-  - Small team
-  - Low parallel work
-
----
-layout: two-cols-header
----
-<div class="mb-8">
-
-## Feature Branch Workflow
-</div>
-
-::left::
-- Developers work on **feature branches**
-- Changes merged via PR / MR
-- `main` is always:
-  - Stable
-  - Deployable
-
-::right::
-- Most common modern workflow
-- Branches should be:
-  - Short-lived
-- Problems appear when:
-  - Branches live too long
-
----
-layout: two-cols-header
----
-<div class="mb-8">
-
-## Forking Workflow
-</div>
-
-::left::
-- Every developer has their **own remote repo**
-- Changes shared via pull requests
-- No direct push access to main repo
-
-::right::
-- Common in **open source**
-- Not really a branching strategy
-- Can be combined with:
-  - Feature branches
-  - Trunk-based development
-
----
-layout: two-cols-header
----
-
-<div class="mb-8">
-
-## Trunk-Based Development
-</div>
-::left::
-- Single trunk (`main`)
-- Very short-lived branches
-- Frequent integration
-- Heavy use of CI
-
-::right::
-- Enables true CI/CD
-- Requires:
-  - Good tests
-  - Team discipline
-  - Feature flags
-- Branch lifetime:
-  - Minutes to hours
-
----
-layout: two-cols-header
----
-<div class="mb-8">
-
-## Git Flow
-</div>
-
-::left::
-- Multiple long-lived branches:
-  - `main`
-  - `develop`
-  - `release/*`
-- Features merged only when "done"
-
-::right::
-- Historically popular
-- Common issues:
-  - Large merges
-  - Long-lived branches
-  - Drift from trunk
-- **Not trunk-based**
-
-
----
 layout: default
 ---
 <div class="mb-8">
 
-## How they compare
+## Git Workflows
+</div>
+<div class="grid grid-cols-2 gap-4">
+<v-clicks>
+<div class="bg-blue-500/10 p-4 rounded-lg border-2 border-blue-400/10">
+
+* **Centralised:** 
+  * Everyone pushes to `main`
+  * Fast, but works best in small teams
+
+</div>
+<div class="bg-green-500/10 p-4 rounded-lg border-2 border-green-400/10">
+
+* **Trunk-Based:** 
+  * Small, frequent commits to `main` 
+  * High speed, requires good testing and CI.
+
+</div>
+<div class="bg-purple-500/10 p-4 rounded-lg border-2 border-purple-400/10">
+
+* **Git Flow:** 
+  * Rigid, multi-branch system
+  * Great for scheduled releases, but *heavy*
+  * Not recommended anymore
+  
+</div>
+<div class="bg-orange-500/10 p-4 rounded-lg border-2 border-orange-400/10">
+
+* **Forking:** 
+  * Total isolation
+  * Common in Open Source where you don't trust everyone with "write" access.
+
 </div>
 
-| **Workflow**  | **Branch Lifetime** | **Integration Speed** |
-|-----------------|-----------------|-------------------|
-| Centralised     | None            | Continuous        |
-| <span v-mark.underline.orange> Feature Branch</span>  | Short           | Fast              |
-| Forking         | Short / Medium  | Medium            |
-| Trunk-Based     | Very short      | Very fast         |
-| Git Flow        | Long            | Slow              |
+</v-clicks>
+</div>
+<v-click>
+<div class="bg-yellow-500/10 p-4 rounded-lg border-2 border-yellow-400/10 mt-4">
 
+**Feature Branching** balances safety (code reviews) with speed (parallel work).
 
+</div>
+</v-click>
 ---
 layout: two-cols-header
 ---
 
-<div class="mb-8">
+<div class="mb-6">
 
 ## A Typical Feature Branch Workflow with a Remote
 </div>
 
 ::left::
 
-```bash {all|1-3|5-7|9-10|12-13|15-16|18-21}
+```bash {1-3|5-7|9-10|12-13|15-16|18-21|all}
 git checkout main
 git pull origin main # update main
 git checkout -b feature # create your branch
@@ -645,8 +566,8 @@ git pull origin main
 ```
 
 ::right:: 
-
-<v-click> 
+<div class="ml-2">
+<v-clicks > 
 
 ```mermaid
 gitGraph
@@ -663,7 +584,13 @@ gitGraph
   merge feature tag: "MR merged"
 ```
 
-</v-click>
+**Why this works:**
+- Isolation: Bad code merged? main stays functional
+- Collaboration: Push triggers a Pull Request — discussion
+- Clean History: Merging back to main only happens once the code is "Done-Done"
+
+</v-clicks>
+</div>
 ---
 
 ## Pull Requests Fit *On Top*
