@@ -419,15 +419,15 @@ class:
 ---
 
 # How Teams Use Git
-## Collaboration Workflows
+## Collaboration Workflows 
 
 <!-- - Depends very much on numerous things: 
   - Infrastructure vs software 
   - Length of time it takes for CI to run  -->
 
----
+<!-- ---
 layout: two-cols-header
----
+
 
 <div class="mb-2">
 
@@ -448,94 +448,222 @@ This is where “pull request” comes from
 
 ::right:: 
 
-put bad image here 
+put bad image here  -->
+
+---
+layout: two-cols-header
+---
+<div class="mb-8">
+
+## How do teams use Git
+</div>
+
+::left::
+- Each developer works in a **local Git repository** on their own machine
+- Changes are committed **locally** first
+- A **shared remote repository** (GitHub / GitLab) is used to:
+  - Share work
+  - Integrate changes
+  - Review code
+- The  `main` branch on the remote is often treated as the **source of truth**
+
+::right::
+```mermaid
+graph TD
+  Remote["Remote Repository<br/>(GitHub / GitLab)"]
+
+  DevA["Alice<br/>Local Repo"]
+  DevB["John<br/>Local Repo"]
+  DevC["Carol<br/>Local Repo"]
+
+  DevA <-->|push / pull| Remote
+  DevB <-->|push / pull| Remote
+  DevC <-->|push / pull| Remote
+
+```
+---
+layout: two-cols-header
+---
+<div class="mb-8">
+
+## Centralised Workflow
+</div>
+
+::left::
+- One shared remote repository
+- Single branch: `main`
+- Everyone commits directly to `main`
+- Linear history
+- No long-lived branches
+
+::right::
+
+- Works best when:
+  - Small team
+  - Low parallel work
+
+---
+layout: two-cols-header
+---
+<div class="mb-8">
+
+## Feature Branch Workflow
+</div>
+
+::left::
+- Developers work on **feature branches**
+- Changes merged via PR / MR
+- `main` is always:
+  - Stable
+  - Deployable
+
+::right::
+- Most common modern workflow
+- Branches should be:
+  - Short-lived
+- Problems appear when:
+  - Branches live too long
+
+---
+layout: two-cols-header
+---
+<div class="mb-8">
+
+## Forking Workflow
+</div>
+
+::left::
+- Every developer has their **own remote repo**
+- Changes shared via pull requests
+- No direct push access to main repo
+
+::right::
+- Common in **open source**
+- Not really a branching strategy
+- Can be combined with:
+  - Feature branches
+  - Trunk-based development
 
 ---
 layout: two-cols-header
 ---
 
-<div class="mb-2">
+<div class="mb-8">
 
-## The common pattern today
+## Trunk-Based Development
 </div>
-
-
-::left:: 
-- GitHub / GitLab made this easy
-- One central source of truth
-
+::left::
+- Single trunk (`main`)
+- Very short-lived branches
+- Frequent integration
+- Heavy use of CI
 
 ::right::
-
-```mermaid
-graph TD
-  Hub["GitHub / GitLab<br/>(shared remote)"]
-
-  DevA["Alice"]
-  DevB["John"]
-  DevC["Carol"]
-
-  DevA <-->|git push / git pull| Hub
-
-  DevB <-->|git push / git pull| Hub
-
-  DevC <-->|git push / git pull| Hub
-```
+- Enables true CI/CD
+- Requires:
+  - Good tests
+  - Team discipline
+  - Feature flags
+- Branch lifetime:
+  - Minutes to hours
 
 ---
+layout: two-cols-header
+---
+<div class="mb-8">
 
-## Basic workflow using git and a remote
+## Git Flow
+</div>
 
-```bash 
-# Start from main
+::left::
+- Multiple long-lived branches:
+  - `main`
+  - `develop`
+  - `release/*`
+- Features merged only when "done"
+
+::right::
+- Historically popular
+- Common issues:
+  - Large merges
+  - Long-lived branches
+  - Drift from trunk
+- **Not trunk-based**
+
+
+---
+layout: default
+---
+<div class="mb-8">
+
+## How they compare
+</div>
+
+| **Workflow**  | **Branch Lifetime** | **Integration Speed** |
+|-----------------|-----------------|-------------------|
+| Centralised     | None            | Continuous        |
+| <span v-mark.underline.orange> Feature Branch</span>  | Short           | Fast              |
+| Forking         | Short / Medium  | Medium            |
+| Trunk-Based     | Very short      | Very fast         |
+| Git Flow        | Long            | Slow              |
+
+
+---
+layout: two-cols-header
+---
+
+<div class="mb-8">
+
+## A Typical Feature Branch Workflow with a Remote
+</div>
+
+::left::
+
+```bash {all|1-3|5-7|9-10|12-13|15-16|18-21}
 git checkout main
-git pull origin main
+git pull origin main # update main
+git checkout -b feature # create your branch
 
-# Create a new feature branch
-git checkout -b feature/todo-item
-
-# Work locally: edit, add, commit
+# Work locally
 git add files
 git commit -m "feat: add new todo item"
 
-# Update branch with main
-git fetch origin
-git merge origin/main   # or git rebase origin/main
+git fetch origin # update your local version of main
+git merge origin/main # (or rebase, depending on team)
 
-# Push branch to remote
-git push origin feature/todo-item
+# Push your branch to the remote
+git push origin feature
+
+# Open a merge request / pull request
+# Review → approve → merge
+
+# Update your local main after merge
+git checkout main
+git pull origin main
+# Your changes are visible!
 
 ```
 
----
+::right:: 
 
-## Feature Branch Workflow
+<v-click> 
 
-- One branch per change
-- Pull / merge requests
-- Pros: isolation, review
-- Cons: long-lived branches
+```mermaid
+gitGraph
+  commit id: "main"
+  branch feature
+  checkout feature
+  commit id: "feat: add todo item"
+  commit id: "refactor"
+  checkout main
+  commit id: "fix: bug"
+  checkout feature
+  merge main tag: "merge in main"
+  checkout main
+  merge feature tag: "MR merged"
+```
 
----
-
-## Trunk-Based Development
-
-- Short-lived branches
-- Frequent integration
-- Heavy use of CI
-- Pros: fewer conflicts
-- Cons: requires discipline
-
----
-
-## Gitflow (Briefly)
-
-- `develop`, `release`, `hotfix`
-- Popular historically
-- Often too heavy 
-- Designed to solve problems that are not so big anymore 
-<!-- Releases used to be ~2 years, now two weeks ish (the problem that it was designed to fix) -->
-
+</v-click>
 ---
 
 ## Pull Requests Fit *On Top*
