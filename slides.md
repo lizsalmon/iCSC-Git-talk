@@ -459,6 +459,8 @@ layout: two-cols-header
 </div>
 
 ::left::
+<v-clicks>
+
 - Each developer works in a **local Git repository** on their own machine
 - Changes are committed **locally** first
 - A **shared remote repository** (GitHub / GitLab) is used to:
@@ -466,6 +468,8 @@ layout: two-cols-header
   - Integrate changes
   - Review code
 - The  `main` branch on the remote is often treated as the **source of truth**
+
+</v-clicks>
 
 ::right::
 ```mermaid
@@ -500,8 +504,8 @@ layout: default
 <div class="bg-green-500/10 p-4 rounded-lg border-2 border-green-400/10">
 
 * **Trunk-Based:** 
-  * Small, frequent commits to `main` 
-  * High speed, requires good testing and CI.
+  * Short-lived branches with few commits 
+  * High speed, requires good testing and CI
 
 </div>
 <div class="bg-purple-500/10 p-4 rounded-lg border-2 border-purple-400/10">
@@ -515,17 +519,17 @@ layout: default
 <div class="bg-orange-500/10 p-4 rounded-lg border-2 border-orange-400/10">
 
 * **Forking:** 
-  * Total isolation
-  * Common in Open Source where you don't trust everyone with "write" access.
+  * Everyone owns a server-side repository
+  * Common in Open Source - don't give everyone "write" access.
 
 </div>
 
 </v-clicks>
 </div>
 <v-click>
-<div class="bg-yellow-500/10 p-4 rounded-lg border-2 border-yellow-400/10 mt-4">
+<div class="bg-yellow-500/10 p-4 rounded-lg border-2 border-yellow-400/10 mt-4 flex justify-center">
 
-**Feature Branching** balances safety (code reviews) with speed (parallel work).
+**Feature Branching** balances safety (code reviews) with speed (parallel work)
 
 </div>
 </v-click>
@@ -567,7 +571,7 @@ git pull origin main
 
 ::right:: 
 <div class="ml-2">
-<v-clicks > 
+<v-click> 
 
 ```mermaid
 gitGraph
@@ -583,12 +587,19 @@ gitGraph
   checkout main
   merge feature tag: "MR merged"
 ```
+</v-click>
+
+<v-click>
 
 **Why this works:**
+
+</v-click>
+
+<v-clicks>
+
 - Isolation: Bad code merged? main stays functional
 - Collaboration: Push triggers a Pull Request — discussion
 - Clean History: Merging back to main only happens once the code is "Done-Done"
-
 </v-clicks>
 </div>
 ---
@@ -786,31 +797,20 @@ When `git log` can't tell you what happened, `git reflog` can.
 <div class="grid grid-cols-3 gap-4">
 
   <div v-click class="p-4 rounded-xl border border-orange-500/20 bg-orange-500/5">
-
-  <!--  -->
   <h3 class="font-bold mb-1 flex items-center"> <carbon-branch class="text-orange-400 text-2xl" /> Deleted Branch</h3>
-
-  <div class="text-sm opacity-80 flex-grow">
-    You finished a feature, merged it, and <b>deleted the branch</b>. 
-    Suddenly, you realize you missed a file. 
+  <div class="text-sm opacity-80">
+  
+  You finished a feature, merged it, and <b>deleted the branch</b>. 
+  Suddenly, you realize you missed a file. 
   </div>
-  <!-- <div class="mt-4 font-mono text-xs bg-black/40 p-2 rounded text-orange-200">
-    $ git reflog<br>
-    <span class="opacity-50">... checkout: moving from feature to main</span><br>
-    <b>f6e25d1</b> HEAD@{1}: commit: ...
-  </div> -->
   </div>
 
   <div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
-  <h3 class="font-bold mb-1 flex items-center"> <carbon-direction-merge class="text-blue-400 text-2xl" /> Messy Rebase</h3>
+  <h3 class="font-bold mb-1 flex items-center"> <carbon-direction-merge class="text-blue-400 text-2xl" /> Messy Conflicts</h3>
   <div class="text-sm opacity-80">
     
   You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
   </div>
-  <!-- <div class="mt-4 font-mono text-xs bg-black/40 p-2 rounded text-blue-200">
-    <span class="opacity-50">// Find the state BEFORE rebase</span><br>
-    $ git reset --hard HEAD@{15}
-  </div> -->
   </div>
 
   <div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5">
@@ -821,34 +821,197 @@ When `git log` can't tell you what happened, `git reflog` can.
   
   You used `git commit --amend` to fix a typo, but accidentally overwrote a bunch of good code in the process.
   </div>
-  <!-- <div class="mt-4 font-mono text-xs bg-black/40 p-2 rounded text-purple-200">
-    <span class="opacity-50">// Reflog keeps the "pre-amend" hash</span><br>
-    $ git cherry-pick b1c2e3f
-  </div> -->
   </div>
 
 </div>
-<div v-after class="p-4 text-center rounded-xl border border-purple-500/20 bg-pink-500/5 mt-4">
-    If you saw it on your screen once, it's in the reflog.
+
+<div v-click class="p-4 text-center rounded-xl border border-purple-500/20 bg-pink-500/5 mt-4">
+  If you saw it on your screen once, it's in the reflog.
 </div>
+---
+layout: two-cols-header
+---
+
+## `git cherry-pick` 
+<div class="opacity-50 -mt-2 mb-8 text-sm">
+
+copying a commit
+</div>
+
+::left:: 
+- Selects a **single commit**
+- Applies its changes elsewhere
+- Does **not** move the original commit
+
+::right:: 
+
+<v-click>
+
+```mermaid
+gitGraph
+  commit
+  branch feature
+  checkout feature
+  commit
+  commit
+  checkout main
+  commit id: "abcde"
+  checkout feature
+  commit type: HIGHLIGHT id: " abcde"
+```
+</v-click>
+
+---
+layout: two-cols-header
 ---
 
 ## `git cherry-pick`
-- Apply a specific commit elsewhere
-- Great for quick fix
-- Dangerous when overused
+<div class="opacity-50 -mt-2 mb-6 text-sm">
 
+The trade offs
+</div>
+
+
+::left::
+
+### <carbon-thumbs-up class="text-green"/> Good for
+- Hotfixes
+- Backports
+- Emergency patches
+
+
+::right::
+<v-click>
+
+### <carbon-warning-alt class="text-red"/> Be careful
+- Same change appears multiple times
+- Harder to follow history
+- Can break future merges
+- Often a sign of workflow issues
+
+</v-click>
+---
+layout: two-cols-header
 ---
 
 ## `git rebase`
-- Applying lots of cherry-picks at once 
+<div class="opacity-50 -mt-2 mb-6 text-sm">
+
+Replaying commits
+</div>
+
+::left::
+
+### The idea
+- Takes a **sequence of commits**
+- Re-applies them **one by one**
+- Onto a new base commit
+
+Conceptually:  
+**a series of cherry-picks**
+
+### What changes
+- Commits get **new hashes**
+- History is **rewritten**
+- End result is linear
+
+::right::
+
+```mermaid
+gitGraph
+  commit id: "A"
+  branch feature
+  checkout feature
+  commit id: "B"
+  commit id: "C"
+  commit id: "D"
+  switch main
+  commit id: "E"
+```
 
 ---
-
-## `git bisect`
-- underused! 
-  
+layout: two-cols-header
 ---
+
+## Rebasing onto `main`
+
+::left::
+
+<div class="mb-4 flex flex-shrink rounded">
+
+```bash 
+git checkout feature
+git rebase main
+```
+</div>
+
+### What Git does internally
+
+1. Temporarily removes commits B, C, D
+2. Moves the branch pointer to point at commit E
+3. Cherry-picks B, then C, then D
+
+::right::
+
+```mermaid
+gitGraph
+  commit id: "A"
+  commit id: "E"
+  branch feature
+  checkout feature
+  commit id: "B'"
+  commit id: "C'"
+  commit id: "D'"
+```
+
+- `B'`, `C'`, `D'` are **new commits**
+- They contain the same changes, different hashes as different parents
+
+---
+layout: default
+---
+
+## Why rebase?
+
+<div class="grid grid-cols-2">
+<div>
+
+### <carbon-thumbs-up class="text-green"/> Benefits
+- Linear, readable history
+- Easier `git log` and `git bisect`
+- Avoids noisy merge commits
+</div>
+
+<div>
+
+### <carbon-warning-alt class="text-red"/> Trade-offs
+- Rewrites commit history
+- Changes commit hashes
+- Can confuse collaborators
+- **Dangerous on shared branches**
+</div>
+</div>
+
+### ❌ Never rebase commits that other people are using
+
+<div class="grid grid-cols-2">
+<div>
+
+Rebase is safe when:
+- You are working alone
+- The branch is private
+- The commits have not been shared
+</div>
+
+<div>
+
+Rebase is dangerous when:
+- The branch is shared
+- Others have based work on it
+</div>
+</div>
+---
+
 
 # Shaping History Intentionally
 ## Branching, Merging, Rebasing
@@ -879,9 +1042,6 @@ When `git log` can't tell you what happened, `git reflog` can.
 
 - Merge: record *what happened*
 - Rebase: show *what you want others to see*
-
-> Rebase your own work.  
-> Merge shared work.
 
 ---
 
