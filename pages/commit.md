@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-6">
+<div class="grid grid-cols-2 gap-4">
 <!-- LEFT: Concepts -->
 <div>
 <h2 class="mb-4">
@@ -18,6 +18,7 @@ With some extra metadata
 And a pointer to a parent commit
 </li>
 </ul>
+
 </div>
 
 <!-- RIGHT: Visual Representation -->

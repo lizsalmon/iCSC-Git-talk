@@ -269,150 +269,6 @@ stateDiagram-v2
 
 <!-- branches arent folders -->
 
----
-layout: two-cols-header
----
-
-<div class="mb-1">
-
-## `git branch`
-<p class="opacity-50 mt-2">Even when you're working solo</p>
-
-</div>
-
-::left::
-
-<v-clicks>
-
-- To separate your work from the `main` branch 
-- It's harder for unstable code to get merged into the main code base
-- Gives you a chance to clean up your future git history before merging it into the main branch
-
-- Make a new branch when you:
-  - Make a new feature 
-  - Fix a bug
-  - Just experiment
-
-</v-clicks>
-
-::right:: 
-
-<v-click>
-```mermaid
-gitGraph
-    commit id: "merge"
-    branch develop
-    checkout develop
-    commit id: "fun stuff"
-    commit id: "???"
-    branch idea
-    checkout idea
-    commit id: "It works!"
-    checkout develop
-    merge idea
-    checkout develop 
-    commit id: "typos"
-    checkout main
-    merge develop id: "merge develop"
-```
-
-</v-click>
-
-<div v-click class="p-2 mt-2 border border-red-500/30 bg-red-500/10 rounded text-md font-bold flex items-center justify-center flex-shrink">
-  <carbon-close-filled class="ma-1 text-red-500"/>
-
-Never commit to `main`
-</div>
-
-<!-- Okay maybe it is fine to commit to main if  
-- Solo projects with discipline
-- Tiny obvious changes (README, config)
-- True emergency hotfixes
-- -->
-
----
-layout: cover
----
-
-# Conflicts Happen 
-## Don't panic
-
----
-layout: default
----
-
-# Creation of a conflict
-
-<Conflicts />
-
----
-layout: default
----
-
-# The Best Way to Prevent Conflicts
-<p class="opacity-50 -mt-2 mb-8">Stop them from happening in the first place</p>
-
-<div class="grid grid-cols-3 gap-4">
-
-<div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
-  
-<h3 class="font-bold mb-1 flex items-center"> <carbon-paint-brush class="text-blue-400 text-3xl mb-1 mr-2" />Consistency</h3>
-
-- Have a standard:
-  - quotation marks
-  - indentation
-  - white space
-  - import order
-  - variable names
-  - ...
-
-</div>
-
-<div v-click class="p-4 rounded-xl border border-green-500/20 bg-green-500/5">
-  
-<h3 class="font-bold mb-1 flex items-center"> <carbon-bot class="text-green-400 text-3xl mb-1 mr-2" />Automation</h3>
-
-- Enforce some standards using linters
-
-```js
-//from eslint.config
-stylistic: {
-  indent: 2,
-  quotes: 'single',
-},
-```
-
-- The diff will only show logic changes
-- Enforce those linters with git-hooks or CI/CD pipelines
-
-</div>
-
-<div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5">
-
-<h3 class="font-bold mb-1 flex items-center">
-<carbon-chat class="text-purple-400 text-3xl mb-1 mr-2" />
- Teamwork</h3>
-
-- **Communicate**
-- Small, atomic PRs
-- Culture changes:
-  - `git pull` and `git rebase` frequently
-  - `git fetch` is a friend 
-
-</div>
-</div>
-
----
-
-## Tools that can help resolve conflicts
-
-- IDE merge tools 
-- `git mergetool`
-
----
-layout: cover
----
-
 --- 
 layout: cover
 class:
@@ -420,35 +276,6 @@ class:
 
 # How Teams Use Git
 ## Collaboration Workflows 
-
-<!-- - Depends very much on numerous things: 
-  - Infrastructure vs software 
-  - Length of time it takes for CI to run  -->
-
-<!-- ---
-layout: two-cols-header
-
-
-<div class="mb-2">
-
-## Remotes: the original model
-</div>
-
-::left::
-- Everyone had their **own remote**  
-- You pushed and pulled from *each other*
-
-This is where “pull request” comes from
-
-→ “I have pushed to my remote, please pull my changes”
-
-
-- As you can imagine - this doesnt scale well
-
-
-::right:: 
-
-put bad image here  -->
 
 ---
 layout: two-cols-header
@@ -533,6 +360,68 @@ layout: default
 
 </div>
 </v-click>
+
+---
+layout: two-cols-header
+---
+
+<div class="mb-1">
+
+## Feauture Branching
+<p class="opacity-50 mt-2">Even when you're working solo or without a remote</p>
+
+</div>
+
+::left::
+
+<v-clicks>
+
+- To separate your work from the `main` branch 
+- It's harder for unstable code to get merged into the main code base
+- Gives you a chance to clean up your future git history before merging it into the main branch
+
+- Make a new branch when you:
+  - Make a new feature 
+  - Fix a bug
+  - Just experiment
+
+</v-clicks>
+
+::right:: 
+
+<v-click>
+```mermaid
+gitGraph
+    commit id: "merge"
+    branch develop
+    checkout develop
+    commit id: "fun stuff"
+    commit id: "???"
+    branch idea
+    checkout idea
+    commit id: "It works!"
+    checkout develop
+    merge idea
+    checkout develop 
+    commit id: "typos"
+    checkout main
+    merge develop id: "merge develop"
+```
+
+</v-click>
+
+<div v-click class="p-2 mt-2 border border-red-500/30 bg-red-500/10 rounded text-md font-bold flex items-center justify-center flex-shrink">
+  <carbon-close-filled class="ma-1 text-red-500"/>
+
+Never commit to `main`
+</div>
+
+<!-- Okay maybe it is fine to commit to main if  
+- Solo projects with discipline
+- Tiny obvious changes (README, config)
+- True emergency hotfixes
+- -->
+
 ---
 layout: two-cols-header
 ---
@@ -619,6 +508,214 @@ gitGraph
 - Just dont squash
 <!-- Sam: if commits just undo previous commits then would squash  
 Telling the useful story -->
+
+---
+layout: cover
+---
+
+# Conflicts Happen 
+## Don't panic
+
+---
+layout: default
+---
+
+# Creation of a conflict
+
+<Conflicts />
+
+---
+layout: default
+---
+
+## Anatomy of a Merge Conflict
+
+<div class="grid grid-cols-2 gap-8">
+<div>
+
+```typescript
+ <<<<<< HEAD
+ console.log("Hello from Main");
+ ======
+ console.log("Hello from Feature");
+ >>>>>> feature-branch
+```
+<Arrow x1="250" y1="190" x2="250" y2="240"/>
+
+<div class="mt-15">
+
+```typescript
+console.log("Hello from Feature")
+```
+</div>
+
+</div> <div>
+
+- `<<<<<<< HEAD`: Your current version (the "Base").
+- `=======`: The divider between the two versions.
+- `>>>>>>> branch`: The incoming version you are trying to merge.
+
+Delete the markers and pick the code you want to keep (or keep both!).
+
+This is the manual way to resolve conflicts
+
+There must be a better way :( ...
+
+</div> </div>
+---
+layout: default
+---
+
+## Resolving conflicts
+<div class="grid grid-cols-3 gap-2 mb-8">
+
+<div>
+
+On branch `main`
+
+```python
+def caluculate_circumference(radius):
+    return(2*3.14*radius)
+```
+</div>
+
+
+<div>
+
+On branch `lizzie/lazy`
+```python
+def caluculate_circumference(radius):
+    return(2*3*radius)
+```
+
+</div>
+<div>
+
+On branch `lizzie/precise`
+```python
+def caluculate_circumference(radius):
+    return(2*math.pi*radius)
+```
+</div>
+</div>
+
+```bash
+# On branch main
+lizzie:~/mergeConflicts$ git merge lizzie/lazy
+Updating 68f5977..a76a9d8
+Fast-forward
+ circumference.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-) # This is a successful merge :) 
+
+lizzie:~/mergeConflicts$ git merge lizzie/precise
+Auto-merging circumference.py
+CONFLICT (content): Merge conflict in circumference.py
+Automatic merge failed; fix conflicts and then commit the result. # Here we go
+```
+---
+layout: two-cols
+---
+
+open `circumference.py`
+
+```python
+def caluculate_circumference(radius):
+ <<<<<< HEAD
+    return(2*3*radius)
+=======
+    return(2*math.pi*radius)
+>>>>>>> lizzie/precise
+```
+
+And turn it into 
+```python
+def caluculate_circumference(radius):
+    return(2*math.pi*radius)
+```
+
+`git add circumference.py`
+
+```bash
+lizzie:~/mergeConflicts$ git status
+On branch main
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+        modified:   circumference.py
+```
+
+::right::
+
+`git commit`
+
+`git log --oneline`
+
+```bash
+821d728 (HEAD -> main) Merge branch 'lizzie/precise'
+a76a9d8 (lizzie/lazy) fix: pi is three
+6c87760 (lizzie/precise) fix: make more precise
+68f5977 feat: Initial commit
+
+```
+
+
+
+---
+
+# The Best Way to Prevent Conflicts
+<p class="opacity-50 -mt-2 mb-8">Stop them from happening in the first place</p>
+
+<div class="grid grid-cols-3 gap-4">
+
+<div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
+  
+<h3 class="font-bold mb-1 flex items-center"> <carbon-paint-brush class="text-blue-400 text-3xl mb-1 mr-2" />Consistency</h3>
+
+- Have a standard:
+  - quotation marks
+  - indentation
+  - white space
+  - import order
+  - variable names
+  - ...
+
+</div>
+
+<div v-click class="p-4 rounded-xl border border-green-500/20 bg-green-500/5">
+  
+<h3 class="font-bold mb-1 flex items-center"> <carbon-bot class="text-green-400 text-3xl mb-1 mr-2" />Automation</h3>
+
+- Enforce some standards using linters
+
+```js
+//from eslint.config
+stylistic: {
+  indent: 2,
+  quotes: 'single',
+},
+```
+
+- The diff will only show logic changes
+- Enforce those linters with git-hooks or CI/CD pipelines
+
+</div>
+
+<div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5">
+
+<h3 class="font-bold mb-1 flex items-center">
+<carbon-chat class="text-purple-400 text-3xl mb-1 mr-2" />
+ Teamwork</h3>
+
+- **Communicate**
+- Small, atomic PRs
+- Culture changes:
+  - `git pull` and `git rebase` frequently
+  - `git fetch` is a friend 
+
+</div>
+</div>
+
 
 ---
 layout: cover
@@ -857,7 +954,7 @@ gitGraph
   checkout main
   commit id: "abcde"
   checkout feature
-  commit type: HIGHLIGHT id: " abcde"
+  commit type: HIGHLIGHT id: "abcde'"
 ```
 </v-click>
 
@@ -866,58 +963,54 @@ layout: two-cols-header
 ---
 
 ## `git cherry-pick`
-<div class="opacity-50 -mt-2 mb-6 text-sm">
-
-The trade offs
+<div class="opacity-50 mt-2 mb-8 text-sm">
+"I just want that one specific commit"
 </div>
-
 
 ::left::
 
-### <carbon-thumbs-up class="text-green"/> Good for
-- Hotfixes
-- Backports
-- Emergency patches
-
+### <carbon-thumbs-up class="text-green-500"/> Use Cases
+- **Hotfixes:** Porting a critical fix from `dev` to `production` immediately.
+- **Backports:** Moving a feature from a new version to an older "Long Term Support" branch.
+- **Lost Work:** Recovering a single commit from a deleted or messy branch.
 
 ::right::
+
 <v-click>
 
-### <carbon-warning-alt class="text-red"/> Be careful
-- Same change appears multiple times
-- Harder to follow history
-- Can break future merges
-- Often a sign of workflow issues
+### <carbon-warning-alt class="text-red-500"/> The Hidden Costs
+* **Duplicate SHAs:** Git sees them as different commits even if the code is identical.
+* **Merge Conflicts:** Can cause "ghost" conflicts later because Git doesn't realize the changes were already applied.
+* **Workflow Issues:** Frequent use often means your **Feature Branching** strategy is breaking down.
 
 </v-click>
+
 ---
 layout: two-cols-header
 ---
 
 ## `git rebase`
-<div class="opacity-50 -mt-2 mb-6 text-sm">
-
-Replaying commits
+<div class="opacity-50 mt-2 mb-10 text-sm italic">
+Replaying commits to create a linear history
 </div>
 
 ::left::
 
-### The idea
+### The Concept
 - Takes a **sequence of commits**
 - Re-applies them **one by one**
 - Onto a new base commit
+- Think of it like: 
 
-Conceptually:  
-**a series of cherry-picks**
-
-### What changes
-- Commits get **new hashes**
-- History is **rewritten**
-- End result is linear
+<div class="mt-4 mr-4 p-4 bg-orange-500/10 border-l-4 border-orange-500 rounded-r text-orange-200">
+  <strong>The "Automated" Cherry-Pick:</strong><br>
+  It's like running a series of cherry-picks for every commit in your branch, one by one.
+</div>
 
 ::right::
 
 ```mermaid
+
 gitGraph
   commit id: "A"
   branch feature
@@ -927,30 +1020,40 @@ gitGraph
   commit id: "D"
   switch main
   commit id: "E"
+
 ```
 
----
-layout: two-cols-header
----
-
-## Rebasing onto `main`
-
-::left::
-
-<div class="mb-4 flex flex-shrink rounded">
-
-```bash 
+<div class="mt-6">
+```bash
 git checkout feature
 git rebase main
 ```
 </div>
 
+
+---
+layout: two-cols-header
+---
+<div class="mb-4">
+
+## Rebasing onto `main`
+</div>
+
+::left::
+
+<v-click>
+
 ### What Git does internally
+
+</v-click>
+
+<v-clicks>
 
 1. Temporarily removes commits B, C, D
 2. Moves the branch pointer to point at commit E
 3. Cherry-picks B, then C, then D
 
+</v-clicks>
 ::right::
 
 ```mermaid
@@ -963,9 +1066,13 @@ gitGraph
   commit id: "C'"
   commit id: "D'"
 ```
+<v-clicks>
 
 - `B'`, `C'`, `D'` are **new commits**
-- They contain the same changes, different hashes as different parents
+- They contain the same changes, but have different hashes as the commits have different parents
+
+</v-clicks>
+
 
 ---
 layout: default
@@ -973,43 +1080,60 @@ layout: default
 
 ## Why rebase?
 
-<div class="grid grid-cols-2">
-<div>
+<div class="grid grid-cols-2 gap-8 mt-4">
+<v-clicks>
 
-### <carbon-thumbs-up class="text-green"/> Benefits
-- Linear, readable history
+<div class="space-y-4">
+
+### <carbon-thumbs-up class="text-green-500"/> Benefits
+- **Linear, readable history**
 - Easier `git log` and `git bisect`
 - Avoids noisy merge commits
 </div>
 
-<div>
+<div class="space-y-4">
 
-### <carbon-warning-alt class="text-red"/> Trade-offs
+### <carbon-warning-alt class="text-red-500"/> Trade-offs
 - Rewrites commit history
 - Changes commit hashes
 - Can confuse collaborators
-- **Dangerous on shared branches**
 </div>
+</v-clicks>
 </div>
 
-### ❌ Never rebase commits that other people are using
+<div v-show="$clicks > 2" class="bg-red-500/10 border-2 border-red-500/50 p-4 rounded-xl mt-4">
+<v-click>
+<h3 class="text-red-400 mt-0 mb-3 flex items-center gap-2">
+<carbon-warning class="text-red-500"/> 
+Be very careful when rebasing in a team
+</h3>
+</v-click>
 
-<div class="grid grid-cols-2">
+<div class="grid grid-cols-2 gap-8 text-md">
+<v-click>
 <div>
-
-Rebase is safe when:
-- You are working alone
-- The branch is private
-- The commits have not been shared
+<span class="text-green-400 font-bold">Safe when:</span>
+<ul class="mt-2 opacity-90">
+<li>You are working alone</li>
+<li>The branch is private</li>
+<li>The commits have not been shared</li>
+</ul>
 </div>
+</v-click>
 
+<v-click>
 <div>
-
-Rebase is dangerous when:
-- The branch is shared
-- Others have based work on it
+<span class="text-red-400 font-bold">Dangerous when:</span>
+<ul class="mt-2 opacity-90">
+<li>The branch is shared</li>
+<li>Others have based work on it</li>
+</ul>
+</div>
+</v-click>
 </div>
 </div>
+---
+layout: cover
 ---
 
 
