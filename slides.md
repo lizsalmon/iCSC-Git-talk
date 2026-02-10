@@ -122,13 +122,11 @@ gitGraph
 ---
 layout: two-cols
 ---
-
-::left:: 
-
 <h2 class="mb-4">
 Common Pain Points When Working in a Team
 </h2>
 
+::left:: 
 <v-clicks>
 
 - A messy, unreadable commit history
@@ -367,7 +365,7 @@ layout: two-cols-header
 
 <div class="mb-1">
 
-## Feauture Branching
+## Feature Branching
 <p class="opacity-50 mt-2">Even when you're working solo or without a remote</p>
 
 </div>
@@ -559,17 +557,40 @@ Delete the markers and pick the code you want to keep (or keep both!).
 
 This is the manual way to resolve conflicts
 
-There must be a better way :( ...
-
 </div> </div>
+
 ---
-layout: default
+layout: two-cols-header
+---
+
+## Our Example
+
+::left::
+We have three branches:
+
+- `main` → current production logic (π ≈ 3.14)
+- `lizzie/lazy` → quick fix (π ≈ 3)
+- `lizzie/precise` → using (`math.pi`)
+
+::right:: 
+
+```mermaid
+gitGraph
+  commit
+  branch lizzie/lazy
+  branch lizzie/precise
+  checkout lizzie/lazy
+  commit
+  checkout lizzie/precise
+  commit
+
+```
 ---
 
 ## Resolving conflicts
 <div class="grid grid-cols-3 gap-2 mb-8">
 
-<div>
+<div v-click>
 
 On branch `main`
 
@@ -580,7 +601,7 @@ def caluculate_circumference(radius):
 </div>
 
 
-<div>
+<div v-click>
 
 On branch `lizzie/lazy`
 ```python
@@ -589,7 +610,7 @@ def caluculate_circumference(radius):
 ```
 
 </div>
-<div>
+<div v-click>
 
 On branch `lizzie/precise`
 ```python
@@ -599,7 +620,9 @@ def caluculate_circumference(radius):
 </div>
 </div>
 
-```bash
+<div v-click="4">
+
+```bash {all|1-2|1-6|8-11}
 # On branch main
 lizzie:~/mergeConflicts$ git merge lizzie/lazy
 Updating 68f5977..a76a9d8
@@ -612,9 +635,13 @@ Auto-merging circumference.py
 CONFLICT (content): Merge conflict in circumference.py
 Automatic merge failed; fix conflicts and then commit the result. # Here we go
 ```
+</div>
 ---
-layout: two-cols
+layout: default
 ---
+
+<div class="grid grid-cols-2 gap-4">
+<div>
 
 open `circumference.py`
 
@@ -626,16 +653,21 @@ def caluculate_circumference(radius):
     return(2*math.pi*radius)
 >>>>>>> lizzie/precise
 ```
+</div>
 
-And turn it into 
+<div>
+
+And change it to be what we want
 ```python
 def caluculate_circumference(radius):
     return(2*math.pi*radius)
 ```
+</div>
+</div>
+---
 
-`git add circumference.py`
-
-```bash
+```bash {1|-2|1-8|10|11|11-}
+lizzie:~/mergeConflicts$ git add circumference.py
 lizzie:~/mergeConflicts$ git status
 On branch main
 All conflicts fixed but you are still merging.
@@ -643,23 +675,53 @@ All conflicts fixed but you are still merging.
 
 Changes to be committed:
         modified:   circumference.py
-```
 
-::right::
-
-`git commit`
-
-`git log --oneline`
-
-```bash
+lizzie:~/mergeConflicts$ git commit
+lizzie:~/mergeConflicts$ git log --oneline
 821d728 (HEAD -> main) Merge branch 'lizzie/precise'
 a76a9d8 (lizzie/lazy) fix: pi is three
 6c87760 (lizzie/precise) fix: make more precise
 68f5977 feat: Initial commit
-
 ```
 
+---
+ 
+## Surely there is a better way than that?
 
+- git has its own selection of merge tools
+
+`git mergetool --tool=vimdiff`
+
+
+---
+
+![Alt text](/gif/vimdiff.gif)
+
+---
+
+## Surely there is a better way than that?
+
+- git has its own selection of merge tools
+
+`git mergetool --tool=meld`
+
+![Alt text](./image.png)
+
+---
+
+
+## Surely there is a better way than that?
+
+- VSCode has its inline merge resolving
+![Alt text](/gif/VSCodeinline.gif)
+
+- It also has its own Merge Editor 
+
+---
+layout: default
+---
+
+![Alt text](/gif/VScodeHIGH.gif)
 
 ---
 
@@ -855,7 +917,7 @@ f6e25d1 (HEAD -> main) feat: new file (dont delete this)
 
 <div class="m-2">
 
-<div v-click="5" class="text-sm">
+<div v-click="5">
 
 - `9479df0`  is the 7-character short SHA of the commit.
 
@@ -873,7 +935,7 @@ f6e25d1 (HEAD -> main) feat: new file (dont delete this)
 
 
 <div v-click="6" class="p-3 bg-blue-500/10 rounded border-l-4 border-blue-500 m-2">
-<div class="text-sm leading-tight">
+<div class=" leading-tight">
   <b>Tip:</b> 
   You can also use time-based notation: 
 
@@ -979,9 +1041,9 @@ layout: two-cols-header
 <v-click>
 
 ### <carbon-warning-alt class="text-red-500"/> The Hidden Costs
-* **Duplicate SHAs:** Git sees them as different commits even if the code is identical.
-* **Merge Conflicts:** Can cause "ghost" conflicts later because Git doesn't realize the changes were already applied.
-* **Workflow Issues:** Frequent use often means your **Feature Branching** strategy is breaking down.
+- **Duplicate changes**: The same change exists multiple times in history under different SHAs.
+- **Merge Conflicts:** Can cause "ghost" conflicts later because Git doesn't realize the changes were already applied.
+- **Workflow Issues:** Frequent use often means your **Feature Branching** strategy is breaking down.
 
 </v-click>
 
@@ -1138,34 +1200,7 @@ layout: cover
 
 
 # Shaping History Intentionally
-## Branching, Merging, Rebasing
-
----
-
-## Merge: Preserving History
-
-- Keeps all branches visible
-- Shows when work diverged
-- Can create noisy graphs
-
-<!-- Diagram slide -->
-
----
-
-## Rebase: Rewriting History
-
-- Replays commits on a new base
-- Creates linear history
-- Changes commit hashes
-
-<!-- Diagram slide -->
-
----
-
-## Rebase vs Merge
-
-- Merge: record *what happened*
-- Rebase: show *what you want others to see*
+## Tell the story you want to tell
 
 ---
 
@@ -1174,6 +1209,118 @@ layout: cover
 - Reorder commits
 - Squash commits
 - Edit commit messages
+
+---
+
+
+## The Before
+### We've all been here...
+
+Your current `git log --oneline` looks a bit like a crime scene:
+
+```bash
+5c9d69f (HEAD -> main) docs
+ed6bd99 oops typo
+a00cdb4 add area function
+7c5fd79 temp commit for lunch
+606fece Merge branch 'lizzie/precise'
+a76a9d8 (lizzie/lazy) fix: pi is three
+6c87760 (lizzie/precise) fix: make more precise
+68f5977 feat: Initial commit
+```
+
+---
+
+### `git rebase -i`
+
+- We want to rebase HEAD 6 previous commits so run `git rebase -i HEAD~6`
+
+```bash
+pick a76a9d8 fix: pi is three
+pick 6c87760 fix: make more precise
+pick 7c5fd79 temp commit for lunch
+pick a00cdb4 add area function
+pick ed6bd99 oops typo
+pick 5c9d69f docs
+
+# Rebase 68f5977..5c9d69f onto 68f5977 (6 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup [-C | -c] <commit> = like "squash" but keep only the previous
+#                    commit's log message, unless -C is used, in which case
+#                    keep only this commit's message; -c is same as -C but
+#                    opens the editor
+# x, exec <command> = run command (the rest of the line) using shell
+# b, break = stop here (continue rebase later with 'git rebase --continue')
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       create a merge commit using the original merge commit's
+# .       message (or the oneline, if no original merge commit was
+# .       specified); use -c <commit> to reword the commit message
+```
+
+---
+
+
+| Command | Action | Result |
+| :--- | :--- | :--- |
+| **Pick** | Use the commit as-is | Keeps it in history. |
+| **Squash** | Use commit, but meld into previous | Combines logs; prompts for new message. |
+| **Fixup** | Like squash, but discard log message | Cleanest way to merge "typo fix" commits. |
+| **Reword** | Use commit, but edit message | Fix those "WIP" or "temp" titles. |
+| **Drop** | Remove the commit entirely | Deletes the changes from history. |
+
+
+---
+layout: default
+---
+
+
+```bash
+pick a76a9d8 fix: pi is three
+fixup 6c87760 fix: make more precise #Merge these into the previous commit
+fixup 7c5fd79 temp commit for lunch 
+reword a00cdb4 add area function #Change the wording of this commit message
+fixup ed6bd99 oops typo #Get rid of this commit message
+pick 5c9d69f docs #Keep this one
+```
+
+- Walked through (like in a normal rebase)
+  - Any merge conflicts
+  - Any squashed commits 
+  - Any reworded commits 
+- Keep running `git rebase --continue`
+
+
+You can ALWAYS run `git rebase --abort` to go back to the state before
+
+
+---
+
+### Our new `git log` looks like: 
+
+```bash
+c8e5742 (HEAD -> main) docs
+89052c1 feat: add area function
+487c3a9 fix: Correct the value of pi
+68f5977 feat: Initial commit
+```
+
+And you can just keep going!! 
+---
+
+
+## Amend
+
+---
+
+## Patch
 
 ---
 
