@@ -165,26 +165,10 @@ layout: cover
 
 
 ---
+layout: two-cols-header
 src: ./pages/commit.md
 ---
 
----
-
-<div class="h-full flex justify-center items-center scale-300">
-
-```mermaid
-stateDiagram-v2
-  direction RL
-
-  state "Commit C3 (HEAD, main)" as C3
-  state "Commit C2 " as C2
-  state "Commit C1 " as C1
-
-  C3 --> C2 : parent
-  C2 --> C1 : parent
-```
-
-</div>
 
 ---
 
@@ -526,10 +510,14 @@ layout: default
 layout: default
 ---
 
+<div class="mb-6">
+
 ## Anatomy of a Merge Conflict
+</div>
 
 <div class="grid grid-cols-2 gap-8">
 <div>
+<div v-click>
 
 ```typescript
  <<<<<< HEAD
@@ -538,7 +526,10 @@ layout: default
  console.log("Hello from Feature");
  >>>>>> feature-branch
 ```
-<Arrow x1="250" y1="190" x2="250" y2="240"/>
+
+</div>
+<div v-click="4">
+<Arrow x1="250" y1="210" x2="250" y2="270"/>
 
 <div class="mt-15">
 
@@ -546,33 +537,48 @@ layout: default
 console.log("Hello from Feature")
 ```
 </div>
+</div>
 
-</div> <div>
+</div> 
+<div>
+<v-click>
 
 - `<<<<<<< HEAD`: Your current version (the "Base").
 - `=======`: The divider between the two versions.
 - `>>>>>>> branch`: The incoming version you are trying to merge.
 
+</v-click>
+
+<div v-click="3">
 Delete the markers and pick the code you want to keep (or keep both!).
 
 This is the manual way to resolve conflicts
-
-</div> </div>
+</div>
+</div>
+</div>
 
 ---
-layout: two-cols-header
+layout: default
 ---
 
 ## Our Example
 
-::left::
+<div class="grid grid-cols-2">
+<div>
+
 We have three branches:
+
+<v-clicks>
 
 - `main` → current production logic (π ≈ 3.14)
 - `lizzie/lazy` → quick fix (π ≈ 3)
 - `lizzie/precise` → using (`math.pi`)
 
-::right:: 
+</v-clicks>
+</div>
+<div>
+
+<v-click>
 
 ```mermaid
 gitGraph
@@ -585,9 +591,10 @@ gitGraph
   commit
 
 ```
----
+</v-click>
+</div>
+</div>
 
-## Resolving conflicts
 <div class="grid grid-cols-3 gap-2 mb-8">
 
 <div v-click>
@@ -619,10 +626,17 @@ def caluculate_circumference(radius):
 ```
 </div>
 </div>
+---
 
-<div v-click="4">
+<div class="mb-6">
 
-```bash {all|1-2|1-6|8-11}
+## Resolving conflicts
+</div>
+<div class="grid grid-cols-3">
+<div class="col-span-2">
+<v-click>
+
+```bash {1-2|1-}
 # On branch main
 lizzie:~/mergeConflicts$ git merge lizzie/lazy
 Updating 68f5977..a76a9d8
@@ -630,18 +644,47 @@ Fast-forward
  circumference.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-) # This is a successful merge :) 
 
+```
+</v-click>
+</div>
+<v-click>
+
+```mermaid
+gitGraph
+  commit
+  branch lizzie/lazy
+  branch lizzie/precise
+  checkout lizzie/lazy
+  commit
+  checkout lizzie/precise
+  commit
+  checkout main 
+  merge lizzie/lazy
+```
+</v-click>
+
+</div>
+<v-click>
+
+```bash {1|1-}
 lizzie:~/mergeConflicts$ git merge lizzie/precise
 Auto-merging circumference.py
 CONFLICT (content): Merge conflict in circumference.py
 Automatic merge failed; fix conflicts and then commit the result. # Here we go
 ```
-</div>
+</v-click>
+
 ---
 layout: default
 ---
 
+<div class="mb-6">
+
+## Resolving conflicts
+</div>
+
 <div class="grid grid-cols-2 gap-4">
-<div>
+<div v-click>
 
 open `circumference.py`
 
@@ -655,7 +698,7 @@ def caluculate_circumference(radius):
 ```
 </div>
 
-<div>
+<div v-click>
 
 And change it to be what we want
 ```python
@@ -685,8 +728,11 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 ```
 
 ---
+
+<div class="mb-6">
  
 ## Surely there is a better way than that?
+</div>
 
 - git has its own selection of merge tools
 
@@ -699,8 +745,10 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 
 ---
 
-## Surely there is a better way than that?
+<div class="mb-6">
 
+## Surely there is a better way than that?
+</div>
 - git has its own selection of merge tools
 
 `git mergetool --tool=meld`
@@ -709,8 +757,10 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 
 ---
 
+<div class="mb-6">
 
 ## Surely there is a better way than that?
+</div>
 
 - VSCode has its inline merge resolving
 ![Alt text](/gif/VSCodeinline.gif)
@@ -1002,6 +1052,10 @@ copying a commit
 - Applies its changes elsewhere
 - Does **not** move the original commit
 
+`git checkout main`
+
+`git cherrypick abcde`
+
 ::right:: 
 
 <v-click>
@@ -1032,18 +1086,23 @@ layout: two-cols-header
 ::left::
 
 ### <carbon-thumbs-up class="text-green-500"/> Use Cases
-- **Hotfixes:** Porting a critical fix from `dev` to `production` immediately.
-- **Backports:** Moving a feature from a new version to an older "Long Term Support" branch.
-- **Lost Work:** Recovering a single commit from a deleted or messy branch.
+
+- **Hotfixes:** Porting a critical fix from `dev` to `production` immediately
+  
+- **Backports:** Moving a feature from a new version to an older branch
+  
+- **Lost Work:** Recovering a single commit from a deleted or messy branch
 
 ::right::
 
 <v-click>
 
 ### <carbon-warning-alt class="text-red-500"/> The Hidden Costs
-- **Duplicate changes**: The same change exists multiple times in history under different SHAs.
-- **Merge Conflicts:** Can cause "ghost" conflicts later because Git doesn't realize the changes were already applied.
-- **Workflow Issues:** Frequent use often means your **Feature Branching** strategy is breaking down.
+- **Duplicate changes**: The same change exists multiple times in history under different IDs
+  
+- **Merge Conflicts:** Can cause "ghost" conflicts later
+  
+- **Workflow Issues:** Frequent use often means your **Feature Branching** strategy is breaking down
 
 </v-click>
 
@@ -1059,17 +1118,21 @@ Replaying commits to create a linear history
 ::left::
 
 ### The Concept
+
+<v-clicks>
+
 - Takes a **sequence of commits**
 - Re-applies them **one by one**
 - Onto a new base commit
-- Think of it like: 
+</v-clicks>
 
-<div class="mt-4 mr-4 p-4 bg-orange-500/10 border-l-4 border-orange-500 rounded-r text-orange-200">
+<div v-click class="mt-4 mr-4 p-4 bg-orange-500/10 border-l-4 border-orange-500 rounded-r text-orange-200">
   <strong>The "Automated" Cherry-Pick:</strong><br>
   It's like running a series of cherry-picks for every commit in your branch, one by one.
 </div>
 
 ::right::
+<v-click>
 
 ```mermaid
 
@@ -1084,8 +1147,8 @@ gitGraph
   commit id: "E"
 
 ```
-
-<div class="mt-6">
+</v-click>
+<div v-click class="mt-6">
 ```bash
 git checkout feature
 git rebase main
@@ -1112,7 +1175,7 @@ layout: two-cols-header
 <v-clicks>
 
 1. Temporarily removes commits B, C, D
-2. Moves the branch pointer to point at commit E
+2. Moves the feature branch pointer to point at E
 3. Cherry-picks B, then C, then D
 
 </v-clicks>
@@ -1149,7 +1212,9 @@ layout: default
 
 ### <carbon-thumbs-up class="text-green-500"/> Benefits
 - **Linear, readable history**
+  
 - Easier `git log` and `git bisect`
+  
 - Avoids noisy merge commits
 </div>
 
@@ -1157,7 +1222,9 @@ layout: default
 
 ### <carbon-warning-alt class="text-red-500"/> Trade-offs
 - Rewrites commit history
+  
 - Changes commit hashes
+  
 - Can confuse collaborators
 </div>
 </v-clicks>
