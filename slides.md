@@ -9,12 +9,6 @@ layout: cover
 # Git in Practice  
 ## Techniques for Collaborative Development
 
----
-hideInToc: true
---- 
-## Contents
-<!-- <Toc columns=2 maxDepth=1>
-</Toc> -->
 
 ---
 layout: cover
@@ -29,7 +23,7 @@ layout: two-cols
 ::left:: 
 
 
-# The Solo Experience
+## The Solo Experience
 
 <v-clicks>
 
@@ -63,7 +57,7 @@ gitGraph
 layout: default
 ---
 
-# The Team Reality
+## The Team Reality
 
 <div class="grid grid-cols-3 gap-4">
 <v-clicks class="col-span-1">
@@ -151,7 +145,7 @@ layout: default
 class:
 ---
 
-# Sounds familiar?
+## Sounds familiar?
 
 <SoundsFamiliar/>
 
@@ -253,7 +247,6 @@ stateDiagram-v2
 
 --- 
 layout: cover
-class:
 ---
 
 # How Teams Use Git
@@ -473,23 +466,6 @@ gitGraph
 - Clean History: Merging back to main only happens once the code is "Done-Done"
 </v-clicks>
 </div>
----
-
-## Pull Requests Fit *On Top*
-
-- PRs are a collaboration layer
-- Not a workflow by themselves
-- History quality affects review quality
-
----
-
-## Squashing Strategies
-- Squash before merge
-- Squash during rebase 
-- Squash in GitHub/GitLab
-- Just dont squash
-<!-- Sam: if commits just undo previous commits then would squash  
-Telling the useful story -->
 
 ---
 layout: cover
@@ -664,15 +640,16 @@ gitGraph
 </v-click>
 
 </div>
-<v-click>
 
-```bash {1|1-}
+<div v-click=4>
+
+```bash {all|1|1-}
 lizzie:~/mergeConflicts$ git merge lizzie/precise
 Auto-merging circumference.py
 CONFLICT (content): Merge conflict in circumference.py
 Automatic merge failed; fix conflicts and then commit the result. # Here we go
 ```
-</v-click>
+</div>
 
 ---
 layout: default
@@ -749,6 +726,7 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 
 ## Surely there is a better way than that?
 </div>
+
 - git has its own selection of merge tools
 
 `git mergetool --tool=meld`
@@ -849,7 +827,7 @@ layout: default
 
 ## `git reflog`
 
-<span class="opacity-50 mt-2">The annoying truth-telling brother of `git log` 
+<span class="opacity-50 mt-2">The annoying truth-telling version of `git log` 
 </span>
 
 <div class="grid grid-cols-2 gap-2">
@@ -1270,93 +1248,235 @@ layout: cover
 ## Tell the story you want to tell
 
 ---
-
-## Interactive Rebase
-
-- Reorder commits
-- Squash commits
-- Edit commit messages
-
 ---
 
 
-## The Before
-### We've all been here...
+## `git commit --amend`
+
+The simplest way to rewrite history.  It allows you to modify the **very last commit** you made. 
+
+<div v-click class="mt-8">
+
+When you just made a commit and suddently realise:
+</div>
+<v-clicks>
+
+- You made a typo in the commit message
+  
+- You forgot to stage one tiny file
+  
+- You left a `console.log` or in the code
+  
+- You forgot to run the linter
+
+</v-clicks>
+---
+
+## `git commit --amend`
+
+Instead of creating a **new** small "typo" commit, you update the previous one.
+
+<div class="grid grid-cols-2 gap-4 mt-4 text-left">
+<div v-click class="bg-gray-500/5 p-4 rounded border border-white/10">
+<h3 class="text-purple-400 mb-2">Scenario A: Fix the Message</h3>
+You just want to change the text.
+
+`git commit --amend -m "New better message"`
+</div>
+<div v-click class="bg-gray-500/5 p-4 rounded border border-white/10">
+<h3 class="text-pink-400 mb-2">Scenario B: Add Files</h3>
+You forgot to add a file.
+
+`git add forgotten-file.ts`
+
+`git commit --amend --no-edit`
+
+(`--no-edit` keeps the existing message)
+</div>
+</div>
+
+---
+
+--- 
+layout: two-cols-header
+---
+
+<div class="mb-4">
+
+## `git add --patch`
+</div>
+
+::left:: 
+
+<v-clicks>
+
+Stop committing "everything in this file." Start committing **logical changes.**
+
+
+`git add -p` breaks your changes down into **hunks** (small chunks of code, like you see on github/gitlab). 
+
+Git will ask you: *"Do you want to stage this specific change?"*
+
+</v-clicks>
+
+::right::
+
+<v-click>
+
+### Why use it?
+</v-click>
+
+<v-clicks>
+
+- Separate "feature work" from "other" work (tests, cleanup, refactor) in the same file
+  
+-  Catch `console.log` or temporary hacks before they ever get staged - like a pre-review review
+  
+- It forces you to look at every single line you changed.
+
+</v-clicks>
+---
+
+<div class="mb-4">
+
+## `git add --patch`
+</div>
+
+When you run `git add --patch`, you'll see a diff and a prompt:
+`Stage this hunk [y, n, q, a, d, s, e, ?]?`
+
+
+| Key | Action | Result |
+| :--- | :--- | :--- |
+| **y** | Yes | Stage this hunk for the next commit|
+| **n** | No | Skip this hunk (keep it in your working directory)|
+| **s** | Split | Break this hunk into even smaller pieces|
+| **q** | Quit | Stop right here and keep what you've already staged|
+| **e** | Edit | Manually pick which lines to keep (The ultimate power) |
+
+---
+
+![Alt text](./gif/patchDemo.gif)
+
+---
+
+## Interactive rebase
+
+`git rebase -i` is a powerful tool that lets you **rewrite, reorder, and clean up** your commit history before sharing it with others.
+
+<br>
+<v-click>
+
+### Why use it?
+</v-click>
+
+<v-clicks>
+
+-  Combine "Work in progress" commits into one logical feature.
+
+- Fix typos in commit messages or remove accidental file additions.
+
+- Keep a clean, readable project timeline.
+
+- Confidence to experiment freely, knowing you can "squash" the mess later.
+
+</v-clicks>
+---
+
+<div class="mb-4">
+
+## `git rebase -i`
+
+</div>
 
 Your current `git log --oneline` looks a bit like a crime scene:
 
 ```bash
-5c9d69f (HEAD -> main) docs
-ed6bd99 oops typo
-a00cdb4 add area function
-7c5fd79 temp commit for lunch
-606fece Merge branch 'lizzie/precise'
-a76a9d8 (lizzie/lazy) fix: pi is three
-6c87760 (lizzie/precise) fix: make more precise
-68f5977 feat: Initial commit
+e9ae60a (HEAD -> main) finally finished
+084d7a2 oops typo
+1c73d8a temp for lunch
+d5f50ae figured it out!!
+031def5 refactor
+296fdf7 step 2
+e301f45 do step 3
+11499a4 why is step 1 not working
+8d29336 feat: implement step 1
 ```
 
 ---
 
-### `git rebase -i`
+<div class="mb-4">
 
-- We want to rebase HEAD 6 previous commits so run `git rebase -i HEAD~6`
+## `git rebase -i`
+
+</div>
+
+- We want to rebase all the commits on this branch so we run `git rebase -i --root`
+- The `--root` takes you back to the very first commit on the branch 
+- Otherwise you can run `git rebase -i HEAD~6`
+
+<v-click>
 
 ```bash
-pick a76a9d8 fix: pi is three
-pick 6c87760 fix: make more precise
-pick 7c5fd79 temp commit for lunch
-pick a00cdb4 add area function
-pick ed6bd99 oops typo
-pick 5c9d69f docs
+pick 8d29336 feat: implement step 1
+pick 11499a4 why is step 1 not working
+pick e301f45 do step 3
+pick 296fdf7 step 2
+pick 031def5 refactor
+pick d5f50ae figured it out!!
+pick 4b877d0 temp for lunch
+pick b8f0c70 oops typo
+pick 0c76067 finally finished
 
-# Rebase 68f5977..5c9d69f onto 68f5977 (6 commands)
-#
-# Commands:
-# p, pick <commit> = use commit
-# r, reword <commit> = use commit, but edit the commit message
-# e, edit <commit> = use commit, but stop for amending
-# s, squash <commit> = use commit, but meld into previous commit
-# f, fixup [-C | -c] <commit> = like "squash" but keep only the previous
-#                    commit's log message, unless -C is used, in which case
-#                    keep only this commit's message; -c is same as -C but
-#                    opens the editor
-# x, exec <command> = run command (the rest of the line) using shell
-# b, break = stop here (continue rebase later with 'git rebase --continue')
-# d, drop <commit> = remove commit
-# l, label <label> = label current HEAD with a name
-# t, reset <label> = reset HEAD to a label
-# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
-# .       create a merge commit using the original merge commit's
-# .       message (or the oneline, if no original merge commit was
-# .       specified); use -c <commit> to reword the commit message
+####
 ```
+</v-click>
 
 ---
 
+<div class="mb-4">
 
-| Command | Action | Result |
-| :--- | :--- | :--- |
-| **Pick** | Use the commit as-is | Keeps it in history. |
-| **Squash** | Use commit, but meld into previous | Combines logs; prompts for new message. |
-| **Fixup** | Like squash, but discard log message | Cleanest way to merge "typo fix" commits. |
-| **Reword** | Use commit, but edit message | Fix those "WIP" or "temp" titles. |
-| **Drop** | Remove the commit entirely | Deletes the changes from history. |
+## `git rebase -i`
+
+</div>
+
+| Command | Short | Action | Result |
+| :--- | :--- | :--- | :--- |
+| **Pick** | `p` | Use the commit as-is | Keeps it in history |
+| **Squash** | `s` | Use commit, but meld into previous | Combines logs; prompts for new message |
+| **Fixup** | `f` | Like squash, but discard log message | Cleanest way to merge "typo fix" commits |
+| **Reword** | `r` | Use commit, but edit message | Fix those "WIP" or "temp" titles |
+| **Drop** | `d` | Remove the commit entirely | Deletes the changes from history |
+| **Edit** | `e` | Stop the rebase for amends | Lets you change files or split one commit into many |
 
 
 ---
 layout: default
 ---
 
+<div class="mb-4">
 
-```bash
-pick a76a9d8 fix: pi is three
-fixup 6c87760 fix: make more precise #Merge these into the previous commit
-fixup 7c5fd79 temp commit for lunch 
-reword a00cdb4 add area function #Change the wording of this commit message
-fixup ed6bd99 oops typo #Get rid of this commit message
-pick 5c9d69f docs #Keep this one
+## `git rebase -i`
+</div>
+
+<div class="grid grid-cols-2">
+<div class="mr-2">
+
+```bash {1|-2|-4||-9}
+pick 8d29336 feat: implement step 1 # Keep this one
+fixup 11499a4 why is step 1 not working # Squash above
+reword 296fdf7 step 2 # swap commits round and reword
+r e301f45 do step 3 
+f 031def5 refactor # fixup all the rest into one commit
+f d5f50ae figured it out!!
+f 4b877d0 temp for lunch
+f b8f0c70 oops typo
+f 0c76067 finally finished
 ```
+</div>
+
+<div class="mt-3">
+<v-click>
 
 - Walked through (like in a normal rebase)
   - Any merge conflicts
@@ -1364,37 +1484,155 @@ pick 5c9d69f docs #Keep this one
   - Any reworded commits 
 - Keep running `git rebase --continue`
 
+</v-click>
+</div>
+</div>
 
-You can ALWAYS run `git rebase --abort` to go back to the state before
+<div v-click class="mt-8 p-4 bg-orange-500/10 border-l-4 border-orange-500 rounded">
+<span class="flex items-center gap-2 m-0! font-bold text-orange-400">
+<mdi-lightbulb-on-outline class="text-yellow"/> DON'T FORGET
+</span>
+<span class="mt-1 opacity-90">
+
+If things get messy or confusing, you can **ALWAYS**
+run:
+
+`git rebase --abort`
+
+This returns you safely to the exact state you were in before you started.
+
+</span>
+</div>
 
 
 ---
+layout: default
+---
+
+<div class="mb-4">
+
+## `git rebase -i`
+</div>
 
 ### Our new `git log` looks like: 
 
 ```bash
-c8e5742 (HEAD -> main) docs
-89052c1 feat: add area function
-487c3a9 fix: Correct the value of pi
-68f5977 feat: Initial commit
+5318de1 (HEAD -> main) feat: implement step 3
+a5f6ffb feat: implement step 2
+1e328f4 feat: implement step 1
 ```
 
-And you can just keep going!! 
+<div v-click class="mt-4">
+
+### Just think of the possibilities...
+</div>
+
+<v-clicks>
+
+- Make it look like you wrote the tests first
+  
+- Move the refactor to be *before* the feature
+  
+- No more "I forgot to lint" commits
+
+- Use edit to make monster commits into smaller ones
+
+</v-clicks>
+
+---
+layout: default
 ---
 
+<div class="mb-4">
 
-## Amend
+## `git push --force`
+</div>
+
+<div class="grid grid-rows-2">
+<div >
+<v-clicks>
+
+Because we **rewrote** history, our local branch and the remote branch may no longer agree (if we pushed before rebasing etc). 
+
+We have to "force" our version to be the truth.
+
+Tutorials often suggest `git push --force` (or `-f`). 
+
+The better option is `--force-with-lease`
+</v-clicks>
+
+</div>
+<div v-click>
+
+| Command | Safety Level | Behavior |
+| :--- | :--- | :--- |
+| `--force` |  **Dangerous** | Overwrites the remote branch no matter what |
+|`--force-with-lease` | **Recommended** | It only works if **no one else** has pushed new commits to the remote branch since you last fetched. |
+
+</div>
+</div>
+
 
 ---
-
-## Patch
-
+layout: center
 ---
 
-# Practical Rules to take away 
-- Rebase your own 
-- Merge together
-- Keep PRs small
-- Write (published) commits for everyone else/future you
+# Congratulations! - You are now a Git Time Traveler
 
-<!-- Git is a communication tool and its the history that tells the story -->
+<p class="opacity-80 mt-2 mb-8 italic">
+  (I told you it would get better.)
+</p>
+
+<div class="grid grid-cols-2 gap-6 text-left">
+  <div v-click class="p-4 border border-main rounded-lg bg-main/5">
+    <div class="flex items-center gap-3 mb-2">
+      <mdi-check-bold class="text-blue-400 text-2xl" />
+      <h3 class="p-0 m-0">The "Why"</h3>
+    </div>
+    <p class="text-sm opacity-80">
+      You're no longer just memorizing strings of text—you're manipulating a git graph with intent.
+    </p>
+  </div>
+
+  <div v-click class="p-4 border border-main rounded-lg bg-main/5">
+    <div class="flex items-center gap-3 mb-2">
+      <mdi-check-bold class="text-yellow-400 text-2xl" />
+      <h3 class="p-0 m-0">Conflict Mastery</h3>
+    </div>
+    <p class="text-sm opacity-80">
+      Conflicts aren't errors; they're conversations. You now have the tools to prevent and resolve them.
+    </p>
+  </div>
+
+  <div v-click class="p-4 border border-main rounded-lg bg-main/5">
+    <div class="flex items-center gap-3 mb-2">
+      <mdi-check-bold class="text-green-400 text-2xl" />
+      <h3 class="p-0 m-0">The Toolbox</h3>
+    </div>
+    <p class="text-sm opacity-80">
+      From <code>--patch</code> to <code>--abort</code>, your toolkit is ready for any workflow disaster.
+    </p>
+  </div>
+
+  <div v-click class="p-4 border border-main rounded-lg bg-main/5">
+    <div class="flex items-center gap-3 mb-2">
+      <mdi-check-bold class="text-purple-400 text-2xl" />
+      <h3 class="p-0 m-0">History Rewriting</h3>
+    </div>
+    <p class="text-sm opacity-80">
+      Your PRs will now tell a professional story that your future self and teammates will love.
+    </p>
+  </div>
+</div>
+
+<div v-click class="mt-10 text-center">
+  <p class="text-xl font-bold">Go and <code>--force-with-lease</code> responsibly!</p>
+</div>
+
+
+--- 
+layout: cover
+--- 
+
+# Thank you! 
+## Any questions? 
