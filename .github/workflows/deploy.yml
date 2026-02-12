@@ -20,11 +20,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          lfs: true
 
       - name: Setup @antfu/ni
         run: npm i -g @antfu/ni
@@ -53,3 +54,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
