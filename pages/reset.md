@@ -48,7 +48,7 @@
 
 </div>
 
-Changes from e5f6g7h are still in your Staging Area. Ready to be committed again!
+Changes from 789112f are still in your Staging Area. Ready to be committed again!
 
 <div class="text-red">
 
@@ -75,7 +75,7 @@ Changes to be committed:
 <div class="text-lg">
 
 
-Changes from e5f6g7h are now
+Changes from 789112f are now
 "modified" but not staged.
 
   <div class="text-red">

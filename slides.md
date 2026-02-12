@@ -1245,8 +1245,20 @@ layout: cover
 
 
 # Shaping History Intentionally
+
+<div class="grid grid-cols-2">
+
 ## Tell the story you want to tell
 
+<div v-click class="bg-red-500/10 border-2 border-red-500/50 p-4 rounded-xl grid grid-cols-10">
+<carbon-warning class="text-red-500 mt-1"/> 
+<div class="text-red-400 mt-0 mb-3 flex items-center gap-2 col-span-9">
+
+- You have a lot of freedom to rewrite your history locally
+- But be careful if it is on a shared branch that other people may have based work off of
+</div>
+</div>
+</div>
 ---
 ---
 
@@ -1294,8 +1306,6 @@ You forgot to add a file.
 (`--no-edit` keeps the existing message)
 </div>
 </div>
-
----
 
 --- 
 layout: two-cols-header
@@ -1411,9 +1421,10 @@ e301f45 do step 3
 
 </div>
 
-- We want to rebase all the commits on this branch so we run `git rebase -i --root`
-- The `--root` takes you back to the very first commit on the branch 
-- Otherwise you can run `git rebase -i HEAD~6`
+- To start an interactive rebase we can run `git rebase -i` followed by what you want to rebase
+- This could be another branch `feature-x`
+- Or the current branch (use `HEAD~6` for the last 6 commits)
+- For the whole current branch use `--root`
 
 <v-click>
 
