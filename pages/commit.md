@@ -1,9 +1,10 @@
 
 <!-- LEFT: Concepts -->
+<slideTitle colour="orange-900">
 
-<h2 class="mb-4">
-Commits Are the Basis
-</h2>
+## Commits Are The Basis
+</slideTitle>
+
 
 <div class="grid grid-cols-2 gap-4">
 <div>

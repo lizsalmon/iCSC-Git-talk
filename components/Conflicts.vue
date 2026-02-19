@@ -3,11 +3,11 @@
 </script>
 
 <template>
-  <p class="opacity-50 -mt-2">
+  <p class="opacity-50 mt-2 mx-2">
     Git merges lines it can, but struggles when both developers edit the same line.
   </p>
 
-  <div class="grid grid-cols-2 gap-2 h-40">
+  <div class="grid grid-cols-2 gap-2 h-40 ma-2">
     <div v-click="1" class="border-2 border-blue-500/30 rounded-lg p-3 bg-blue-500/5 relative">
       <div class="absolute -top-3 left-2 bg-blue-500 text-white text-sm px-2 py-0.5 rounded uppercase">
         Lizzie
@@ -61,12 +61,12 @@
     </div>
   </div>
 
-  <div v-click="3" class="mt-4 border-2 border-red-500 rounded-xl p-4 bg-red-900/10">
-    <div class="flex items-center justify-between mb-2">
+  <div v-click="3" class=" mx-2 mt-3 border-2 border-red-500 rounded-xl p-4 bg-red-900/10">
+    <div class="flex items-center justify-between mb-1">
       <div class="flex items-center gap-2 text-red-500 font-bold">
         <carbon-warning-hex-filled /> 1 Conflict, 2 Auto-Merges
       </div>
-      <div class="text-sm px-2 py-0.5 bg-green-500/20 text-green-400 rounded">
+      <div class="text-sm px-1 py-0.5 bg-green-500/20 text-green-400 rounded">
         Git resolved lines 2 & 5
       </div>
     </div>

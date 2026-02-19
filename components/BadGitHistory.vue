@@ -4,9 +4,6 @@
 
 <template>
   <div class="font-mono text-[11px] bg-[#1e1e1e] p-5 rounded-xl border border-red-900/30 shadow-2xl leading-[1.2]">
-    <div class="text-gray-600 mb-3">
-      $ git log --graph --oneline --all
-    </div>
 
     <div class="flex gap-2">
       <span class="text-red-500">*</span>
@@ -59,12 +56,6 @@
 
     <div class="flex gap-2">
       <span class="text-red-500">*</span>
-      <span class="text-gray-400 text-xs italic">0021abc</span>
-      <span class="text-white opacity-50">dodgy rebase</span>
-    </div>
-
-    <div class="flex gap-2">
-      <span class="text-red-500">*</span>
       <span class="text-gray-400 text-xs italic">03eqi91</span>
       <span class="text-white opacity-50">bug fix</span>
     </div>
@@ -93,9 +84,6 @@
 
     <div class="flex gap-2">
       <span class="text-red-500">|</span><span class="text-yellow-500"> *</span><span class="text-gray-500 italic">1d92eaa</span><span class="text-white">refactor: change everything</span>
-    </div>
-    <div class="flex gap-2">
-      <span class="text-red-500">|</span><span class="text-yellow-500"> *</span><span class="text-gray-500 italic">e21a8bb</span><span class="text-white">temp save</span>
     </div>
     <div class="flex gap-2">
       <span class="text-red-500">*</span><span class="text-yellow-500"> |</span><span class="text-purple-500">\</span>

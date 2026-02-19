@@ -1,11 +1,16 @@
+
+<slideTitle colour="pink-900">
+
 ## `git reset`
+</slideTitle>
+
 <p class="opacity-50 mt-2">Rewinding the clock</p>
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-5">
 
-<div>
+<div class="col-span-2">
 
-<div class="pr-4">
+<div class="pr-4 mx-2">
 
 - Moves the current branch pointer to a specific commit. Think of it as <b>"Undo"</b> with three levels of intensity:
 
@@ -32,7 +37,7 @@
 </div>
 </div>
 
-<div class="col-span-2">
+<div class="col-span-3 mr-2">
 
 
 ```bash

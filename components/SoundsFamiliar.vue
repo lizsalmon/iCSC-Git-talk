@@ -3,9 +3,6 @@
 </script>
 
 <template>
-  <p class="opacity-80 mt-2 mb-8 italic">
-    (Please don't leave! It gets better, I promise.)
-  </p>
 
   <div class="grid grid-cols-2 gap-6 text-left">
     <div v-click class="p-4 border border-main rounded-lg bg-main/5">

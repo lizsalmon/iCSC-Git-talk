@@ -2,30 +2,46 @@
 theme: default
 title: Git in Practice — Techniques for Collaborative Development
 author: Lizzie Salmon
-hideInToc: true
 layout: cover
+hideInToc: true
 ---
+
+<div class="bg-purple-900 w-100% py-2 px-2">
 
 # Git in Practice  
 ## Techniques for Collaborative Development
 
+</div>
 
 ---
-layout: cover
+
+<div class="bg-purple-900 pa-2">
+
+## Talk contents
+</div>
+
+<Toc class="ml-2 my-2" maxDepth="1"/>
+
 ---
+layout: section
+---
+<sectionTitle colour="green-900">
 
 # Why Git Hurts in Teams
+</sectionTitle>
+---
+layout: two-cols-header
+---
+<slideTitle colour="green-900">
 
----
-layout: two-cols
----
+## The Solo Experience
+</slideTitle>
+
 
 ::left:: 
 
 
-## The Solo Experience
-
-<v-clicks>
+<v-clicks class="ml-4">
 
  - Linear history
  - Zero conflicts
@@ -34,7 +50,7 @@ layout: two-cols
 
 ::right:: 
 
-<div v-click class="bg-white/5 p-4 rounded-lg shadow-xl">
+<div v-click class="p-4 rounded-lg shadow-xl">
 <p class="text-xs mb-2 font-mono">This is what we expect</p>
 <div class="scale-90 origin-top">
 
@@ -56,10 +72,12 @@ gitGraph
 ---
 layout: default
 ---
+<slideTitle colour="green-900">
 
 ## The Team Reality
+</slideTitle>
 
-<div class="grid grid-cols-3 gap-4">
+<div class="grid grid-cols-3 gap-4 ml-4">
 <v-clicks class="col-span-1">
 
 - You are 4 commits ahead
@@ -107,21 +125,26 @@ gitGraph
 
 <div v-click class="absolute inset-0 flex items-center justify-center bg-red-900/80 backdrop-blur-sm rounded-lg border-4 border-red-500 animate-shake">
 <div class="text-center">
-  <carbon-warning-alt-filled class="text-6xl mb-2" />
-  <h2 class="text-white">CONFLICT</h2>
-  <p class="font-mono text-xs">CONFLICT (content): Merge conflict in EVERYTHING.ts</p>
+  <mdi-alert class="text-6xl mb-2" />
+
+  ## CONFLICT
+  <p class="font-mono">CONFLICT: Merge conflict in EVERYTHING.ts</p>
 </div>
 </div>
 
 ---
-layout: two-cols
+layout: two-cols-header
 ---
-<h2 class="mb-4">
-Common Pain Points When Working in a Team
-</h2>
+
+<slideTitle colour="green-900">
+
+## Common Pain Points When Working in a Team
+</slideTitle>
 
 ::left:: 
-<v-clicks>
+
+<br>
+<v-clicks class="ml-4">
 
 - A messy, unreadable commit history
 - Long-lived branches that never merge cleanly
@@ -131,7 +154,7 @@ Common Pain Points When Working in a Team
 
 ::right::
 
-<div class="relative w-full">
+<div class="flex flex-shrink">
   <div v-click v-show="$clicks <= 5" >
     <BadGitHistory />
   </div>
@@ -142,35 +165,42 @@ Common Pain Points When Working in a Team
 
 ---
 layout: default
-class:
+---
+<slideTitle colour="green-900">
+
+## Sounds Familiar?
+</slideTitle>
+
+
+<SoundsFamiliar class="mx-4"/>
+
+---
+layout: section
 ---
 
-## Sounds familiar?
-
-<SoundsFamiliar/>
-
----
-layout: cover
----
+<sectionTitle colour="orange-900">
 
 # How Git Actually Works
-
-<!-- commmit as a change set (not strictly true, but makes things simple) -->
-
+</sectionTitle>
 
 ---
 layout: two-cols-header
 src: ./pages/commit.md
+hideInToc: true
 ---
 
 
 ---
 
-<div class="grid grid-cols-2 gap-6">
+<slideTitle colour="orange-900">
+
+## Branches Are Just Pointers
+</slideTitle>
+
+<div class="grid grid-cols-2 gap-6 mx-2 h-90%">
+
+
 <div>
-
-
-<h2 class="mb-4">Branches Are Just Pointers</h2>
 <v-clicks>
 
 - A branch is just an extra piece of metadata that gets passed along from parent to child 
@@ -178,14 +208,14 @@ src: ./pages/commit.md
 - Multiple branches can point to the same commit
 
 </v-clicks>
-<br/>
+<br>
 <div v-click="5">
 
 - `git checkout feature-x`
 - `git commit `
 </div>
 </div>
-<div>
+<div class="flex flex-col justify-around">
 <div v-click="4">
 ```mermaid
 stateDiagram-v2
@@ -195,14 +225,12 @@ stateDiagram-v2
 
   state "main" as main
   state "feature-x" as fx
-  state "bugfix" as bf
 
   main --> C3
   fx --> C3
-  bf --> C3
 
   %% Styling
-  class main,fx,bf branch
+  class main,fx branch
   class C4,C3 parent
 
   classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
@@ -222,17 +250,15 @@ stateDiagram-v2
 
   state "main" as main
   state "feature-x" as fx
-  state "bugfix" as bf
 
   C4 --> C3 : parent
 
   %% Branch pointers (dashed, colored)
   main --> C3 : branch
-  bf --> C3 : branch
   fx --> C4 : branch
 
   %% Styling
-  class main,fx,bf branch
+  class main,fx branch
   class C4,C3 parent
 
   classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
@@ -246,22 +272,24 @@ stateDiagram-v2
 <!-- branches arent folders -->
 
 --- 
-layout: cover
+layout: section
 ---
 
-# How Teams Use Git
-## Collaboration Workflows 
+<sectionTitle colour="blue-900">
+
+# Git Collaboration Workflows
+</sectionTitle>
 
 ---
 layout: two-cols-header
 ---
-<div class="mb-8">
+<slideTitle colour="blue-900">
 
-## How do teams use Git
-</div>
+## How Teams Use Git
+</slideTitle>
 
 ::left::
-<v-clicks>
+<v-clicks class="mx-4">
 
 - Each developer works in a **local Git repository** on their own machine
 - Changes are committed **locally** first
@@ -274,6 +302,8 @@ layout: two-cols-header
 </v-clicks>
 
 ::right::
+<v-click>
+
 ```mermaid
 graph TD
   Remote["Remote Repository<br/>(GitHub / GitLab)"]
@@ -287,30 +317,32 @@ graph TD
   DevC <-->|push / pull| Remote
 
 ```
+</v-click>
 ---
 layout: default
 ---
-<div class="mb-8">
+<slideTitle colour="blue-900">
 
 ## Git Workflows
-</div>
-<div class="grid grid-cols-2 gap-4">
+</slideTitle>
+
+<div class="grid grid-cols-2 gap-4 ma-2">
 <v-clicks>
-<div class="bg-blue-500/10 p-4 rounded-lg border-2 border-blue-400/10">
+<div class=" p-4 rounded-lg border-2 border-blue-400/10">
 
 * **Centralised:** 
   * Everyone pushes to `main`
   * Fast, but works best in small teams
 
 </div>
-<div class="bg-green-500/10 p-4 rounded-lg border-2 border-green-400/10">
+<div class=" p-4 rounded-lg border-2 border-green-400/10">
 
 * **Trunk-Based:** 
   * Short-lived branches with few commits 
   * High speed, requires good testing and CI
 
 </div>
-<div class="bg-purple-500/10 p-4 rounded-lg border-2 border-purple-400/10">
+<div class=" p-4 rounded-lg border-2 border-purple-400/10">
 
 * **Git Flow:** 
   * Rigid, multi-branch system
@@ -318,7 +350,7 @@ layout: default
   * Not recommended anymore
   
 </div>
-<div class="bg-orange-500/10 p-4 rounded-lg border-2 border-orange-400/10">
+<div class=" p-4 rounded-lg border-2 border-orange-400/10">
 
 * **Forking:** 
   * Everyone owns a server-side repository
@@ -329,7 +361,7 @@ layout: default
 </v-clicks>
 </div>
 <v-click>
-<div class="bg-yellow-500/10 p-4 rounded-lg border-2 border-yellow-400/10 mt-4 flex justify-center">
+<div class="ma-2 p-4 rounded-lg border-2 border-yellow-400/10 mt-4 flex justify-center">
 
 **Feature Branching** balances safety (code reviews) with speed (parallel work)
 
@@ -340,16 +372,19 @@ layout: default
 layout: two-cols-header
 ---
 
-<div class="mb-1">
+<slideTitle colour="blue-900">
 
 ## Feature Branching
+</slideTitle>
+
+<div class="mb-1">
 <p class="opacity-50 mt-2">Even when you're working solo or without a remote</p>
 
 </div>
 
 ::left::
 
-<v-clicks>
+<v-clicks class="mx-2">
 
 - To separate your work from the `main` branch 
 - It's harder for unstable code to get merged into the main code base
@@ -385,7 +420,7 @@ gitGraph
 
 </v-click>
 
-<div v-click class="p-2 mt-2 border border-red-500/30 bg-red-500/10 rounded text-md font-bold flex items-center justify-center flex-shrink">
+<div v-click class="p-2 ma-4 border border-red-500/30 bg-red-500/10 rounded text-md font-bold flex items-center justify-center flex-shrink">
   <carbon-close-filled class="ma-1 text-red-500"/>
 
 Never commit to `main`
@@ -401,12 +436,14 @@ Never commit to `main`
 layout: two-cols-header
 ---
 
-<div class="mb-6">
+<slideTitle colour="blue-900">
 
 ## A Typical Feature Branch Workflow with a Remote
-</div>
+</slideTitle>
 
 ::left::
+
+<div class="ml-4">
 
 ```bash {1-3|5-7|9-10|12-13|15-16|18-21|all}
 git checkout main
@@ -432,6 +469,7 @@ git pull origin main
 # Your changes are visible!
 
 ```
+</div>
 
 ::right:: 
 <div class="ml-2">
@@ -468,30 +506,36 @@ gitGraph
 </div>
 
 ---
-layout: cover
+layout: section
 ---
 
+<sectionTitle colour="teal-800">
+
 # Conflicts Happen 
+</sectionTitle>
+
 ## Don't panic
 
 ---
 layout: default
 ---
 
-# Creation of a conflict
+<slideTitle colour="teal-800">
 
+## Creation of a conflict
+</slideTitle>
 <Conflicts />
 
 ---
 layout: default
 ---
 
-<div class="mb-6">
+<slideTitle colour="teal-800">
 
 ## Anatomy of a Merge Conflict
-</div>
+</slideTitle>
 
-<div class="grid grid-cols-2 gap-8">
+<div class="grid grid-cols-2 gap-8 mx-2">
 <div>
 <div v-click>
 
@@ -537,9 +581,12 @@ This is the manual way to resolve conflicts
 layout: default
 ---
 
-## Our Example
+<slideTitle colour="teal-800">
 
-<div class="grid grid-cols-2">
+## Our Example
+</slideTitle>
+
+<div class="grid grid-cols-2 mx-2">
 <div>
 
 We have three branches:
@@ -571,7 +618,7 @@ gitGraph
 </div>
 </div>
 
-<div class="grid grid-cols-3 gap-2 mb-8">
+<div class="grid grid-cols-3 gap-2 mb-8 mx-2">
 
 <div v-click>
 
@@ -604,11 +651,11 @@ def caluculate_circumference(radius):
 </div>
 ---
 
-<div class="mb-6">
+<slideTitle colour="teal-800">
 
-## Resolving conflicts
-</div>
-<div class="grid grid-cols-3">
+## Resolving Conflicts
+</slideTitle>
+<div class="grid grid-cols-3 mx-2">
 <div class="col-span-2">
 <v-click>
 
@@ -647,7 +694,7 @@ gitGraph
 lizzie:~/mergeConflicts$ git merge lizzie/precise
 Auto-merging circumference.py
 CONFLICT (content): Merge conflict in circumference.py
-Automatic merge failed; fix conflicts and then commit the result. # Here we go
+Automatic merge failed; fix conflicts and then commit the result. 
 ```
 </div>
 
@@ -655,12 +702,12 @@ Automatic merge failed; fix conflicts and then commit the result. # Here we go
 layout: default
 ---
 
-<div class="mb-6">
+<slideTitle colour="teal-800">
 
-## Resolving conflicts
-</div>
+## Resolving Conflicts
+</slideTitle>
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-2 gap-4 mx-2">
 <div v-click>
 
 open `circumference.py`
@@ -706,10 +753,10 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 
 ---
 
-<div class="mb-6">
- 
+<slideTitle colour="teal-800">
+
 ## Surely there is a better way than that?
-</div>
+</slideTitle>
 
 - git has its own selection of merge tools
 
@@ -722,10 +769,10 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 
 ---
 
-<div class="mb-6">
+<slideTitle colour="teal-800">
 
 ## Surely there is a better way than that?
-</div>
+</slideTitle>
 
 - git has its own selection of merge tools
 
@@ -735,10 +782,10 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 
 ---
 
-<div class="mb-6">
+<slideTitle colour="teal-800">
 
 ## Surely there is a better way than that?
-</div>
+</slideTitle>
 
 - VSCode has its inline merge resolving
 ![Alt text](/gif/VSCodeinline.gif)
@@ -753,10 +800,14 @@ layout: default
 
 ---
 
-# The Best Way to Prevent Conflicts
-<p class="opacity-50 -mt-2 mb-8">Stop them from happening in the first place</p>
 
-<div class="grid grid-cols-3 gap-4">
+<slideTitle colour="teal-800">
+
+## The Best Way to Prevent Conflicts
+</slideTitle>
+<p class="opacity-50 -mt-2 mb-8 mx-2">Stop them from happening in the first place</p>
+
+<div class="grid grid-cols-3 gap-4 mx-2">
 
 <div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
   
@@ -808,12 +859,16 @@ stylistic: {
 
 
 ---
-layout: cover
+layout: section
 ---
+<sectionTitle colour="pink-900">
+
+# Git Power Tools
+</sectionTitle>
 
 
-# Git Power Tools and How to Use Them
-## Without Breaking Things
+## and how to use them without breaking things
+
 
 
 ---
@@ -825,12 +880,16 @@ src: pages/reset.md
 layout: default
 ---
 
-## `git reflog`
 
-<span class="opacity-50 mt-2">The annoying truth-telling version of `git log` 
+<slideTitle colour="pink-900">
+
+## `git reflog`
+</slideTitle>
+
+<span class="opacity-50 mt-2 mx-2">The annoying truth-telling version of `git log` 
 </span>
 
-<div class="grid grid-cols-2 gap-2">
+<div class="grid grid-cols-2 gap-2 mx-2">
 <div class="">
 <div class="text-red">
 
@@ -905,15 +964,14 @@ f6e25d1 HEAD@{7}: commit: feat: new file (dont delete this)
 ---
 layout: two-cols-header
 ---
-
-
-<div class="mb-4">
+<slideTitle colour="pink-900">
 
 ## `git reflog` saving the day
-</div>
+</slideTitle>
 
 ::left::
 
+<div class="mx-2">
 
 ```bash {all|1-2|4-6|7-9|10-12|13-17|18-20|21-24}
 $ git commit -m "feat: Initial To Do list"
@@ -940,10 +998,11 @@ $ git log --oneline
 f6e25d1 (HEAD -> main) feat: new file (dont delete this)
 9479df0 feat: Initial To Do list
 ```
+</div>
 
 ::right::
 
-<div class="m-2">
+<div class="ma-2">
 
 <div v-click="5">
 
@@ -974,14 +1033,17 @@ f6e25d1 (HEAD -> main) feat: new file (dont delete this)
 ---
 layout: default
 ---
+<slideTitle colour="pink-900">
 
 ## Beyond undoing `reset`
-<div class="opacity-50 -mt-2 mb-8 text-sm">
+</slideTitle>
+
+<div class="opacity-50 -mt-2 mb-8 mx-2">
 
 When `git log` can't tell you what happened, `git reflog` can.
 </div>
 
-<div class="grid grid-cols-3 gap-4">
+<div class="grid grid-cols-3 gap-4 mx-2">
 
   <div v-click class="p-4 rounded-xl border border-orange-500/20 bg-orange-500/5">
   <h3 class="font-bold mb-1 flex items-center"> <carbon-branch class="text-orange-400 text-2xl" /> Deleted Branch</h3>
@@ -1012,27 +1074,37 @@ When `git log` can't tell you what happened, `git reflog` can.
 
 </div>
 
-<div v-click class="p-4 text-center rounded-xl border border-purple-500/20 bg-pink-500/5 mt-4">
-  If you saw it on your screen once, it's in the reflog.
+<div v-click class="p-4 text-center rounded-xl border border-purple-500/20 bg-pink-500/5 mt-4 mx-2">
+  If you committed it, it's in the reflog.
 </div>
 ---
 layout: two-cols-header
 ---
+<slideTitle colour="pink-900">
 
 ## `git cherry-pick` 
-<div class="opacity-50 -mt-2 mb-8 text-sm">
+</slideTitle>
+
+<div class="opacity-50 -mt-2 mb-8 mx-2 ">
 
 copying a commit
 </div>
 
 ::left:: 
+
+<v-clicks class="mx-2">
+
 - Selects a **single commit**
 - Applies its changes elsewhere
 - Does **not** move the original commit
+</v-clicks>
+
+<div v-click="5" class="mx-2">
 
 `git checkout main`
 
 `git cherrypick abcde`
+</div>
 
 ::right:: 
 
@@ -1056,12 +1128,17 @@ gitGraph
 layout: two-cols-header
 ---
 
-## `git cherry-pick`
-<div class="opacity-50 mt-2 mb-8 text-sm">
+<slideTitle colour="pink-900">
+
+## `git cherry-pick` 
+</slideTitle>
+
+<div class="opacity-50 mt-2 mb-8">
 "I just want that one specific commit"
 </div>
 
 ::left::
+<div class="ml-2">
 
 ### <carbon-thumbs-up class="text-green-500"/> Use Cases
 
@@ -1070,9 +1147,9 @@ layout: two-cols-header
 - **Backports:** Moving a feature from a new version to an older branch
   
 - **Lost Work:** Recovering a single commit from a deleted or messy branch
-
+</div>
 ::right::
-
+<div class="ml-2">
 <v-click>
 
 ### <carbon-warning-alt class="text-red-500"/> The Hidden Costs
@@ -1083,17 +1160,21 @@ layout: two-cols-header
 - **Workflow Issues:** Frequent use often means your **Feature Branching** strategy is breaking down
 
 </v-click>
-
+</div>
 ---
 layout: two-cols-header
 ---
 
-## `git rebase`
-<div class="opacity-50 mt-2 mb-10 text-sm italic">
+<slideTitle colour="pink-900">
+
+## `git rebase` 
+</slideTitle>
+<div class="opacity-50 mt-2 mb-10">
 Replaying commits to create a linear history
 </div>
 
 ::left::
+<div class="mx-2">
 
 ### The Concept
 
@@ -1108,8 +1189,9 @@ Replaying commits to create a linear history
   <strong>The "Automated" Cherry-Pick:</strong><br>
   It's like running a series of cherry-picks for every commit in your branch, one by one.
 </div>
-
+</div>
 ::right::
+<div class="mx-2">
 <v-click>
 
 ```mermaid
@@ -1133,17 +1215,17 @@ git rebase main
 ```
 </div>
 
-
+</div>
 ---
 layout: two-cols-header
 ---
-<div class="mb-4">
+<slideTitle colour="pink-900">
 
-## Rebasing onto `main`
-</div>
+## `git rebase` onto main
+</slideTitle>
 
 ::left::
-
+<div class="mx-2">
 <v-click>
 
 ### What Git does internally
@@ -1157,7 +1239,9 @@ layout: two-cols-header
 3. Cherry-picks B, then C, then D
 
 </v-clicks>
+</div>
 ::right::
+<div class="mx-2">
 
 ```mermaid
 gitGraph
@@ -1175,15 +1259,18 @@ gitGraph
 - They contain the same changes, but have different hashes as the commits have different parents
 
 </v-clicks>
-
+</div>
 
 ---
 layout: default
 ---
 
-## Why rebase?
+<slideTitle colour="pink-900">
 
-<div class="grid grid-cols-2 gap-8 mt-4">
+## Why `git rebase` 
+</slideTitle>
+
+<div class="grid grid-cols-2 gap-8 mt-4 mx-2">
 <v-clicks>
 
 <div class="space-y-4">
@@ -1208,7 +1295,7 @@ layout: default
 </v-clicks>
 </div>
 
-<div v-show="$clicks > 2" class="bg-red-500/10 border-2 border-red-500/50 p-4 rounded-xl mt-4">
+<div v-show="$clicks > 2" class="bg-red-500/10 border-2 border-red-500/50 p-4 rounded-xl mt-4 mx-2">
 <v-click>
 <h3 class="text-red-400 mt-0 mb-3 flex items-center gap-2">
 <carbon-warning class="text-red-500"/> 
@@ -1240,37 +1327,44 @@ Be very careful when rebasing in a team
 </div>
 </div>
 ---
-layout: cover
+layout: section
 ---
 
+<sectionTitle colour="indigo-900">
 
 # Shaping History Intentionally
+</sectionTitle>
 
 <div class="grid grid-cols-2">
 
 ## Tell the story you want to tell
 
-<div v-click class="bg-red-500/10 border-2 border-red-500/50 p-4 rounded-xl grid grid-cols-10">
-<carbon-warning class="text-red-500 mt-1"/> 
-<div class="text-red-400 mt-0 mb-3 flex items-center gap-2 col-span-9">
+<div v-click class="bg-red-500/10 border-2 mr-2 border-red-500/50 p-4 rounded-xl">
+<div class="text-red-400 mt-0 mb-3 gap-2">
 
-- You have a lot of freedom to rewrite your history locally
-- But be careful if it is on a shared branch that other people may have based work off of
+You have a lot of freedom to rewrite your history locally.
+<br>
+But be careful if it is on a shared branch that other people may have based work off of
 </div>
 </div>
 </div>
 ---
 ---
 
+<slideTitle colour="indigo-900">
 
 ## `git commit --amend`
+</slideTitle>
+
+<div class="mx-2">
 
 The simplest way to rewrite history.  It allows you to modify the **very last commit** you made. 
-
-<div v-click class="mt-8">
+</div>
+<div v-click class="mt-8 mx-2">
 
 When you just made a commit and suddently realise:
 </div>
+<div class="mx-2">
 <v-clicks>
 
 - You made a typo in the commit message
@@ -1282,13 +1376,19 @@ When you just made a commit and suddently realise:
 - You forgot to run the linter
 
 </v-clicks>
+</div>
 ---
 
+<slideTitle colour="indigo-900">
+
 ## `git commit --amend`
+</slideTitle>
+<div class="mx-2">
 
 Instead of creating a **new** small "typo" commit, you update the previous one.
+</div>
 
-<div class="grid grid-cols-2 gap-4 mt-4 text-left">
+<div class="grid grid-cols-2 gap-4 mt-4 text-left mx-2">
 <div v-click class="bg-gray-500/5 p-4 rounded border border-white/10">
 <h3 class="text-purple-400 mb-2">Scenario A: Fix the Message</h3>
 You just want to change the text.
@@ -1311,22 +1411,26 @@ You forgot to add a file.
 layout: two-cols-header
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
 ## `git add --patch`
-</div>
+</slideTitle>
 
 ::left:: 
 
 <v-clicks>
+<div class="mx-2">
 
 Stop committing "everything in this file." Start committing **logical changes.**
+</div>
 
+<div class="mx-2">
 
 `git add -p` breaks your changes down into **hunks** (small chunks of code, like you see on github/gitlab). 
 
 Git will ask you: *"Do you want to stage this specific change?"*
 
+</div>
 </v-clicks>
 
 ::right::
@@ -1347,10 +1451,11 @@ Git will ask you: *"Do you want to stage this specific change?"*
 </v-clicks>
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
 ## `git add --patch`
-</div>
+</slideTitle>
+<div class="mx-2">
 
 When you run `git add --patch`, you'll see a diff and a prompt:
 `Stage this hunk [y, n, q, a, d, s, e, ?]?`
@@ -1363,18 +1468,29 @@ When you run `git add --patch`, you'll see a diff and a prompt:
 | **s** | Split | Break this hunk into even smaller pieces|
 | **q** | Quit | Stop right here and keep what you've already staged|
 | **e** | Edit | Manually pick which lines to keep (The ultimate power) |
+</div>
 
+---
+layout: full
+class: "pa-0"
 ---
 
 ![Alt text](./gif/patchDemo.gif)
 
 ---
 
-## Interactive rebase
+
+<slideTitle colour="indigo-900">
+
+## Interactive Rebase
+</slideTitle>
+
+<div class="mx-2">
 
 `git rebase -i` is a powerful tool that lets you **rewrite, reorder, and clean up** your commit history before sharing it with others.
-
+</div>
 <br>
+<div class="mx-2">
 <v-click>
 
 ### Why use it?
@@ -1391,13 +1507,14 @@ When you run `git add --patch`, you'll see a diff and a prompt:
 - Confidence to experiment freely, knowing you can "squash" the mess later.
 
 </v-clicks>
+</div>
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
 ## `git rebase -i`
-
-</div>
+</slideTitle>
+<div class="mx-2">
 
 Your current `git log --oneline` looks a bit like a crime scene:
 
@@ -1412,14 +1529,14 @@ e301f45 do step 3
 11499a4 why is step 1 not working
 8d29336 feat: implement step 1
 ```
-
+</div>
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
 ## `git rebase -i`
-
-</div>
+</slideTitle>
+<div class="mx-2">
 
 - To start an interactive rebase we can run `git rebase -i` followed by what you want to rebase
 - This could be another branch `feature-x`
@@ -1442,14 +1559,14 @@ pick 0c76067 finally finished
 ####
 ```
 </v-click>
-
+</div>
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
 ## `git rebase -i`
-
-</div>
+</slideTitle>
+<div class="mx-2">
 
 | Command | Short | Action | Result |
 | :--- | :--- | :--- | :--- |
@@ -1460,17 +1577,17 @@ pick 0c76067 finally finished
 | **Drop** | `d` | Remove the commit entirely | Deletes the changes from history |
 | **Edit** | `e` | Stop the rebase for amends | Lets you change files or split one commit into many |
 
-
+</div>
 ---
 layout: default
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
 ## `git rebase -i`
-</div>
+</slideTitle>
 
-<div class="grid grid-cols-2">
+<div class="grid grid-cols-2 mx-2">
 <div class="mr-2">
 
 ```bash {1|-2|-4||-9}
@@ -1499,7 +1616,7 @@ f 0c76067 finally finished
 </div>
 </div>
 
-<div v-click class="mt-8 p-4 bg-orange-500/10 border-l-4 border-orange-500 rounded">
+<div v-click class="mt-8 p-4 mx-2 bg-orange-500/10 border-l-4 border-orange-500 rounded">
 <span class="flex items-center gap-2 m-0! font-bold text-orange-400">
 <mdi-lightbulb-on-outline class="text-yellow"/> DON'T FORGET
 </span>
@@ -1520,10 +1637,11 @@ This returns you safely to the exact state you were in before you started.
 layout: default
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
 ## `git rebase -i`
-</div>
+</slideTitle>
+<div class="mx-2">
 
 ### Our new `git log` looks like: 
 
@@ -1549,18 +1667,19 @@ a5f6ffb feat: implement step 2
 - Use edit to make monster commits into smaller ones
 
 </v-clicks>
+</div>
 
 ---
 layout: default
 ---
 
-<div class="mb-4">
+<slideTitle colour="indigo-900">
 
-## `git push --force`
-</div>
+## `git push` with force
+</slideTitle>
 
-<div class="grid grid-rows-2">
-<div >
+<div class="grid grid-rows-2 mx-2">
+<div>
 <v-clicks>
 
 Because we **rewrote** history, our local branch and the remote branch may no longer agree (if we pushed before rebasing etc). 
@@ -1586,15 +1705,18 @@ The better option is `--force-with-lease`
 
 ---
 layout: center
+hideInToc: true
 ---
 
-# Congratulations! - You are now a Git Time Traveler
+<slideTitle colour="indigo-900">
 
-<p class="opacity-80 mt-2 mb-8 italic">
-  (I told you it would get better.)
+## Congratulations! You are now a Git Time Traveller
+</slideTitle>
+<p class="opacity-80 mt-2 mb-8 mx-2 italic">
+  (I told you so.)
 </p>
 
-<div class="grid grid-cols-2 gap-6 text-left">
+<div class="grid grid-cols-2 gap-6 text-left mx-2">
   <div v-click class="p-4 border border-main rounded-lg bg-main/5">
     <div class="flex items-center gap-3 mb-2">
       <mdi-check-bold class="text-blue-400 text-2xl" />
