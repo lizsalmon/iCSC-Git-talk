@@ -1769,3 +1769,11 @@ layout: cover
 
 # Thank you! 
 ## Any questions? 
+
+<div class="bg-purple-900"></div>
+<div class="bg-blue-900"></div>
+<div class="bg-green-900"></div>
+<div class="bg-orange-900"></div>
+<div class="bg-teal-800"></div>
+<div class="bg-pink-900"></div>
+<div class="bg-indigo-900"></div>
