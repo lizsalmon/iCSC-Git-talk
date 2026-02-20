@@ -25,13 +25,242 @@ hideInToc: true
 ---
 layout: section
 ---
+<sectionTitle colour="sky-800">
+
+# Basic Git Commands
+</sectionTitle>
+
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="grid grid-cols-2 gap-6 px-8 mt-8">
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Working Directory
+    </h3>
+    <ul class="opacity-90">
+      <li>Where you write your code</li>
+      <li>Real files on disk</li>
+      <li>Not versioned yet</li>
+    </ul>
+  </div>
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Staging Area
+    </h3>
+    <ul class="opacity-90">
+      <li>The “prepare” zone</li>
+      <li>Select what goes into the next commit</li>
+      <li>Controlled by <code>git add</code></li>
+    </ul>
+  </div>
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Local Repository
+    </h3>
+    <ul class="opacity-90">
+      <li>Your local history</li>
+      <li>Fully versioned</li>
+      <li>Updated by <code>git commit</code></li>
+    </ul>
+  </div>
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Remote Repository
+    </h3>
+    <ul class="opacity-90">
+      <li>Shared version on a server</li>
+      <li>Updated by <code>git push</code></li>
+      <li>Downloaded via <code>git fetch</code></li>
+    </ul>
+  </div>
+
+</div>
+
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="flex justify-center items-center h-100% scale-300">
+
+```mermaid
+sequenceDiagram
+    participant WD as Working Directory
+    participant SA as Staging Area
+    participant LR as Local Repository
+    participant RR as Remote Repository
+
+    WD->>SA: git add
+```
+</div>
+
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="flex justify-center items-center h-100% scale-300">
+
+```mermaid
+sequenceDiagram
+    participant WD as Working Directory
+    participant SA as Staging Area
+    participant LR as Local Repository
+    participant RR as Remote Repository
+
+    WD->>SA: git add
+    SA->>LR: git commit
+```
+</div>
+
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="flex justify-center items-center h-100% scale-300">
+
+```mermaid
+sequenceDiagram
+    participant WD as Working Directory
+    participant SA as Staging Area
+    participant LR as Local Repository
+    participant RR as Remote Repository
+
+    WD->>SA: git add
+    SA->>LR: git commit
+    LR->>RR: git push
+```
+</div>
+
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="flex justify-center items-center h-100% scale-300">
+
+```mermaid
+sequenceDiagram
+    participant WD as Working Directory
+    participant SA as Staging Area
+    participant LR as Local Repository
+    participant RR as Remote Repository
+
+    WD->>SA: git add
+    SA->>LR: git commit
+    LR->>RR: git push
+
+    RR->>LR: git fetch
+```
+</div>
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="flex justify-center items-center h-95% scale-295">
+
+```mermaid
+sequenceDiagram
+    participant WD as Working Directory
+    participant SA as Staging Area
+    participant LR as Local Repository
+    participant RR as Remote Repository
+
+    WD->>SA: git add
+    SA->>LR: git commit
+    LR->>RR: git push
+
+    RR->>LR: git fetch
+    LR->>WD: git merge
+```
+
+</div>
+
+<div v-click class="absolute bottom-40 left-2 bg-sky-500 px-6 py-4 rounded-sm text-lg">
+
+`git pull` == `git fetch` + `git merge`
+</div>
+
+---
+
+<slideTitle colour="sky-800">
+
+## What On Earth is Happening?
+</slideTitle>
+
+<div class="grid grid-cols-8 mx-4">
+<div class="col-span-5">
+
+<v-clicks>
+
+These are your **read-only** commands. Use them constantly to avoid the "How did I get here?" panic.
+
+`git status`
+- Shows the difference between your Working Directory, Staging Area, and the current `HEAD`.
+</v-clicks>
+
+<div v-click="5">
+
+`git log`
+</div>
+
+<div v-click="6">
+
+- Lists the history of commits that lead to where you are now.
+</div>
+<div v-click="7">
+
+- `git log --oneline --graph` is the "human-readable" version that shows you the branch structure without the wall of text.
+</div>
+
+</div>
+
+<div v-click="4" class="col-span-3 flex justify-center items-center">
+<div class="bg-sky-600 pa-4 h-50 w-60">
+
+`HEAD` is a pointer to the current commit you’re working on.
+
+Usually, it points to the tip of your current branch.
+</div>
+
+</div>
+</div>
+---
+layout: section
+---
+
 <sectionTitle colour="green-900">
 
 # Why Git Hurts in Teams
 </sectionTitle>
+
+
 ---
 layout: two-cols-header
 ---
+
+
 <slideTitle colour="green-900">
 
 ## The Solo Experience
@@ -377,7 +606,7 @@ layout: two-cols-header
 ## Feature Branching
 </slideTitle>
 
-<div class="mb-1">
+<div class="mx-2 mb-1">
 <p class="opacity-50 mt-2">Even when you're working solo or without a remote</p>
 
 </div>
@@ -1765,6 +1994,7 @@ hideInToc: true
 
 --- 
 layout: cover
+hideInToc: true
 --- 
 
 # Thank you! 
@@ -1777,3 +2007,4 @@ layout: cover
 <div class="bg-teal-800"></div>
 <div class="bg-pink-900"></div>
 <div class="bg-indigo-900"></div>
+<div class="bg-sky-800"></div>
