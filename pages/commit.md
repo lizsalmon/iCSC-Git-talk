@@ -10,18 +10,18 @@
 <div>
 <v-clicks>
 
-- A snapshot of the state of <strong>all files</strong>
+- A snapshot of the state of <strong>all tracked files</strong>
   - Dont worry git keeps it small
+  - Includes the files that are added to the staging area 
+  - It also includes the unchanged files 
 - With some extra metadata
 - And a pointer to a parent commit
 </v-clicks>
 
 <v-click>
 <div class="absolute bottom-10 left-3 -rotate-3">
-  <div class="bg-orange-200 text-amber-900 p-6 border-t-4 border-amber-300 w-50 aspect-square flex items-center justify-center text-center">
-    <span class="text-lg">
-      Change the parent, files, or metadata and you get a brand new commit!
-    </span>
+  <div class="bg-orange-700 p-6 border-t-4 border-orange-800 w-50 aspect-square flex items-center justify-center text-center">
+    Change the parent, files, or metadata and you get a brand new commit!
   </div>
 </div>
 </v-click>

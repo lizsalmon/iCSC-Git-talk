@@ -197,11 +197,10 @@ sequenceDiagram
 
 </div>
 
-<div v-click class="absolute bottom-40 left-2 bg-sky-500 px-6 py-4 rounded-sm text-lg">
+<div v-click class="absolute bottom-40 left-2 bg-sky-500 px-6 py-4 rounded-sm text-lg border-t-4 border-sky-800 -rotate-2">
 
 `git pull` == `git fetch` + `git merge`
 </div>
-
 ---
 
 <slideTitle colour="sky-800">
@@ -237,13 +236,12 @@ These are your **read-only** commands. Use them constantly to avoid the "How did
 </div>
 
 <div v-click="4" class="col-span-3 flex justify-center items-center">
-<div class="bg-sky-600 pa-4 h-50 w-60">
+<div class="bg-sky-600 pa-4 h-50 w-60 border-t-4 border-sky-800 rotate-2">
 
 `HEAD` is a pointer to the current commit you’re working on.
 
 Usually, it points to the tip of your current branch.
 </div>
-
 </div>
 </div>
 ---
@@ -672,9 +670,43 @@ layout: two-cols-header
 
 ::left::
 
+
+
 <div class="ml-4">
 
-```bash {1-3|5-7|9-10|12-13|15-16|18-21|all}
+<div v-click> 
+
+```mermaid
+gitGraph
+  commit id: "main"
+  branch feature
+  checkout feature
+  commit id: "feat: add todo item"
+  commit id: "refactor"
+  checkout main
+  commit id: "fix: bug"
+  checkout feature
+  merge main tag: "merge in main"
+  checkout main
+  merge feature tag: "MR merged"
+```
+</div>
+
+<div v-click="6" class="col-span-3 flex justify-center items-center">
+<div class="bg-blue-900 pa-2 h-50 w-60 border-t-4 border-blue-700 -rotate-2">
+
+A merge/pull request is a way of saying to your team: 
+
+“Please review and merge my changes into the main branch.”
+</div>
+</div>
+</div>
+
+::right:: 
+
+<div v-show="$clicks >= 2" class="ml-2">
+
+```bash {0|1-3|5-7|9-10|12-13|15-16|18-21|all}
 git checkout main
 git pull origin main # update main
 git checkout -b feature # create your branch
@@ -698,40 +730,7 @@ git pull origin main
 # Your changes are visible!
 
 ```
-</div>
 
-::right:: 
-<div class="ml-2">
-<v-click> 
-
-```mermaid
-gitGraph
-  commit id: "main"
-  branch feature
-  checkout feature
-  commit id: "feat: add todo item"
-  commit id: "refactor"
-  checkout main
-  commit id: "fix: bug"
-  checkout feature
-  merge main tag: "merge in main"
-  checkout main
-  merge feature tag: "MR merged"
-```
-</v-click>
-
-<v-click>
-
-**Why this works:**
-
-</v-click>
-
-<v-clicks>
-
-- Isolation: Bad code merged? main stays functional
-- Collaboration: Push triggers a Pull Request — discussion
-- Clean History: Merging back to main only happens once the code is "Done-Done"
-</v-clicks>
 </div>
 
 ---
