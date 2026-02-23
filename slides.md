@@ -30,6 +30,8 @@ layout: section
 # Basic Git Commands
 </sectionTitle>
 
+## The Git stuff you already know
+
 ---
 
 <slideTitle colour="sky-800">
@@ -213,10 +215,10 @@ sequenceDiagram
 
 <v-clicks>
 
-These are your **read-only** commands. Use them constantly to avoid the "How did I get here?" panic.
+These are your **read-only** commands. Use them constantly to avoid the "How did I get here?" panic
 
 `git status`
-- Shows the difference between your Working Directory, Staging Area, and the current `HEAD`.
+- Shows the difference between your Working Directory, Staging Area, and the current `HEAD`
 </v-clicks>
 
 <div v-click="5">
@@ -226,11 +228,11 @@ These are your **read-only** commands. Use them constantly to avoid the "How did
 
 <div v-click="6">
 
-- Lists the history of commits that lead to where you are now.
+- Lists the history of commits that lead to where you are now
 </div>
 <div v-click="7">
 
-- `git log --oneline --graph` is the "human-readable" version that shows you the branch structure without the wall of text.
+- `git log --oneline --graph` is the "human-readable" version that shows you the branch structure without the wall of text
 </div>
 
 </div>
@@ -238,9 +240,9 @@ These are your **read-only** commands. Use them constantly to avoid the "How did
 <div v-click="4" class="col-span-3 flex justify-center items-center">
 <div class="bg-sky-600 pa-4 h-50 w-60 border-t-4 border-sky-800 rotate-2">
 
-`HEAD` is a pointer to the current commit you’re working on.
+`HEAD` is a pointer to the current commit you’re working on
 
-Usually, it points to the tip of your current branch.
+Usually, it points to the tip of your current branch
 </div>
 </div>
 </div>
@@ -308,8 +310,8 @@ layout: default
 <v-clicks class="col-span-1">
 
 - You are 4 commits ahead
-- John force-pushed his hotfix
-- Richard's refactor has been approved
+- J Robert force-pushed his hotfix
+- Rosalind's refactor has been approved
 - Nobody has pulled in 3 days
 
 </v-clicks>
@@ -318,16 +320,16 @@ layout: default
 ```mermaid
 gitGraph
   commit
-  branch richard-refactor
+  branch rosalind-refactor
   branch lizzie-feat
   checkout lizzie-feat
   commit
-  branch john-feat
+  branch jrob-feat
   checkout lizzie-feat
   commit
-  checkout john-feat
+  checkout jrob-feat
   commit
-  checkout richard-refactor
+  checkout rosalind-refactor
   commit
   branch hotfix
   checkout hotfix
@@ -336,10 +338,10 @@ gitGraph
   merge hotfix
   checkout lizzie-feat
   commit
-  checkout richard-refactor
+  checkout rosalind-refactor
   commit
   checkout lizzie-feat
-  checkout john-feat
+  checkout jrob-feat
   commit
   checkout main
   commit
@@ -438,9 +440,23 @@ hideInToc: true
 <br>
 <div v-click="5">
 
-- `git checkout feature-x`
-- `git commit `
+  `git switch feature-x`
+
+  `git commit`
 </div>
+
+
+
+<div v-click="7" class="absolute bottom-0 left-3 -rotate-3">
+  <div class="bg-orange-700 p-4 border-t-4 border-orange-800 w-100 flex flex-col items-center justify-center text-center">
+    
+`git switch` is the new recommended way to change between branches.  
+
+It works just like `git checkout` but is used **only** for changing branches.
+  </div>
+</div>
+
+
 </div>
 <div class="flex flex-col justify-around">
 <div v-click="4">
@@ -448,17 +464,17 @@ hideInToc: true
 stateDiagram-v2
   direction RL
 
-  state "Commit C3" as C3
+  state "Commit 1" as C1
 
   state "main" as main
   state "feature-x" as fx
 
-  main --> C3
-  fx --> C3
+  main --> C1 : branch
+  fx --> C1 : branch
 
   %% Styling
   class main,fx branch
-  class C4,C3 parent
+  class C2,C1 parent
 
   classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
   classDef parent stroke:#2563eb,color:#2563eb
@@ -472,21 +488,21 @@ stateDiagram-v2
 stateDiagram-v2
   direction RL
 
-  state "Commit C3" as C3
-  state "Commit C4" as C4
+  state "Commit 1" as C1
+  state "Commit 2" as C2
 
   state "main" as main
   state "feature-x" as fx
 
-  C4 --> C3 : parent
+  C2 --> C1 : parent
 
   %% Branch pointers (dashed, colored)
-  main --> C3 : branch
-  fx --> C4 : branch
+  main --> C1 : branch
+  fx --> C2 : branch
 
   %% Styling
   class main,fx branch
-  class C4,C3 parent
+  class C2,C1 parent
 
   classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
   classDef parent stroke:#2563eb,color:#2563eb
@@ -535,9 +551,9 @@ layout: two-cols-header
 graph TD
   Remote["Remote Repository<br/>(GitHub / GitLab)"]
 
-  DevA["Alice<br/>Local Repo"]
-  DevB["John<br/>Local Repo"]
-  DevC["Carol<br/>Local Repo"]
+  DevA["Enrico<br/>Local Repo"]
+  DevB["Cecilia<br/>Local Repo"]
+  DevC["Emmy<br/>Local Repo"]
 
   DevA <-->|push / pull| Remote
   DevB <-->|push / pull| Remote
@@ -670,11 +686,9 @@ layout: two-cols-header
 
 ::left::
 
-
-
 <div class="ml-4">
 
-<div v-click> 
+<!-- <div v-click> 
 
 ```mermaid
 gitGraph
@@ -690,7 +704,83 @@ gitGraph
   checkout main
   merge feature tag: "MR merged"
 ```
+</div> -->
+
+<div v-if="$clicks==1"> 
+
+```mermaid
+gitGraph
+  commit id: "main"
+  branch feature
+  checkout feature
+  
+```
 </div>
+
+<div v-if="$clicks==2"> 
+
+```mermaid
+gitGraph
+  commit id: "main"
+  branch feature
+  checkout feature
+  commit id: "feat: add todo item"
+  commit id: "refactor"
+```
+</div>
+
+<div v-if="$clicks==3 || $clicks==4 || $clicks==5 || $clicks==6"> 
+
+```mermaid
+gitGraph
+  commit id: "main"
+  branch feature
+  checkout feature
+  commit id: "feat: add todo item"
+  commit id: "refactor"
+  checkout main
+  commit id: "fix: bug"
+  checkout feature
+  merge main
+  
+```
+</div>
+
+<div v-if="$clicks==4"> 
+
+```mermaid
+gitGraph
+  commit id: "main"
+  checkout main 
+  commit id: "fix: bug"
+  branch feature
+  checkout feature
+  commit id: "feat: add todo item"
+  commit id: "refactor"
+  checkout main
+  checkout feature
+  
+```
+</div>
+
+<div v-if="$clicks==7"> 
+
+```mermaid
+gitGraph
+  commit id: "main"
+  branch feature
+  checkout feature
+  commit id: "feat: add todo item"
+  commit id: "refactor"
+  checkout main
+  commit id: "fix: bug"
+  checkout feature
+  merge main
+  checkout main
+  merge feature
+```
+</div>
+
 
 <div v-click="6" class="col-span-3 flex justify-center items-center">
 <div class="bg-blue-900 pa-2 h-50 w-60 border-t-4 border-blue-700 -rotate-2">
@@ -704,12 +794,12 @@ A merge/pull request is a way of saying to your team:
 
 ::right:: 
 
-<div v-show="$clicks >= 2" class="ml-2">
+<div v-if="$clicks >= 1" class="ml-2">
 
-```bash {0|1-3|5-7|9-10|12-13|15-16|18-21|all}
+```bash {0|1-3|5-7|9-10|9-10|12-13|15-16|18-21}
 git checkout main
 git pull origin main # update main
-git checkout -b feature # create your branch
+git switch -c feature # create your branch
 
 # Work locally
 git add files
@@ -721,11 +811,11 @@ git merge origin/main # (or rebase, depending on team)
 # Push your branch to the remote
 git push origin feature
 
-# Open a merge request / pull request
+# Open a merge request/pull request
 # Review → approve → merge
 
 # Update your local main after merge
-git checkout main
+git switch main
 git pull origin main
 # Your changes are visible!
 
@@ -777,7 +867,7 @@ layout: default
 
 </div>
 <div v-click="4">
-<Arrow x1="250" y1="210" x2="250" y2="270"/>
+<Arrow x1="250" y1="220" x2="250" y2="275"/>
 
 <div class="mt-15">
 
@@ -916,7 +1006,7 @@ gitGraph
 
 </div>
 
-<div v-click=4>
+<div class="mx-2" v-click=4>
 
 ```bash {all|1|1-}
 lizzie:~/mergeConflicts$ git merge lizzie/precise
@@ -959,27 +1049,26 @@ def caluculate_circumference(radius):
 ```
 </div>
 </div>
----
 
-```bash {1|-2|1-8|10|11|11-}
-lizzie:~/mergeConflicts$ git add circumference.py
-lizzie:~/mergeConflicts$ git status
-On branch main
-All conflicts fixed but you are still merging.
-  (use "git commit" to conclude merge)
+<div class="mx-2">
+<v-clicks>
 
-Changes to be committed:
-        modified:   circumference.py
+`git add circumference.py`
 
-lizzie:~/mergeConflicts$ git commit
-lizzie:~/mergeConflicts$ git log --oneline
+`git commit`
+
+`git log --oneline`
+
+```bash
 821d728 (HEAD -> main) Merge branch 'lizzie/precise'
 a76a9d8 (lizzie/lazy) fix: pi is three
 6c87760 (lizzie/precise) fix: make more precise
 68f5977 feat: Initial commit
 ```
-
+</v-clicks>
+</div>
 ---
+
 
 <slideTitle colour="teal-800">
 
