@@ -87,92 +87,7 @@ layout: section
 
 </div>
 
----
 
-<slideTitle colour="sky-800">
-
-## Git Areas
-</slideTitle>
-
-<div class="flex justify-center items-center h-100% scale-300">
-
-```mermaid
-sequenceDiagram
-    participant WD as Working Directory
-    participant SA as Staging Area
-    participant LR as Local Repository
-    participant RR as Remote Repository
-
-    WD->>SA: git add
-```
-</div>
-
----
-
-<slideTitle colour="sky-800">
-
-## Git Areas
-</slideTitle>
-
-<div class="flex justify-center items-center h-100% scale-300">
-
-```mermaid
-sequenceDiagram
-    participant WD as Working Directory
-    participant SA as Staging Area
-    participant LR as Local Repository
-    participant RR as Remote Repository
-
-    WD->>SA: git add
-    SA->>LR: git commit
-```
-</div>
-
----
-
-<slideTitle colour="sky-800">
-
-## Git Areas
-</slideTitle>
-
-<div class="flex justify-center items-center h-100% scale-300">
-
-```mermaid
-sequenceDiagram
-    participant WD as Working Directory
-    participant SA as Staging Area
-    participant LR as Local Repository
-    participant RR as Remote Repository
-
-    WD->>SA: git add
-    SA->>LR: git commit
-    LR->>RR: git push
-```
-</div>
-
----
-
-<slideTitle colour="sky-800">
-
-## Git Areas
-</slideTitle>
-
-<div class="flex justify-center items-center h-100% scale-300">
-
-```mermaid
-sequenceDiagram
-    participant WD as Working Directory
-    participant SA as Staging Area
-    participant LR as Local Repository
-    participant RR as Remote Repository
-
-    WD->>SA: git add
-    SA->>LR: git commit
-    LR->>RR: git push
-
-    RR->>LR: git fetch
-```
-</div>
 ---
 
 <slideTitle colour="sky-800">
@@ -203,6 +118,8 @@ sequenceDiagram
 
 `git pull` == `git fetch` + `git merge`
 </div>
+
+<!-- make it just of a reminder that the staging area exists, nothing leaves local repo until it is pushed -->
 ---
 
 <slideTitle colour="sky-800">
@@ -561,6 +478,14 @@ graph TD
 
 ```
 </v-click>
+
+<v-click>
+<div class="absolute bottom-10 right-10 -rotate-3">
+  <div class="bg-blue-700 p-6 border-t-4 w-80 border-blue-800 flex items-center justify-center text-center">
+    This could be you working on an HPC cluster, or on another computer. 
+  </div>
+</div>
+</v-click>
 ---
 layout: default
 ---
@@ -688,24 +613,6 @@ layout: two-cols-header
 
 <div class="ml-4">
 
-<!-- <div v-click> 
-
-```mermaid
-gitGraph
-  commit id: "main"
-  branch feature
-  checkout feature
-  commit id: "feat: add todo item"
-  commit id: "refactor"
-  checkout main
-  commit id: "fix: bug"
-  checkout feature
-  merge main tag: "merge in main"
-  checkout main
-  merge feature tag: "MR merged"
-```
-</div> -->
-
 <div v-if="$clicks==1"> 
 
 ```mermaid
@@ -797,8 +704,8 @@ A merge/pull request is a way of saying to your team:
 <div v-if="$clicks >= 1" class="ml-2">
 
 ```bash {0|1-3|5-7|9-10|9-10|12-13|15-16|18-21}
-git checkout main
-git pull origin main # update main
+git switch main
+git pull # update main
 git switch -c feature # create your branch
 
 # Work locally
@@ -816,7 +723,7 @@ git push origin feature
 
 # Update your local main after merge
 git switch main
-git pull origin main
+git pull
 # Your changes are visible!
 
 ```
@@ -844,56 +751,6 @@ layout: default
 </slideTitle>
 <Conflicts />
 
----
-layout: default
----
-
-<slideTitle colour="teal-800">
-
-## Anatomy of a Merge Conflict
-</slideTitle>
-
-<div class="grid grid-cols-2 gap-8 mx-2">
-<div>
-<div v-click>
-
-```typescript
- <<<<<< HEAD
- console.log("Hello from Main");
- ======
- console.log("Hello from Feature");
- >>>>>> feature-branch
-```
-
-</div>
-<div v-click="4">
-<Arrow x1="250" y1="220" x2="250" y2="275"/>
-
-<div class="mt-15">
-
-```typescript
-console.log("Hello from Feature")
-```
-</div>
-</div>
-
-</div> 
-<div>
-<v-click>
-
-- `<<<<<<< HEAD`: Your current version (the "Base").
-- `=======`: The divider between the two versions.
-- `>>>>>>> branch`: The incoming version you are trying to merge.
-
-</v-click>
-
-<div v-click="3">
-Delete the markers and pick the code you want to keep (or keep both!).
-
-This is the manual way to resolve conflicts
-</div>
-</div>
-</div>
 
 ---
 layout: default
@@ -912,8 +769,8 @@ We have three branches:
 <v-clicks>
 
 - `main` → current production logic (π ≈ 3.14)
-- `lizzie/lazy` → quick fix (π ≈ 3)
-- `lizzie/precise` → using (`math.pi`)
+- `lazy_dev` → quick fix (π ≈ 3)
+- `precise_dev` → using (`math.pi`)
 
 </v-clicks>
 </div>
@@ -924,11 +781,11 @@ We have three branches:
 ```mermaid
 gitGraph
   commit
-  branch lizzie/lazy
-  branch lizzie/precise
-  checkout lizzie/lazy
+  branch lazy_dev
+  branch precise_dev
+  checkout lazy_dev
   commit
-  checkout lizzie/precise
+  checkout precise_dev
   commit
 
 ```
@@ -943,7 +800,7 @@ gitGraph
 On branch `main`
 
 ```python
-def caluculate_circumference(radius):
+def calculate_circumference(radius):
     return(2*3.14*radius)
 ```
 </div>
@@ -951,18 +808,18 @@ def caluculate_circumference(radius):
 
 <div v-click>
 
-On branch `lizzie/lazy`
+On branch `lazy_dev`
 ```python
-def caluculate_circumference(radius):
+def calculate_circumference(radius):
     return(2*3*radius)
 ```
 
 </div>
 <div v-click>
 
-On branch `lizzie/precise`
+On branch `precise_dev`
 ```python
-def caluculate_circumference(radius):
+def calculate_circumference(radius):
     return(2*math.pi*radius)
 ```
 </div>
@@ -973,13 +830,14 @@ def caluculate_circumference(radius):
 
 ## Resolving Conflicts
 </slideTitle>
+
 <div class="grid grid-cols-3 mx-2">
 <div class="col-span-2">
 <v-click>
 
 ```bash {1-2|1-}
 # On branch main
-lizzie:~/mergeConflicts$ git merge lizzie/lazy
+lizzie:~/mergeConflicts$ git merge lazy_dev
 Updating 68f5977..a76a9d8
 Fast-forward
  circumference.py | 2 +-
@@ -987,33 +845,33 @@ Fast-forward
 
 ```
 </v-click>
-</div>
-<v-click>
 
-```mermaid
-gitGraph
-  commit
-  branch lizzie/lazy
-  branch lizzie/precise
-  checkout lizzie/lazy
-  commit
-  checkout lizzie/precise
-  commit
-  checkout main 
-  merge lizzie/lazy
-```
-</v-click>
-
-</div>
-
-<div class="mx-2" v-click=4>
+<div class="mt-10" v-click="4">
 
 ```bash {all|1|1-}
-lizzie:~/mergeConflicts$ git merge lizzie/precise
+lizzie:~/mergeConflicts$ git merge precise_dev
 Auto-merging circumference.py
 CONFLICT (content): Merge conflict in circumference.py
 Automatic merge failed; fix conflicts and then commit the result. 
 ```
+</div>
+</div>
+<div v-click="3">
+
+```mermaid
+gitGraph
+  commit
+  branch lazy_dev
+  branch precise_dev
+  checkout lazy_dev
+  commit
+  checkout precise_dev
+  commit
+  checkout main 
+  merge lazy_dev
+```
+</div>
+
 </div>
 
 ---
@@ -1031,12 +889,12 @@ layout: default
 open `circumference.py`
 
 ```python
-def caluculate_circumference(radius):
+def calculate_circumference(radius):
  <<<<<< HEAD
     return(2*3*radius)
 =======
     return(2*math.pi*radius)
->>>>>>> lizzie/precise
+>>>>>>> precise_dev
 ```
 </div>
 
@@ -1044,7 +902,7 @@ def caluculate_circumference(radius):
 
 And change it to be what we want
 ```python
-def caluculate_circumference(radius):
+def calculate_circumference(radius):
     return(2*math.pi*radius)
 ```
 </div>
@@ -1060,9 +918,9 @@ def caluculate_circumference(radius):
 `git log --oneline`
 
 ```bash
-821d728 (HEAD -> main) Merge branch 'lizzie/precise'
-a76a9d8 (lizzie/lazy) fix: pi is three
-6c87760 (lizzie/precise) fix: make more precise
+821d728 (HEAD -> main) Merge branch 'precise_dev'
+6c87760 (precise_dev) fix: make more precise
+a76a9d8 (lazy_dev) fix: pi is three
 68f5977 feat: Initial commit
 ```
 </v-clicks>
@@ -1079,23 +937,7 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 
 `git mergetool --tool=vimdiff`
 
-
----
-
 ![Alt text](/gif/vimdiff.gif)
-
----
-
-<slideTitle colour="teal-800">
-
-## Surely there is a better way than that?
-</slideTitle>
-
-- git has its own selection of merge tools
-
-`git mergetool --tool=meld`
-
-![Alt text](./image.png)
 
 ---
 
@@ -1107,6 +949,8 @@ a76a9d8 (lizzie/lazy) fix: pi is three
 - VSCode has its inline merge resolving
 ![Alt text](/gif/VSCodeinline.gif)
 
+
+
 - It also has its own Merge Editor 
 
 ---
@@ -1115,6 +959,8 @@ layout: default
 
 ![Alt text](/gif/VScodeHIGH.gif)
 
+
+<!-- Loads of other options too - inlcluding meld which is free -->
 ---
 
 
@@ -1136,7 +982,6 @@ layout: default
   - white space
   - import order
   - variable names
-  - ...
 
 </div>
 
@@ -1187,6 +1032,14 @@ layout: section
 ## and how to use them without breaking things
 
 
+<v-click>
+<div class="absolute bottom-10 right-3 -rotate-3">
+  <div class="bg-pink-700 pa-4 border-t-4 border-pink-800 w-70 flex items-center justify-center text-center">
+
+`HEAD~3` refers to the commit three steps before `HEAD`, found by traversing back through its parent commits.
+  </div>
+</div>
+</v-click>
 
 ---
 layout: two-cols-header
@@ -1208,10 +1061,9 @@ layout: default
 
 <div class="grid grid-cols-2 gap-2 mx-2">
 <div class="">
-<div class="text-red">
 
 `git log`
-</div>
+
 
 <div v-if="$clicks <= 2" v-click>
 
@@ -1247,10 +1099,8 @@ Date:   Mon Feb 2 17:11:40 2026 +0000
 
 <div>
 
-<div class="text-red">
-
 `git reflog`
-</div>
+
 
 <div v-if="$clicks <= 2" v-click="2" >
 
@@ -1418,7 +1268,7 @@ copying a commit
 
 <div v-click="5" class="mx-2">
 
-`git checkout main`
+`git switch feature`
 
 `git cherrypick abcde`
 </div>
@@ -1450,31 +1300,27 @@ layout: two-cols-header
 ## `git cherry-pick` 
 </slideTitle>
 
-<div class="opacity-50 mt-2 mb-8">
-"I just want that one specific commit"
-</div>
-
 ::left::
 <div class="ml-2">
 
 ### <carbon-thumbs-up class="text-green-500"/> Use Cases
 
-- **Hotfixes:** Porting a critical fix from `dev` to `production` immediately
+- Porting a critical fix from `dev` to `production` immediately
   
-- **Backports:** Moving a feature from a new version to an older branch
+- Moving a feature from a new version to an older branch
   
-- **Lost Work:** Recovering a single commit from a deleted or messy branch
+- Recovering a single commit from a deleted or messy branch
 </div>
 ::right::
 <div class="ml-2">
 <v-click>
 
 ### <carbon-warning-alt class="text-red-500"/> The Hidden Costs
-- **Duplicate changes**: The same change exists multiple times in history under different IDs
+- The same change exists multiple times in history under different IDs
   
-- **Merge Conflicts:** Can cause "ghost" conflicts later
+- You commit needs to contain everything that you need and be independent
   
-- **Workflow Issues:** Frequent use often means your **Feature Branching** strategy is breaking down
+- Frequent use often means your **Feature Branching** strategy is breaking down
 
 </v-click>
 </div>
@@ -1486,7 +1332,7 @@ layout: two-cols-header
 
 ## `git rebase` 
 </slideTitle>
-<div class="opacity-50 mt-2 mb-10">
+<div class="opacity-50 mt-2 mb-2">
 Replaying commits to create a linear history
 </div>
 
@@ -1526,10 +1372,11 @@ gitGraph
 ```
 </v-click>
 <div v-click class="mt-6">
-```bash
-git checkout feature
-git rebase main
-```
+
+`git switch feature`
+
+`git rebase main`
+
 </div>
 
 </div>
@@ -1679,7 +1526,7 @@ The simplest way to rewrite history.  It allows you to modify the **very last co
 </div>
 <div v-click class="mt-8 mx-2">
 
-When you just made a commit and suddently realise:
+When you just made a commit and suddenly realise:
 </div>
 <div class="mx-2">
 <v-clicks>
@@ -1724,75 +1571,9 @@ You forgot to add a file.
 </div>
 </div>
 
---- 
-layout: two-cols-header
----
-
-<slideTitle colour="indigo-900">
-
-## `git add --patch`
-</slideTitle>
-
-::left:: 
-
-<v-clicks>
-<div class="mx-2">
-
-Stop committing "everything in this file." Start committing **logical changes.**
-</div>
-
-<div class="mx-2">
-
-`git add -p` breaks your changes down into **hunks** (small chunks of code, like you see on github/gitlab). 
-
-Git will ask you: *"Do you want to stage this specific change?"*
-
-</div>
-</v-clicks>
-
-::right::
-
-<v-click>
-
-### Why use it?
-</v-click>
-
-<v-clicks>
-
-- Separate "feature work" from "other" work (tests, cleanup, refactor) in the same file
-  
--  Catch `console.log` or temporary hacks before they ever get staged - like a pre-review review
-  
-- It forces you to look at every single line you changed.
-
-</v-clicks>
----
-
-<slideTitle colour="indigo-900">
-
-## `git add --patch`
-</slideTitle>
-<div class="mx-2">
-
-When you run `git add --patch`, you'll see a diff and a prompt:
-`Stage this hunk [y, n, q, a, d, s, e, ?]?`
-
-
-| Key | Action | Result |
-| :--- | :--- | :--- |
-| **y** | Yes | Stage this hunk for the next commit|
-| **n** | No | Skip this hunk (keep it in your working directory)|
-| **s** | Split | Break this hunk into even smaller pieces|
-| **q** | Quit | Stop right here and keep what you've already staged|
-| **e** | Edit | Manually pick which lines to keep (The ultimate power) |
-</div>
-
----
-layout: full
-class: "pa-0"
----
-
-![Alt text](./gif/patchDemo.gif)
+<!--
+If you want to do something
+-->
 
 ---
 
@@ -1986,6 +1767,10 @@ a5f6ffb feat: implement step 2
 </v-clicks>
 </div>
 
+<!--
+You can also do something even more granular with small changes instead of whole commits you can use `git add --patch`
+-->
+
 ---
 layout: default
 ---
@@ -2060,7 +1845,7 @@ hideInToc: true
       <h3 class="p-0 m-0">The Toolbox</h3>
     </div>
     <p class="text-sm opacity-80">
-      From <code>--patch</code> to <code>--abort</code>, your toolkit is ready for any workflow disaster.
+      From <code>rebase -i </code> to <code>--abort</code>, your toolkit is ready for any workflow disaster.
     </p>
   </div>
 
@@ -2079,14 +1864,6 @@ hideInToc: true
   <p class="text-xl font-bold">Go and <code>--force-with-lease</code> responsibly!</p>
 </div>
 
-
---- 
-layout: cover
-hideInToc: true
---- 
-
-# Thank you! 
-## Any questions? 
 
 <div class="bg-purple-900"></div>
 <div class="bg-blue-900"></div>
