@@ -8,161 +8,14 @@ hideInToc: true
 
 <div class="bg-purple-900 w-100% py-2 px-2">
 
-# Git in Practice  
+# Git in Practice 
+
 ## Techniques for Collaborative Development
 
 </div>
 
----
+<!-- We all know why we use git -->
 
-<div class="bg-purple-900 pa-2">
-
-## Talk contents
-</div>
-
-<Toc class="ml-2 my-2" maxDepth="1"/>
-
----
-layout: section
----
-<sectionTitle colour="sky-800">
-
-# Basic Git Commands
-</sectionTitle>
-
-## The Git stuff you already know
-
----
-
-<slideTitle colour="sky-800">
-
-## Git Areas
-</slideTitle>
-
-<div class="grid grid-cols-2 gap-6 px-8 mt-8">
-
-  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
-    <h3 class="text-xl font-semibold mb-4  text-sky-300">
-      Working Directory
-    </h3>
-    <ul class="opacity-90">
-      <li>Where you write your code</li>
-      <li>Real files on disk</li>
-      <li>Not versioned yet</li>
-    </ul>
-  </div>
-
-  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
-    <h3 class="text-xl font-semibold mb-4  text-sky-300">
-      Staging Area
-    </h3>
-    <ul class="opacity-90">
-      <li>The “prepare” zone</li>
-      <li>Select what goes into the next commit</li>
-      <li>Controlled by <code>git add</code></li>
-    </ul>
-  </div>
-
-  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
-    <h3 class="text-xl font-semibold mb-4  text-sky-300">
-      Local Repository
-    </h3>
-    <ul class="opacity-90">
-      <li>Your local history</li>
-      <li>Fully versioned</li>
-      <li>Updated by <code>git commit</code></li>
-    </ul>
-  </div>
-
-  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
-    <h3 class="text-xl font-semibold mb-4  text-sky-300">
-      Remote Repository
-    </h3>
-    <ul class="opacity-90">
-      <li>Shared version on a server</li>
-      <li>Updated by <code>git push</code></li>
-      <li>Downloaded via <code>git fetch</code></li>
-    </ul>
-  </div>
-
-</div>
-
-
----
-
-<slideTitle colour="sky-800">
-
-## Git Areas
-</slideTitle>
-
-<div class="flex justify-center items-center h-95% scale-295">
-
-```mermaid
-sequenceDiagram
-    participant WD as Working Directory
-    participant SA as Staging Area
-    participant LR as Local Repository
-    participant RR as Remote Repository
-
-    WD->>SA: git add
-    SA->>LR: git commit
-    LR->>RR: git push
-
-    RR->>LR: git fetch
-    LR->>WD: git merge
-```
-
-</div>
-
-<div v-click class="absolute bottom-40 left-2 bg-sky-500 px-6 py-4 rounded-sm text-lg border-t-4 border-sky-800 -rotate-2">
-
-`git pull` == `git fetch` + `git merge`
-</div>
-
-<!-- make it just of a reminder that the staging area exists, nothing leaves local repo until it is pushed -->
----
-
-<slideTitle colour="sky-800">
-
-## What On Earth is Happening?
-</slideTitle>
-
-<div class="grid grid-cols-8 mx-4">
-<div class="col-span-5">
-
-<v-clicks>
-
-These are your **read-only** commands. Use them constantly to avoid the "How did I get here?" panic
-
-`git status`
-- Shows the difference between your Working Directory, Staging Area, and the current `HEAD`
-</v-clicks>
-
-<div v-click="5">
-
-`git log`
-</div>
-
-<div v-click="6">
-
-- Lists the history of commits that lead to where you are now
-</div>
-<div v-click="7">
-
-- `git log --oneline --graph` is the "human-readable" version that shows you the branch structure without the wall of text
-</div>
-
-</div>
-
-<div v-click="4" class="col-span-3 flex justify-center items-center">
-<div class="bg-sky-600 pa-4 h-50 w-60 border-t-4 border-sky-800 rotate-2">
-
-`HEAD` is a pointer to the current commit you’re working on
-
-Usually, it points to the tip of your current branch
-</div>
-</div>
-</div>
 ---
 layout: section
 ---
@@ -311,6 +164,7 @@ layout: two-cols-header
 
 ---
 layout: default
+hideInToc: true
 ---
 <slideTitle colour="green-900">
 
@@ -323,11 +177,100 @@ layout: default
 ---
 layout: section
 ---
+<sectionTitle colour="sky-800">
 
-<sectionTitle colour="orange-900">
-
-# How Git Actually Works
+# Basic Git Commands
 </sectionTitle>
+
+## The Git stuff you already know
+
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="grid grid-cols-2 gap-6 px-8 mt-8">
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Working Directory
+    </h3>
+    <ul class="opacity-90">
+      <li>Where you write your code</li>
+      <li>Real files on disk</li>
+      <li>Not versioned yet</li>
+    </ul>
+  </div>
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Staging Area
+    </h3>
+    <ul class="opacity-90">
+      <li>The “prepare” zone</li>
+      <li>Select what goes into the next commit</li>
+      <li>Controlled by <code>git add</code></li>
+    </ul>
+  </div>
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Local Repository
+    </h3>
+    <ul class="opacity-90">
+      <li>Your local history</li>
+      <li>Fully versioned</li>
+      <li>Updated by <code>git commit</code></li>
+    </ul>
+  </div>
+
+  <div v-click class="border border-slate-500  p-6 rounded-2xl ">
+    <h3 class="text-xl font-semibold mb-4  text-sky-300">
+      Remote Repository
+    </h3>
+    <ul class="opacity-90">
+      <li>Shared version on a server</li>
+      <li>Updated by <code>git push</code></li>
+      <li>Downloaded via <code>git fetch</code></li>
+    </ul>
+  </div>
+
+</div>
+
+---
+
+<slideTitle colour="sky-800">
+
+## Git Areas
+</slideTitle>
+
+<div class="flex justify-center items-center h-95% scale-295">
+
+```mermaid
+sequenceDiagram
+    participant WD as Working Directory
+    participant SA as Staging Area
+    participant LR as Local Repository
+    participant RR as Remote Repository
+
+    WD->>SA: git add
+    SA->>LR: git commit
+    LR->>RR: git push
+
+    RR->>LR: git fetch
+    LR->>WD: git merge
+```
+
+</div>
+
+<div v-click class="absolute bottom-40 left-2 bg-sky-500 px-6 py-4 rounded-sm text-lg border-t-4 border-sky-800 -rotate-2">
+
+`git pull` == `git fetch` + `git merge`
+</div>
+
+<!-- make it just of a reminder that the staging area exists, nothing leaves local repo until it is pushed -->
 
 ---
 layout: two-cols-header
@@ -335,10 +278,161 @@ src: ./pages/commit.md
 hideInToc: true
 ---
 
+---
+
+<slideTitle colour="sky-800">
+
+## What On Earth is Happening?
+</slideTitle>
+
+<div class="grid grid-cols-8 mx-4">
+<div class="col-span-5">
+
+<v-clicks>
+
+These are your **read-only** commands. Use them constantly to avoid the "How did I get here?" panic
+
+`git status`
+- Shows the difference between your Working Directory, Staging Area, and the current `HEAD`
+</v-clicks>
+
+<div v-click="5">
+
+`git log`
+</div>
+
+<div v-click="6">
+
+- Lists the history of commits that lead to where you are now
+</div>
+<div v-click="7">
+
+- `git log --oneline --graph` is the "human-readable" version that shows you the branch structure without the wall of text
+</div>
+
+</div>
+
+<div v-click="4" class="col-span-3 flex justify-center items-center">
+<div class="bg-sky-600 pa-4 h-50 w-60 border-t-4 border-sky-800 rotate-2">
+
+`HEAD` is a pointer to the current commit you’re working on
+
+Usually, it points to the tip of your current branch
+</div>
+</div>
+</div>
+
+
+
+--- 
+layout: section
+---
+
+<sectionTitle colour="teal-800">
+
+# Using Git in Teams
+</sectionTitle>
+
+---
+layout: two-cols-header
+---
+<slideTitle colour="teal-800">
+
+## How Teams Use Remotes
+</slideTitle>
+
+::left::
+<v-clicks class="mx-4">
+
+- Each developer works in a **local Git repository** on their own machine
+- Changes are committed **locally** first
+- A **shared remote repository** (GitHub / GitLab) is used to:
+  - Share work
+  - Integrate changes
+  - Review code
+- The  `main` branch on the remote is often treated as the **source of truth**
+
+</v-clicks>
+
+::right::
+<v-click>
+
+```mermaid
+graph TD
+  Remote["Remote Repository<br/>(GitHub / GitLab)"]
+
+  DevA["Enrico<br/>Local Repo"]
+  DevB["Cecilia<br/>Local Repo"]
+  DevC["Emmy<br/>Local Repo"]
+
+  DevA <-->|push / pull| Remote
+  DevB <-->|push / pull| Remote
+  DevC <-->|push / pull| Remote
+
+```
+</v-click>
+
+<v-click>
+<div class="absolute bottom-10 right-10 -rotate-3">
+  <div class="bg-teal-700 p-6 border-t-4 w-80 border-teal-800 flex items-center justify-center text-center">
+    This could be you working on an HPC cluster, or on another computer. 
+  </div>
+</div>
+</v-click>
+
+---
+layout: default
+---
+<slideTitle colour="teal-800">
+
+## Git Workflows
+</slideTitle>
+
+<div class="grid grid-cols-2 gap-4 ma-2">
+<v-clicks>
+<div class=" p-4 rounded-lg border-2 border-blue-400/10">
+
+* **Centralised:** 
+  * Everyone pushes to `main`
+  * Fast, but works best in small teams
+
+</div>
+<div class=" p-4 rounded-lg border-2 border-green-400/10">
+
+* **Trunk-Based:** 
+  * Short-lived branches with few commits 
+  * High speed, requires good testing and CI
+
+</div>
+<div class=" p-4 rounded-lg border-2 border-purple-400/10">
+
+* **Git Flow:** 
+  * Rigid, multi-branch system
+  * Great for scheduled releases, but *heavy*
+  * Not recommended anymore
+  
+</div>
+<div class=" p-4 rounded-lg border-2 border-orange-400/10">
+
+* **Forking:** 
+  * Everyone owns a server-side repository
+  * Common in Open Source - don't give everyone "write" access.
+
+</div>
+
+</v-clicks>
+</div>
+<v-click>
+<div class="ma-2 p-4 rounded-lg border-2 border-yellow-400/10 mt-4 flex justify-center">
+
+**Feature Branching** balances safety (code reviews) with speed (parallel work)
+
+</div>
+</v-click>
 
 ---
 
-<slideTitle colour="orange-900">
+<slideTitle colour="teal-800">
 
 ## Branches Are Just Pointers
 </slideTitle>
@@ -365,9 +459,9 @@ hideInToc: true
 
 
 <div v-click="7" class="absolute bottom-0 left-3 -rotate-3">
-  <div class="bg-orange-700 p-4 border-t-4 border-orange-800 w-100 flex flex-col items-center justify-center text-center">
+  <div class="bg-teal-700 p-4 border-t-4 border-teal-500 w-100 flex flex-col items-center justify-center text-center">
     
-`git switch` is the new recommended way to change between branches.  
+`git switch` is the recommended way to change between branches.  
 
 It works just like `git checkout` but is used **only** for changing branches.
   </div>
@@ -431,116 +525,11 @@ stateDiagram-v2
 
 <!-- branches arent folders -->
 
---- 
-layout: section
----
-
-<sectionTitle colour="blue-900">
-
-# Git Collaboration Workflows
-</sectionTitle>
-
----
-layout: two-cols-header
----
-<slideTitle colour="blue-900">
-
-## How Teams Use Git
-</slideTitle>
-
-::left::
-<v-clicks class="mx-4">
-
-- Each developer works in a **local Git repository** on their own machine
-- Changes are committed **locally** first
-- A **shared remote repository** (GitHub / GitLab) is used to:
-  - Share work
-  - Integrate changes
-  - Review code
-- The  `main` branch on the remote is often treated as the **source of truth**
-
-</v-clicks>
-
-::right::
-<v-click>
-
-```mermaid
-graph TD
-  Remote["Remote Repository<br/>(GitHub / GitLab)"]
-
-  DevA["Enrico<br/>Local Repo"]
-  DevB["Cecilia<br/>Local Repo"]
-  DevC["Emmy<br/>Local Repo"]
-
-  DevA <-->|push / pull| Remote
-  DevB <-->|push / pull| Remote
-  DevC <-->|push / pull| Remote
-
-```
-</v-click>
-
-<v-click>
-<div class="absolute bottom-10 right-10 -rotate-3">
-  <div class="bg-blue-700 p-6 border-t-4 w-80 border-blue-800 flex items-center justify-center text-center">
-    This could be you working on an HPC cluster, or on another computer. 
-  </div>
-</div>
-</v-click>
----
-layout: default
----
-<slideTitle colour="blue-900">
-
-## Git Workflows
-</slideTitle>
-
-<div class="grid grid-cols-2 gap-4 ma-2">
-<v-clicks>
-<div class=" p-4 rounded-lg border-2 border-blue-400/10">
-
-* **Centralised:** 
-  * Everyone pushes to `main`
-  * Fast, but works best in small teams
-
-</div>
-<div class=" p-4 rounded-lg border-2 border-green-400/10">
-
-* **Trunk-Based:** 
-  * Short-lived branches with few commits 
-  * High speed, requires good testing and CI
-
-</div>
-<div class=" p-4 rounded-lg border-2 border-purple-400/10">
-
-* **Git Flow:** 
-  * Rigid, multi-branch system
-  * Great for scheduled releases, but *heavy*
-  * Not recommended anymore
-  
-</div>
-<div class=" p-4 rounded-lg border-2 border-orange-400/10">
-
-* **Forking:** 
-  * Everyone owns a server-side repository
-  * Common in Open Source - don't give everyone "write" access.
-
-</div>
-
-</v-clicks>
-</div>
-<v-click>
-<div class="ma-2 p-4 rounded-lg border-2 border-yellow-400/10 mt-4 flex justify-center">
-
-**Feature Branching** balances safety (code reviews) with speed (parallel work)
-
-</div>
-</v-click>
-
 ---
 layout: two-cols-header
 ---
 
-<slideTitle colour="blue-900">
+<slideTitle colour="teal-800">
 
 ## Feature Branching
 </slideTitle>
@@ -604,9 +593,9 @@ Never commit to `main`
 layout: two-cols-header
 ---
 
-<slideTitle colour="blue-900">
+<slideTitle colour="teal-800">
 
-## A Typical Feature Branch Workflow with a Remote
+## A Typical Feature Branch Workflow with a Remote (Merge)
 </slideTitle>
 
 ::left::
@@ -690,7 +679,7 @@ gitGraph
 
 
 <div v-click="6" class="col-span-3 flex justify-center items-center">
-<div class="bg-blue-900 pa-2 h-50 w-60 border-t-4 border-blue-700 -rotate-2">
+<div class="bg-teal-900 pa-2 h-50 w-60 border-t-4 border-teal-700 -rotate-2">
 
 A merge/pull request is a way of saying to your team: 
 
@@ -731,34 +720,13 @@ git pull
 </div>
 
 ---
-layout: section
----
-
-<sectionTitle colour="teal-800">
-
-# Conflicts Happen 
-</sectionTitle>
-
-## Don't panic
-
----
 layout: default
 ---
 
-<slideTitle colour="teal-800">
-
-## Creation of a conflict
-</slideTitle>
-<Conflicts />
-
-
----
-layout: default
----
 
 <slideTitle colour="teal-800">
 
-## Our Example
+## What can possibly go wrong
 </slideTitle>
 
 <div class="grid grid-cols-2 mx-2">
@@ -828,7 +796,7 @@ def calculate_circumference(radius):
 
 <slideTitle colour="teal-800">
 
-## Resolving Conflicts
+## Merge Conflicts
 </slideTitle>
 
 <div class="grid grid-cols-3 mx-2">
@@ -908,7 +876,9 @@ def calculate_circumference(radius):
 </div>
 </div>
 
-<div class="mx-2">
+<div class="mx-2 grid grid-cols-2">
+<div>
+
 <v-clicks>
 
 `git add circumference.py`
@@ -925,6 +895,26 @@ a76a9d8 (lazy_dev) fix: pi is three
 ```
 </v-clicks>
 </div>
+
+<div v-click="7">
+
+```mermaid
+gitGraph
+  commit
+  branch lazy_dev
+  branch precise_dev
+  checkout lazy_dev
+  commit
+  checkout precise_dev
+  commit
+  checkout main 
+  merge lazy_dev
+  checkout main 
+  merge precise_dev
+```
+</div>
+</div>
+
 ---
 
 
@@ -1025,11 +1015,11 @@ layout: section
 ---
 <sectionTitle colour="pink-900">
 
-# Git Power Tools
+# Changing History
 </sectionTitle>
 
 
-## and how to use them without breaking things
+## without breaking things
 
 
 <v-click>
@@ -1041,209 +1031,6 @@ layout: section
 </div>
 </v-click>
 
----
-layout: two-cols-header
-src: pages/reset.md
----
-
----
-layout: default
----
-
-
-<slideTitle colour="pink-900">
-
-## `git reflog`
-</slideTitle>
-
-<span class="opacity-50 mt-2 mx-2">The annoying truth-telling version of `git log` 
-</span>
-
-<div class="grid grid-cols-2 gap-2 mx-2">
-<div class="">
-
-`git log`
-
-
-<div v-if="$clicks <= 2" v-click>
-
-- Shows the current HEAD and where it has been
-- It prints the commit HEAD points to, then its parent, its parent, and so on.
-
-</div>
-<div v-click="3">
-
-```bash
-commit e6edcdc (HEAD -> main, new-branch)
-Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
-Date:   Tue Feb 3 15:47:03 2026 +0000
-
-    feat: Add to do
-
-commit f6e25d1
-Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
-Date:   Mon Feb 2 17:12:44 2026 +0000
-
-    feat: new file (dont delete this)
-
-commit 9479df0
-Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
-Date:   Mon Feb 2 17:11:40 2026 +0000
-
-    feat: Initial To Do list
-
-```
-</div>
-
-</div>
-
-<div>
-
-`git reflog`
-
-
-<div v-if="$clicks <= 2" v-click="2" >
-
-- Shows an ordered list of the commits that HEAD has pointed to
-- It's a fully comprehensive history for your *local* repo
-- It means that nothing is permanently lost EVER
-
-</div>
-<div v-click="4">
-
-```bash
-e6edcdc (HEAD -> main, new-branch) HEAD@{0}: merge new-branch: Fast-forward
-f6e25d1 HEAD@{1}: checkout: moving from new-branch to main
-e6edcdc (HEAD -> main, new-branch) HEAD@{2}: commit (amend): feat: Add to do
-191f995 HEAD@{3}: commit: Add to do
-f6e25d1 HEAD@{4}: checkout: moving from main to new-branch
-f6e25d1 HEAD@{5}: reset: moving to f6e25d1
-9479df0 HEAD@{6}: reset: moving to HEAD~1
-f6e25d1 HEAD@{7}: commit: feat: new file (dont delete this)
-9479df0 HEAD@{8}: commit (initial): feat: Initial To Do list
-
-```
-</div>
-</div>
-</div>
-
-
----
-layout: two-cols-header
----
-<slideTitle colour="pink-900">
-
-## `git reflog` saving the day
-</slideTitle>
-
-::left::
-
-<div class="mx-2">
-
-```bash {all|1-2|4-6|7-9|10-12|13-17|18-20|21-24}
-$ git commit -m "feat: Initial To Do list"
-[main 9479df0] feat: Initial To Do list
-
-$ git commit -m "feat: new file (dont delete this)"
-[main f6e25d1] feat: new file (dont delete this)
-
-$ git reset --hard HEAD~1 # <--- disaster has struck!! 
-HEAD is now at 9479df0 feat: Initial To Do list
-
-$ git log --oneline
-9479df0 (HEAD -> main) feat: Initial To Do list
-
-$ git reflog
-9479df0 HEAD@{0}: reset: moving to HEAD~1
-f6e25d1 HEAD@{1}: commit: feat: new file (dont delete this)
-9479df0 HEAD@{2}: commit (initial): feat: Initial To Do list
-
-$ git reset --hard HEAD@{1}
-HEAD is now at f6e25d1 feat: new file (dont delete this)
-
-$ git log --oneline
-f6e25d1 (HEAD -> main) feat: new file (dont delete this)
-9479df0 feat: Initial To Do list
-```
-</div>
-
-::right::
-
-<div class="ma-2">
-
-<div v-click="5">
-
-- `9479df0`  is the 7-character short SHA of the commit.
-
-
-- `HEAD@{2}:` explains that this is the second prior position of the head
-
-  - `@{0}` is the current position of the head
-  - `@{1}` is the previous step
-- `commit` / `checkout` / `reset`
-  - This is the action that caused the move
-
-</div>
-</div>
-
-
-
-<div v-click="6" class="p-3 bg-blue-500/10 rounded border-l-4 border-blue-500 m-2">
-<div class=" leading-tight">
-  <b>Tip:</b> 
-  You can also use time-based notation: 
-
-- `main@{yesterday}`
-- `HEAD@{5.minutes.ago}`
-</div>
-</div>
----
-layout: default
----
-<slideTitle colour="pink-900">
-
-## Beyond undoing `reset`
-</slideTitle>
-
-<div class="opacity-50 -mt-2 mb-8 mx-2">
-
-When `git log` can't tell you what happened, `git reflog` can.
-</div>
-
-<div class="grid grid-cols-3 gap-4 mx-2">
-
-  <div v-click class="p-4 rounded-xl border border-orange-500/20 bg-orange-500/5">
-  <h3 class="font-bold mb-1 flex items-center"> <carbon-branch class="text-orange-400 text-2xl" /> Deleted Branch</h3>
-  <div class="text-sm opacity-80">
-  
-  You finished a feature, merged it, and <b>deleted the branch</b>. 
-  Suddenly, you realize you missed a file. 
-  </div>
-  </div>
-
-  <div v-click class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
-  <h3 class="font-bold mb-1 flex items-center"> <carbon-direction-merge class="text-blue-400 text-2xl" /> Messy Conflicts</h3>
-  <div class="text-sm opacity-80">
-    
-  You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
-  </div>
-  </div>
-
-  <div v-click class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5">
-
-  <h3 class="font-bold mb-1 flex items-center"><mdi-ghost-outline class="text-purple-400 text-2xl" />Lost Amend</h3>
-  
-  <div class="text-sm opacity-80">
-  
-  You used `git commit --amend` to fix a typo, but accidentally overwrote a bunch of good code in the process.
-  </div>
-  </div>
-
-</div>
-
-<div v-click class="p-4 text-center rounded-xl border border-purple-500/20 bg-pink-500/5 mt-4 mx-2">
-  If you committed it, it's in the reflog.
-</div>
 ---
 layout: two-cols-header
 ---
@@ -1303,7 +1090,7 @@ layout: two-cols-header
 ::left::
 <div class="ml-2">
 
-### <carbon-thumbs-up class="text-green-500"/> Use Cases
+### <carbon-thumbs-up class="text-green-500"/> Benefits
 
 - Porting a critical fix from `dev` to `production` immediately
   
@@ -1315,7 +1102,7 @@ layout: two-cols-header
 <div class="ml-2">
 <v-click>
 
-### <carbon-warning-alt class="text-red-500"/> The Hidden Costs
+### <carbon-warning-alt class="text-red-500"/> Trade-offs
 - The same change exists multiple times in history under different IDs
   
 - You commit needs to contain everything that you need and be independent
@@ -1425,6 +1212,94 @@ gitGraph
 </v-clicks>
 </div>
 
+
+
+---
+
+<slideTitle colour="pink-900">
+
+## Why rebasing is better than merging
+</slideTitle>
+
+<div class="grid grid-cols-2">
+<div>
+
+### `git merge`
+
+<v-click>
+
+```mermaid
+gitGraph
+  commit id: "init-commit"
+  branch feature
+  checkout feature
+  commit id: "my-feat"
+  checkout main
+  commit id: "bug-fix"
+```
+
+</v-click>
+<v-click>
+
+```mermaid
+gitGraph
+  commit id: "init-commit"
+  branch feature
+  checkout feature
+  commit id: "my-feat"
+  checkout main
+  commit id: "bug-fix"
+  checkout main 
+  merge feature id: "merge-feat"
+```
+
+</v-click>
+</div>
+
+<div >
+
+### `git rebase`
+<v-click>
+
+```mermaid
+gitGraph
+  commit id: "init-commit"
+  branch feature
+  checkout feature
+  commit id: "my-feat"
+  checkout main
+  commit id: "bug-fix"
+```
+
+</v-click>
+
+<div v-click="4" v-if="$clicks===4"> 
+```mermaid
+gitGraph
+  commit id: "init-commit"
+  commit id: "bug-fix"
+  branch feature
+  checkout feature
+  commit id: "my-feat"
+  checkout main
+```
+</div>
+
+<div v-click="5"> 
+
+```mermaid
+gitGraph
+  commit id: "init-commit"
+  commit id: "bug-fix"
+  commit id: "my-feat'"
+
+```
+
+</div>
+</div>
+</div>
+
+
 ---
 layout: default
 ---
@@ -1490,60 +1365,115 @@ Be very careful when rebasing in a team
 </v-click>
 </div>
 </div>
+
 ---
-layout: section
----
-
-<sectionTitle colour="indigo-900">
-
-# Shaping History Intentionally
-</sectionTitle>
-
-<div class="grid grid-cols-2">
-
-## Tell the story you want to tell
-
-<div v-click class="bg-red-500/10 border-2 mr-2 border-red-500/50 p-4 rounded-xl">
-<div class="text-red-400 mt-0 mb-3 gap-2">
-
-You have a lot of freedom to rewrite your history locally.
-<br>
-But be careful if it is on a shared branch that other people may have based work off of
-</div>
-</div>
-</div>
----
+layout: two-cols-header
+src: pages/reset.md
 ---
 
-<slideTitle colour="indigo-900">
+---
+layout: default
+---
 
-## `git commit --amend`
+
+<slideTitle colour="pink-900">
+
+## `git reflog`
 </slideTitle>
 
-<div class="mx-2">
+<span class="opacity-50 mt-2 mx-2">The annoying truth-telling version of `git log` 
+</span>
 
-The simplest way to rewrite history.  It allows you to modify the **very last commit** you made. 
+<div class="grid grid-cols-2 gap-2 mx-2">
+<div class="">
+
+`git log`
+
+
+<div v-if="$clicks <= 2" v-click>
+
+- Shows the current HEAD and where it has been
+- It prints the commit HEAD points to, then its parent, its parent, and so on.
+
 </div>
-<div v-click class="mt-8 mx-2">
+<div v-click="3">
 
-When you just made a commit and suddenly realise:
+```bash
+commit e6edcdc (HEAD -> main, new-branch)
+Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
+Date:   Tue Feb 3 15:47:03 2026 +0000
+
+    feat: Add to do
+
+commit f6e25d1
+Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
+Date:   Mon Feb 2 17:12:44 2026 +0000
+
+    feat: new file (dont delete this)
+
+commit 9479df0
+Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
+Date:   Mon Feb 2 17:11:40 2026 +0000
+
+    feat: Initial To Do list
+
+```
 </div>
-<div class="mx-2">
-<v-clicks>
 
-- You made a typo in the commit message
-  
-- You forgot to stage one tiny file
-  
-- You left a `console.log` or in the code
-  
-- You forgot to run the linter
-
-</v-clicks>
 </div>
+
+<div>
+
+`git reflog`
+
+
+<div v-if="$clicks <= 2" v-click="2" >
+
+- Shows an ordered list of the commits that HEAD has pointed to
+- It's a fully comprehensive history for your *local* repo
+- It means that nothing is permanently lost EVER
+
+</div>
+<div v-click="4">
+
+```bash
+e6edcdc (HEAD -> main, new-branch) HEAD@{0}: merge new-branch: Fast-forward
+f6e25d1 HEAD@{1}: checkout: moving from new-branch to main
+e6edcdc (HEAD -> main, new-branch) HEAD@{2}: commit (amend): feat: Add to do
+191f995 HEAD@{3}: commit: Add to do
+f6e25d1 HEAD@{4}: checkout: moving from main to new-branch
+f6e25d1 HEAD@{5}: reset: moving to f6e25d1
+9479df0 HEAD@{6}: reset: moving to HEAD~1
+f6e25d1 HEAD@{7}: commit: feat: new file (dont delete this)
+9479df0 HEAD@{8}: commit (initial): feat: Initial To Do list
+
+```
+</div>
+
+<div v-click="6" class="p-3 bg-blue-500/10 rounded border-l-4 border-blue-500 m-2">
+<div class=" leading-tight">
+  <b>Tip:</b> 
+  You can also use time-based notation: 
+
+- `main@{yesterday}`
+- `HEAD@{5.minutes.ago}`
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- When `git log` can't tell you what happened, `git reflog` can.
+
+You finished a feature, merged it, and <b>deleted the branch</b>. 
+  Suddenly, you realize you missed a file. 
+  You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
+   -->
+
+
 ---
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## `git commit --amend`
 </slideTitle>
@@ -1571,14 +1501,10 @@ You forgot to add a file.
 </div>
 </div>
 
-<!--
-If you want to do something
--->
-
 ---
 
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## Interactive Rebase
 </slideTitle>
@@ -1608,7 +1534,7 @@ If you want to do something
 </div>
 ---
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## `git rebase -i`
 </slideTitle>
@@ -1630,7 +1556,7 @@ e301f45 do step 3
 </div>
 ---
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## `git rebase -i`
 </slideTitle>
@@ -1660,7 +1586,7 @@ pick 0c76067 finally finished
 </div>
 ---
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## `git rebase -i`
 </slideTitle>
@@ -1680,7 +1606,7 @@ pick 0c76067 finally finished
 layout: default
 ---
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## `git rebase -i`
 </slideTitle>
@@ -1730,12 +1656,11 @@ This returns you safely to the exact state you were in before you started.
 </span>
 </div>
 
-
 ---
 layout: default
 ---
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## `git rebase -i`
 </slideTitle>
@@ -1775,7 +1700,7 @@ You can also do something even more granular with small changes instead of whole
 layout: default
 ---
 
-<slideTitle colour="indigo-900">
+<slideTitle colour="pink-900">
 
 ## `git push` with force
 </slideTitle>

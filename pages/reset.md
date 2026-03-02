@@ -47,19 +47,15 @@
 
 
 <div v-if="$clicks === 1">
-<div class="text-red">
+
 
 `git reset --soft HEAD~1`
 
-</div>
 
 Changes from 789112f are still in your Staging Area. Ready to be committed again!
 
-<div class="text-red">
 
 `git status` 
-
-</div>
 
 ```bash
 On branch main
@@ -72,22 +68,18 @@ Changes to be committed:
 
 <div v-if="$clicks === 2">
 
-<div class="text-red">
+
 
 `git reset --mixed HEAD~1`
-
-</div>
-<div class="text-lg">
 
 
 Changes from 789112f are now
 "modified" but not staged.
 
-  <div class="text-red">
 
   `git status`
 
-  </div>
+
 
 ```bash
 On branch main
@@ -100,16 +92,16 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 ```
 
-</div>
+
 
 </div>
 
 <div v-if="$clicks === 3">
-<div class="text-red">
+
 
 `git reset --hard HEAD~1`
 
-</div>
+
 <div class="bg-red-900/20 p-4 rounded border border-red-500/50 text-center">
 <carbon-trash-can class="text-3xl text-red-500 mx-auto mb-2" />
 <p class="text-md text-red-200">Files reverted to "initial" state.</p>

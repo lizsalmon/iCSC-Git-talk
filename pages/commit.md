@@ -1,6 +1,6 @@
 
 <!-- LEFT: Concepts -->
-<slideTitle colour="orange-900">
+<slideTitle colour="sky-800">
 
 ## Commits Are The Basis
 </slideTitle>
@@ -20,7 +20,7 @@
 
 <v-click>
 <div class="absolute bottom-10 left-3 -rotate-3">
-  <div class="bg-orange-700 p-6 border-t-4 border-orange-800 w-50 aspect-square flex items-center justify-center text-center">
+  <div class="bg-sky-700 p-6 border-t-4 border-sky-800 w-50 aspect-square flex items-center justify-center text-center">
     Change the parent, files, or metadata and you get a brand new commit!
   </div>
 </div>
