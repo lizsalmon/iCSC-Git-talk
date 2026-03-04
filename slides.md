@@ -270,7 +270,11 @@ sequenceDiagram
 `git pull` == `git fetch` + `git merge`
 </div>
 
-<!-- make it just of a reminder that the staging area exists, nothing leaves local repo until it is pushed -->
+<!--
+make it just of a reminder that the staging area exists, nothing leaves local repo until it is pushed
+
+If you like sequence diagrams
+-->
 
 ---
 layout: two-cols-header
@@ -307,8 +311,20 @@ These are your **read-only** commands. Use them constantly to avoid the "How did
 </div>
 <div v-click="7">
 
-- `git log --oneline --graph` is the "human-readable" version that shows you the branch structure without the wall of text
+- `git log --oneline --graph` is a "human-readable" version 
 </div>
+
+<div v-click="8">
+```bash
+*   4ef9557 (HEAD -> main) Merge branch 'precise_dev'
+|\
+| * a1b8571 (precise_dev) fix: make more precise
+* | f03a420 (lazy_dev) fix: pi is three
+|/
+* 0842057 feat: Initial commit
+```
+</div>
+
 
 </div>
 
@@ -336,6 +352,7 @@ layout: section
 ---
 layout: two-cols-header
 ---
+
 <slideTitle colour="teal-800">
 
 ## How Teams Use Remotes
@@ -380,9 +397,14 @@ graph TD
 </div>
 </v-click>
 
+<!--
+The linux kernel
+-->
+
 ---
 layout: default
 ---
+
 <slideTitle colour="teal-800">
 
 ## Git Workflows
@@ -429,6 +451,14 @@ layout: default
 
 </div>
 </v-click>
+
+<!--
+There are lots of different ways to use git - some formulated methods include the below
+
+Git is actually really flexible
+
+But people do it their own way
+-->
 
 ---
 
@@ -583,11 +613,15 @@ gitGraph
 Never commit to `main`
 </div>
 
-<!-- Okay maybe it is fine to commit to main if  
+<!--
+Separate changes that are unrelated
+
+Okay maybe it is fine to commit to main if  
 - Solo projects with discipline
 - Tiny obvious changes (README, config)
 - True emergency hotfixes
-- -->
+-
+-->
 
 ---
 layout: two-cols-header
@@ -625,7 +659,22 @@ gitGraph
 ```
 </div>
 
-<div v-if="$clicks==3 || $clicks==4 || $clicks==5 || $clicks==6"> 
+<div v-if="$clicks==3">
+
+```mermaid
+gitGraph
+  commit id: "main"
+  branch feature
+  checkout feature
+  commit id: "feat: add todo item"
+  commit id: "refactor"
+  checkout main
+  commit id: "fix: bug"
+  
+```
+</div>
+
+<div v-if=" $clicks==4 || $clicks==5 || $clicks==6"> 
 
 ```mermaid
 gitGraph
@@ -638,23 +687,6 @@ gitGraph
   commit id: "fix: bug"
   checkout feature
   merge main
-  
-```
-</div>
-
-<div v-if="$clicks==4"> 
-
-```mermaid
-gitGraph
-  commit id: "main"
-  checkout main 
-  commit id: "fix: bug"
-  branch feature
-  checkout feature
-  commit id: "feat: add todo item"
-  commit id: "refactor"
-  checkout main
-  checkout feature
   
 ```
 </div>
@@ -692,7 +724,7 @@ A merge/pull request is a way of saying to your team:
 
 <div v-if="$clicks >= 1" class="ml-2">
 
-```bash {0|1-3|5-7|9-10|9-10|12-13|15-16|18-21}
+```bash {0|1-3|5-7|9|10|12-13|15-16|18-21}
 git switch main
 git pull # update main
 git switch -c feature # create your branch
@@ -702,7 +734,7 @@ git add files
 git commit -m "feat: add new todo item"
 
 git fetch origin # update your local version of main
-git merge origin/main # (or rebase, depending on team)
+git merge origin/main # (optionally!)
 
 # Push your branch to the remote
 git push origin feature
@@ -718,6 +750,10 @@ git pull
 ```
 
 </div>
+
+<!--
+If you are on a busy project people may have pushed in between you resolving conflicts and merging - so some people just dont bother
+-->
 
 ---
 layout: default
@@ -809,7 +845,7 @@ lizzie:~/mergeConflicts$ git merge lazy_dev
 Updating 68f5977..a76a9d8
 Fast-forward
  circumference.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-) # This is a successful merge :) 
+ 1 file changed, 1 insertion(+), 1 deletion(-) # This is a fast forward merge
 
 ```
 </v-click>
@@ -885,13 +921,15 @@ def calculate_circumference(radius):
 
 `git commit`
 
-`git log --oneline`
+`git log --oneline --graph`
 
 ```bash
-821d728 (HEAD -> main) Merge branch 'precise_dev'
-6c87760 (precise_dev) fix: make more precise
-a76a9d8 (lazy_dev) fix: pi is three
-68f5977 feat: Initial commit
+*   4ef9557 (HEAD -> main) Merge branch 'precise_dev'
+|\
+| * a1b8571 (precise_dev) fix: make more precise
+* | f03a420 (lazy_dev) fix: pi is three
+|/
+* 0842057 feat: Initial commit
 ```
 </v-clicks>
 </div>
@@ -1030,6 +1068,36 @@ layout: section
   </div>
 </div>
 </v-click>
+---
+
+<slideTitle colour="pink-900">
+
+## `git commit --amend`
+</slideTitle>
+<div class="mx-2">
+
+Instead of creating a **new** small "typo" commit, you update the previous one.
+</div>
+
+<div class="grid grid-cols-2 gap-4 mt-4 text-left mx-2">
+<div v-click class="bg-gray-500/5 p-4 rounded border border-white/10">
+<h3 class="text-purple-400 mb-2">Scenario A: Fix the Message</h3>
+You just want to change the text.
+
+`git commit --amend -m "New better message"`
+</div>
+<div v-click class="bg-gray-500/5 p-4 rounded border border-white/10">
+<h3 class="text-pink-400 mb-2">Scenario B: Add Files</h3>
+You forgot to add a file.
+
+`git add forgotten-file.ts`
+
+`git commit --amend --no-edit`
+
+(`--no-edit` keeps the existing message)
+</div>
+</div>
+
 
 ---
 layout: two-cols-header
@@ -1090,7 +1158,7 @@ layout: two-cols-header
 ::left::
 <div class="ml-2">
 
-### <carbon-thumbs-up class="text-green-500"/> Benefits
+### <carbon-thumbs-up class="text-green-500"/> Use Cases
 
 - Porting a critical fix from `dev` to `production` immediately
   
@@ -1195,6 +1263,20 @@ layout: two-cols-header
 <div class="mx-2">
 
 ```mermaid
+
+gitGraph
+  commit id: "A"
+  branch feature
+  checkout feature
+  commit id: "B"
+  commit id: "C"
+  commit id: "D"
+  switch main
+  commit id: "E"
+
+```
+
+```mermaid
 gitGraph
   commit id: "A"
   commit id: "E"
@@ -1218,7 +1300,7 @@ gitGraph
 
 <slideTitle colour="pink-900">
 
-## Why rebasing is better than merging
+## Rebasing vs merging
 </slideTitle>
 
 <div class="grid grid-cols-2">
@@ -1280,7 +1362,7 @@ gitGraph
   commit id: "bug-fix"
   branch feature
   checkout feature
-  commit id: "my-feat"
+  commit id: "my-feat'"
   checkout main
 ```
 </div>
@@ -1299,6 +1381,9 @@ gitGraph
 </div>
 </div>
 
+<!--
+You lose the knowledge that this was where a branch was merged in
+-->
 
 ---
 layout: default
@@ -1452,7 +1537,6 @@ f6e25d1 HEAD@{7}: commit: feat: new file (dont delete this)
 
 <div v-click="6" class="p-3 bg-blue-500/10 rounded border-l-4 border-blue-500 m-2">
 <div class=" leading-tight">
-  <b>Tip:</b> 
   You can also use time-based notation: 
 
 - `main@{yesterday}`
@@ -1470,36 +1554,6 @@ You finished a feature, merged it, and <b>deleted the branch</b>.
   You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
    -->
 
-
----
-
-<slideTitle colour="pink-900">
-
-## `git commit --amend`
-</slideTitle>
-<div class="mx-2">
-
-Instead of creating a **new** small "typo" commit, you update the previous one.
-</div>
-
-<div class="grid grid-cols-2 gap-4 mt-4 text-left mx-2">
-<div v-click class="bg-gray-500/5 p-4 rounded border border-white/10">
-<h3 class="text-purple-400 mb-2">Scenario A: Fix the Message</h3>
-You just want to change the text.
-
-`git commit --amend -m "New better message"`
-</div>
-<div v-click class="bg-gray-500/5 p-4 rounded border border-white/10">
-<h3 class="text-pink-400 mb-2">Scenario B: Add Files</h3>
-You forgot to add a file.
-
-`git add forgotten-file.ts`
-
-`git commit --amend --no-edit`
-
-(`--no-edit` keeps the existing message)
-</div>
-</div>
 
 ---
 
@@ -1551,6 +1605,7 @@ d5f50ae figured it out!!
 296fdf7 step 2
 e301f45 do step 3
 11499a4 why is step 1 not working
+35218b6 Add debugging commands
 8d29336 feat: implement step 1
 ```
 </div>
@@ -1571,6 +1626,7 @@ e301f45 do step 3
 
 ```bash
 pick 8d29336 feat: implement step 1
+pick 35218b6 Add debugging commands
 pick 11499a4 why is step 1 not working
 pick e301f45 do step 3
 pick 296fdf7 step 2
@@ -1614,9 +1670,10 @@ layout: default
 <div class="grid grid-cols-2 mx-2">
 <div class="mr-2">
 
-```bash {1|-2|-4||-9}
+```bash {1|-2|-3|-5|}
 pick 8d29336 feat: implement step 1 # Keep this one
 fixup 11499a4 why is step 1 not working # Squash above
+drop 35218b6 Add debugging commands #drop this commit
 reword 296fdf7 step 2 # swap commits round and reword
 r e301f45 do step 3 
 f 031def5 refactor # fixup all the rest into one commit
@@ -1694,6 +1751,8 @@ a5f6ffb feat: implement step 2
 
 <!--
 You can also do something even more granular with small changes instead of whole commits you can use `git add --patch`
+
+Makes life easier for the reviewer, not just about making yourself look sane
 -->
 
 ---

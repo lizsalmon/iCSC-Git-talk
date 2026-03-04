@@ -1,4 +1,3 @@
-
 <slideTitle colour="pink-900">
 
 ## `git reset`
@@ -114,3 +113,9 @@ HEAD is now at 129bb28 feat: Initial ToDo list
 </div>
 </div>
 </div>
+
+<!--
+Useful if you have accidentally committed to main or are doing a code review on someone elses branch 
+
+Hard is essentially moving a branch label from one commit to another
+-->

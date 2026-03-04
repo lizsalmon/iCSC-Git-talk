@@ -11,9 +11,9 @@
 <v-clicks>
 
 - A snapshot of the state of <strong>all tracked files</strong>
-  - Dont worry git keeps it small
-  - Includes the files that are added to the staging area 
+  - git keeps it small
   - It also includes the unchanged files 
+- Can just be thought of as a set of diffs
 - With some extra metadata
 - And a pointer to a parent commit
 </v-clicks>
@@ -32,7 +32,7 @@
 <div class="space-y-4">
 
 
-<div v-click="3" class="rounded-lg bg-purple-500/20 p-3 text-sm">
+<div v-click="4" class="rounded-lg bg-purple-500/20 p-3 text-sm">
 Parent commit
 <br>
 (state of the files at the last commit)
@@ -50,7 +50,7 @@ Parent commit
 # file-three.py 
 ```
 
-<div v-click="2" class="mt-2 text-sm">
+<div v-click="3" class="mt-2 text-sm">
   <div><strong>Author:</strong> Lizzie</div>
   <div><strong>Date:</strong> Today</div>
   <div><strong>Message:</strong> “Changing my new files”</div>
@@ -60,7 +60,7 @@ Parent commit
 </div>
 </div>
 
-<Arrow v-click="3" x1="700" y1="225" x2="700" y2="175" />
+<Arrow v-click="4" x1="700" y1="225" x2="700" y2="175" />
 
 </div>
 </div>
