@@ -3,8 +3,6 @@
 ## `git reset`
 </slideTitle>
 
-<p class="opacity-50 mt-2">Rewinding the clock</p>
-
 <div class="grid grid-cols-5">
 
 <div class="col-span-2">

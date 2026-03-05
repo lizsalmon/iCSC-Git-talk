@@ -80,8 +80,8 @@ layout: default
 <v-clicks class="col-span-1">
 
 - You are 4 commits ahead
-- J Robert force-pushed his hotfix
-- Rosalind's refactor has been approved
+-  [J Robert](https://en.wikipedia.org/wiki/J._Robert_Oppenheimer) force-pushed his hotfix
+- [Rosalind](https://en.wikipedia.org/wiki/Rosalind_Franklin)'s refactor has been approved
 - Nobody has pulled in 3 days
 
 </v-clicks>
@@ -286,7 +286,105 @@ hideInToc: true
 
 <slideTitle colour="sky-800">
 
-## What On Earth is Happening?
+## Branches as Pointers
+</slideTitle>
+
+<div class="grid grid-cols-2 gap-6 mx-2 h-90%">
+
+
+<div>
+<v-clicks>
+
+- A branch is just a tag that gets passed along from parent to child 
+- No copies, no magic 
+- Multiple branches can point to the same commit
+
+</v-clicks>
+<br>
+<div v-click="5">
+
+  `git switch feature-x`
+
+  `git commit`
+</div>
+
+
+
+<div v-click="7" class="absolute bottom-0 left-3 -rotate-3">
+  <div class="bg-sky-700 p-4 border-t-4 border-sky-500 w-100 flex flex-col items-center justify-center text-center">
+    
+`git switch` is the recommended way to change between branches.  
+
+It works just like `git checkout` but is used **only** for changing branches.
+  </div>
+</div>
+
+
+</div>
+<div class="flex flex-col justify-around">
+<div v-click="4">
+```mermaid
+stateDiagram-v2
+  direction RL
+
+  state "Commit 1" as C1
+
+  state "main" as main
+  state "feature-x" as fx
+
+  main --> C1 : branch
+  fx --> C1 : branch
+
+  %% Styling
+  class main,fx branch
+  class C2,C1 parent
+
+  classDef branch stroke:#f59e0b,color:#f59e0b
+  classDef parent stroke:#2563eb,color:#2563eb
+```
+
+</div>
+<div v-click="6">
+
+
+```mermaid
+stateDiagram-v2
+  direction RL
+
+  state "Commit 1" as C1
+  state "Commit 2" as C2
+
+  state "main" as main
+  state "feature-x" as fx
+
+  
+
+  %% Branch pointers (dashed, colored)
+  main --> C1 : branch
+  fx --> C2 : branch
+
+  C2 --> C1 : parent
+
+  %% Styling
+  class main,fx branch
+  class C2,C1 parent
+
+  classDef branch stroke:#f59e0b,color:#f59e0b
+  classDef parent stroke:#2563eb,color:#2563eb
+
+```
+</div>
+</div>
+</div>
+
+<!-- branches arent folders -->
+
+
+---
+
+<slideTitle colour="sky-800">
+
+## Panic Commands
 </slideTitle>
 
 <div class="grid grid-cols-8 mx-4">
@@ -316,10 +414,10 @@ These are your **read-only** commands. Use them constantly to avoid the "How did
 
 <div v-click="8">
 ```bash
-*   4ef9557 (HEAD -> main) Merge branch 'precise_dev'
+*   4ef9557 (HEAD -> main) Merge branch 'katherine/feat'
 |\
-| * a1b8571 (precise_dev) fix: make more precise
-* | f03a420 (lazy_dev) fix: pi is three
+| * a1b8571 (katherine/feat) fix: make more precise
+* | f03a420 (thomas/feat) fix: pi is three
 |/
 * 0842057 feat: Initial commit
 ```
@@ -397,6 +495,14 @@ graph TD
 </div>
 </v-click>
 
+
+<div v-click="5" class="absolute bottom--2 right-15 text-sm text-gray-600" >
+
+[Enrico](https://en.wikipedia.org/wiki/Enrico_Fermi),
+[Cecilia ](https://en.wikipedia.org/wiki/Cecilia_Payne-Gaposchkin),
+[Emmy](https://en.wikipedia.org/wiki/Emmy_Noether)
+</div>
+
 <!--
 The linux kernel
 -->
@@ -459,101 +565,6 @@ Git is actually really flexible
 
 But people do it their own way
 -->
-
----
-
-<slideTitle colour="teal-800">
-
-## Branches Are Just Pointers
-</slideTitle>
-
-<div class="grid grid-cols-2 gap-6 mx-2 h-90%">
-
-
-<div>
-<v-clicks>
-
-- A branch is just an extra piece of metadata that gets passed along from parent to child 
-- No copies, no magic 
-- Multiple branches can point to the same commit
-
-</v-clicks>
-<br>
-<div v-click="5">
-
-  `git switch feature-x`
-
-  `git commit`
-</div>
-
-
-
-<div v-click="7" class="absolute bottom-0 left-3 -rotate-3">
-  <div class="bg-teal-700 p-4 border-t-4 border-teal-500 w-100 flex flex-col items-center justify-center text-center">
-    
-`git switch` is the recommended way to change between branches.  
-
-It works just like `git checkout` but is used **only** for changing branches.
-  </div>
-</div>
-
-
-</div>
-<div class="flex flex-col justify-around">
-<div v-click="4">
-```mermaid
-stateDiagram-v2
-  direction RL
-
-  state "Commit 1" as C1
-
-  state "main" as main
-  state "feature-x" as fx
-
-  main --> C1 : branch
-  fx --> C1 : branch
-
-  %% Styling
-  class main,fx branch
-  class C2,C1 parent
-
-  classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
-  classDef parent stroke:#2563eb,color:#2563eb
-```
-
-</div>
-<div v-click="6">
-
-
-```mermaid
-stateDiagram-v2
-  direction RL
-
-  state "Commit 1" as C1
-  state "Commit 2" as C2
-
-  state "main" as main
-  state "feature-x" as fx
-
-  C2 --> C1 : parent
-
-  %% Branch pointers (dashed, colored)
-  main --> C1 : branch
-  fx --> C2 : branch
-
-  %% Styling
-  class main,fx branch
-  class C2,C1 parent
-
-  classDef branch stroke:#f59e0b,stroke-dasharray: 5 5,color:#f59e0b
-  classDef parent stroke:#2563eb,color:#2563eb
-
-```
-</div>
-</div>
-</div>
-
-<!-- branches arent folders -->
 
 ---
 layout: two-cols-header
@@ -773,8 +784,8 @@ We have three branches:
 <v-clicks>
 
 - `main` → current production logic (π ≈ 3.14)
-- `lazy_dev` → quick fix (π ≈ 3)
-- `precise_dev` → using (`math.pi`)
+- `thomas/feat` → quick fix (π ≈ 3)
+- `katherine/feat` → using (`math.pi`)
 
 </v-clicks>
 </div>
@@ -785,11 +796,11 @@ We have three branches:
 ```mermaid
 gitGraph
   commit
-  branch lazy_dev
-  branch precise_dev
-  checkout lazy_dev
+  branch thomas/feat
+  branch katherine/feat
+  checkout thomas/feat
   commit
-  checkout precise_dev
+  checkout katherine/feat
   commit
 
 ```
@@ -812,7 +823,7 @@ def calculate_circumference(radius):
 
 <div v-click>
 
-On branch `lazy_dev`
+On branch `thomas/feat`
 ```python
 def calculate_circumference(radius):
     return(2*3*radius)
@@ -821,12 +832,18 @@ def calculate_circumference(radius):
 </div>
 <div v-click>
 
-On branch `precise_dev`
+On branch `katherine/feat`
 ```python
 def calculate_circumference(radius):
     return(2*math.pi*radius)
 ```
 </div>
+</div>
+
+<div v-click="2" class="absolute bottom--2 right-15 text-sm text-gray-600" >
+
+[Thomas](https://en.wikipedia.org/wiki/Thomas_Edison),
+[Katherine](https://en.wikipedia.org/wiki/Katherine_Johnson)
 </div>
 ---
 
@@ -841,7 +858,7 @@ def calculate_circumference(radius):
 
 ```bash {1-2|1-}
 # On branch main
-lizzie:~/mergeConflicts$ git merge lazy_dev
+lizzie:~/mergeConflicts$ git merge thomas/feat
 Updating 68f5977..a76a9d8
 Fast-forward
  circumference.py | 2 +-
@@ -853,7 +870,7 @@ Fast-forward
 <div class="mt-10" v-click="4">
 
 ```bash {all|1|1-}
-lizzie:~/mergeConflicts$ git merge precise_dev
+lizzie:~/mergeConflicts$ git merge katherine/feat
 Auto-merging circumference.py
 CONFLICT (content): Merge conflict in circumference.py
 Automatic merge failed; fix conflicts and then commit the result. 
@@ -865,17 +882,23 @@ Automatic merge failed; fix conflicts and then commit the result.
 ```mermaid
 gitGraph
   commit
-  branch lazy_dev
-  branch precise_dev
-  checkout lazy_dev
+  branch thomas/feat
+  branch katherine/feat
+  checkout thomas/feat
   commit
-  checkout precise_dev
+  checkout katherine/feat
   commit
   checkout main 
-  merge lazy_dev
+  merge thomas/feat
 ```
 </div>
 
+</div>
+
+<div class="absolute bottom--2 right-15 text-sm text-gray-600" >
+
+[Thomas](https://en.wikipedia.org/wiki/Thomas_Edison),
+[Katherine](https://en.wikipedia.org/wiki/Katherine_Johnson)
 </div>
 
 ---
@@ -892,30 +915,28 @@ layout: default
 
 open `circumference.py`
 
+````md magic-move{at:2}
 ```python
 def calculate_circumference(radius):
  <<<<<< HEAD
     return(2*3*radius)
 =======
     return(2*math.pi*radius)
->>>>>>> precise_dev
+>>>>>>> katherine/feat
 ```
-</div>
-
-<div v-click>
-
-And change it to be what we want
 ```python
 def calculate_circumference(radius):
     return(2*math.pi*radius)
 ```
+````
+
 </div>
 </div>
 
 <div class="mx-2 grid grid-cols-2">
 <div>
 
-<v-clicks>
+<v-clicks at="3">
 
 `git add circumference.py`
 
@@ -924,10 +945,10 @@ def calculate_circumference(radius):
 `git log --oneline --graph`
 
 ```bash
-*   4ef9557 (HEAD -> main) Merge branch 'precise_dev'
+*   4ef9557 (HEAD -> main) Merge branch 'katherine/feat'
 |\
-| * a1b8571 (precise_dev) fix: make more precise
-* | f03a420 (lazy_dev) fix: pi is three
+| * a1b8571 (katherine/feat) fix: make more precise
+* | f03a420 (thomas/feat) fix: pi is three
 |/
 * 0842057 feat: Initial commit
 ```
@@ -939,18 +960,24 @@ def calculate_circumference(radius):
 ```mermaid
 gitGraph
   commit
-  branch lazy_dev
-  branch precise_dev
-  checkout lazy_dev
+  branch thomas/feat
+  branch katherine/feat
+  checkout thomas/feat
   commit
-  checkout precise_dev
+  checkout katherine/feat
   commit
   checkout main 
-  merge lazy_dev
+  merge thomas/feat
   checkout main 
-  merge precise_dev
+  merge katherine/feat
 ```
 </div>
+</div>
+
+<div class="absolute bottom--2 right-15 text-sm text-gray-600" >
+
+[Thomas](https://en.wikipedia.org/wiki/Thomas_Edison),
+[Katherine](https://en.wikipedia.org/wiki/Katherine_Johnson)
 </div>
 
 ---
@@ -1107,11 +1134,6 @@ layout: two-cols-header
 ## `git cherry-pick` 
 </slideTitle>
 
-<div class="opacity-50 -mt-2 mb-8 mx-2 ">
-
-copying a commit
-</div>
-
 ::left:: 
 
 <v-clicks class="mx-2">
@@ -1142,7 +1164,7 @@ gitGraph
   checkout main
   commit id: "abcde"
   checkout feature
-  commit type: HIGHLIGHT id: "abcde'"
+  commit type: HIGHLIGHT id: "abcde#"
 ```
 </v-click>
 
@@ -1187,9 +1209,6 @@ layout: two-cols-header
 
 ## `git rebase` 
 </slideTitle>
-<div class="opacity-50 mt-2 mb-2">
-Replaying commits to create a linear history
-</div>
 
 ::left::
 <div class="mx-2">
@@ -1282,13 +1301,13 @@ gitGraph
   commit id: "E"
   branch feature
   checkout feature
-  commit id: "B'"
-  commit id: "C'"
-  commit id: "D'"
+  commit id: "B#"
+  commit id: "C#"
+  commit id: "D#"
 ```
 <v-clicks>
 
-- `B'`, `C'`, `D'` are **new commits**
+- `B#`, `C#`, `D#` are **new commits**
 - They contain the same changes, but have different hashes as the commits have different parents
 
 </v-clicks>
@@ -1391,7 +1410,7 @@ layout: default
 
 <slideTitle colour="pink-900">
 
-## Why `git rebase` 
+## Rebasing vs Merging
 </slideTitle>
 
 <div class="grid grid-cols-2 gap-8 mt-4 mx-2">
@@ -1399,7 +1418,7 @@ layout: default
 
 <div class="space-y-4">
 
-### <carbon-thumbs-up class="text-green-500"/> Benefits
+### `git rebase`
 - **Linear, readable history**
   
 - Easier `git log` and `git bisect`
@@ -1409,12 +1428,12 @@ layout: default
 
 <div class="space-y-4">
 
-### <carbon-warning-alt class="text-red-500"/> Trade-offs
-- Rewrites commit history
+### `git merge`
+- More comprehensive history
   
-- Changes commit hashes
+- No rewriting of history
   
-- Can confuse collaborators
+- Easier to understand and use
 </div>
 </v-clicks>
 </div>
@@ -1466,7 +1485,7 @@ layout: default
 ## `git reflog`
 </slideTitle>
 
-<span class="opacity-50 mt-2 mx-2">The annoying truth-telling version of `git log` 
+<span class="mt-2 mx-2">The annoying truth-telling version of `git log` 
 </span>
 
 <div class="grid grid-cols-2 gap-2 mx-2">
