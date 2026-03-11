@@ -990,7 +990,6 @@ gitGraph
   commit tag: "thomas/feat"
   checkout main 
   merge katherine/feat
-  
 ```
 </div>
 </div>
@@ -1013,7 +1012,13 @@ gitGraph
 
 `git mergetool --tool=vimdiff`
 
-![Alt text](/gif/vimdiff.gif)
+---
+
+<div class="absolute bottom-1 scale-70">
+
+![Alt text](/gif/11-03-vimdiff.gif)
+
+</div>
 
 ---
 
@@ -1023,7 +1028,7 @@ gitGraph
 </slideTitle>
 
 - VSCode has its inline merge resolving
-![Alt text](/gif/VSCodeinline.gif)
+![Alt text](/gif/11-03-inline.gif)
 
 
 
@@ -1033,7 +1038,7 @@ gitGraph
 layout: default
 ---
 
-![Alt text](/gif/VScodeHIGH.gif)
+![Alt text](/gif/11-03-mergeeditor.gif)
 
 
 <!-- Loads of other options too - inlcluding meld which is free -->
