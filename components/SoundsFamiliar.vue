@@ -13,7 +13,7 @@
         </h3>
       </div>
       <p class="text-sm opacity-80">
-        Peek under the hood to understand how Git actually works, beyond just memorizing commands.
+        Understand how Git actually works, beyond just memorizing commands.
       </p>
     </div>
 
@@ -25,7 +25,7 @@
         </h3>
       </div>
       <p class="text-sm opacity-80">
-        Stop fearing merge conflicts. Learn resolutions and the tricks to prevent them entirely.
+        Stop fearing merge conflicts. Learn how to resolve them and some tips to prevent them entirely.
       </p>
     </div>
 
@@ -37,7 +37,7 @@
         </h3>
       </div>
       <p class="text-sm opacity-80">
-        Build a massive arsenal of advanced commands for every weird scenario you encounter.
+        Build a toolbox of commands for every weird scenario you may encounter.
       </p>
     </div>
 

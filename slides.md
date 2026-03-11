@@ -182,7 +182,7 @@ layout: section
 # Basic Git Commands
 </sectionTitle>
 
-## The Git stuff you already know
+## Understanding Git teminology
 
 ---
 
@@ -392,7 +392,7 @@ stateDiagram-v2
 
 <v-clicks>
 
-These are your **read-only** commands. Use them constantly to avoid the "How did I get here?" panic
+**Read-only** commands. Use them to avoid the "How did I get here?" panic
 
 `git status`
 - Shows the difference between your Working Directory, Staging Area, and the current `HEAD`
@@ -409,7 +409,7 @@ These are your **read-only** commands. Use them constantly to avoid the "How did
 </div>
 <div v-click="7">
 
-- `git log --oneline --graph` is a "human-readable" version 
+- `git log --oneline --graph`
 </div>
 
 <div v-click="8">
@@ -536,8 +536,8 @@ layout: default
 
 * **Git Flow:** 
   * Rigid, multi-branch system
-  * Great for scheduled releases, but *heavy*
-  * Not recommended anymore
+  * Great for scheduled releases
+  * Easy to roll back
   
 </div>
 <div class=" p-4 rounded-lg border-2 border-orange-400/10">
@@ -576,7 +576,7 @@ layout: two-cols-header
 </slideTitle>
 
 <div class="mx-2 mb-1">
-<p class="opacity-50 mt-2">Even when you're working solo or without a remote</p>
+Even when you're working solo or without a remote
 
 </div>
 
@@ -584,8 +584,8 @@ layout: two-cols-header
 
 <v-clicks class="mx-2">
 
-- To separate your work from the `main` branch 
-- It's harder for unstable code to get merged into the main code base
+- Separate your work from the `main` branch 
+- It's harder for unstable code to be merged into the main branch
 - Gives you a chance to clean up your future git history before merging it into the main branch
 
 - Make a new branch when you:
@@ -658,7 +658,7 @@ gitGraph
 ```
 </div>
 
-<div v-if="$clicks==2"> 
+<div  v-if="$clicks==2"> 
 
 ```mermaid
 gitGraph
@@ -733,7 +733,7 @@ A merge/pull request is a way of saying to your team:
 
 ::right:: 
 
-<div v-if="$clicks >= 1" class="ml-2">
+<div v-if="$clicks >= 1" class="mx-2">
 
 ```bash {0|1-3|5-7|9|10|12-13|15-16|18-21}
 git switch main
@@ -773,7 +773,7 @@ layout: default
 
 <slideTitle colour="teal-800">
 
-## What can possibly go wrong
+## Conflicts
 </slideTitle>
 
 <div class="grid grid-cols-2 mx-2">
@@ -866,8 +866,14 @@ Fast-forward
 
 ```
 </v-click>
+<div v-click=4>
+```bash
+* 1568e33 (HEAD -> main, thomas/feat) fix: pi is three
+* a12cd31 feat: Initial commit
+```
+</div>
 
-<div class="mt-10" v-click="4">
+<div class="mt-10" v-click="5">
 
 ```bash {all|1|1-}
 lizzie:~/mergeConflicts$ git merge katherine/feat
@@ -877,7 +883,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 ```
 </div>
 </div>
-<div v-click="3">
+<div v-click="3" v-show="$clicks===3">
 
 ```mermaid
 gitGraph
@@ -890,6 +896,22 @@ gitGraph
   commit
   checkout main 
   merge thomas/feat
+```
+</div>
+
+<div v-click="4" v-show="$clicks===4">
+
+```mermaid
+gitGraph
+  commit
+  branch thomas/feat
+  branch katherine/feat
+  checkout katherine/feat
+  commit
+  checkout main
+  commit tag: "thomas/feat"
+  checkout main 
+  
 ```
 </div>
 
@@ -955,21 +977,20 @@ def calculate_circumference(radius):
 </v-clicks>
 </div>
 
-<div v-click="7">
+<div v-click="7" v-show="$clicks===7">
 
 ```mermaid
 gitGraph
   commit
   branch thomas/feat
   branch katherine/feat
-  checkout thomas/feat
-  commit
   checkout katherine/feat
   commit
-  checkout main 
-  merge thomas/feat
+  checkout main
+  commit tag: "thomas/feat"
   checkout main 
   merge katherine/feat
+  
 ```
 </div>
 </div>
@@ -1023,7 +1044,7 @@ layout: default
 
 ## The Best Way to Prevent Conflicts
 </slideTitle>
-<p class="opacity-50 -mt-2 mb-8 mx-2">Stop them from happening in the first place</p>
+<p class="mt-2 mb-8 mx-2">Stop them from happening in the first place</p>
 
 <div class="grid grid-cols-3 gap-4 mx-2">
 
@@ -1217,9 +1238,7 @@ layout: two-cols-header
 
 <v-clicks>
 
-- Takes a **sequence of commits**
-- Re-applies them **one by one**
-- Onto a new base commit
+Takes a **sequence of commits** and re-applies them **one by one** onto a new base commit.  
 </v-clicks>
 
 <div v-click class="mt-4 mr-4 p-4 bg-orange-500/10 border-l-4 border-orange-500 rounded-r text-orange-200">
@@ -1573,38 +1592,6 @@ You finished a feature, merged it, and <b>deleted the branch</b>.
   You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
    -->
 
-
----
-
-
-<slideTitle colour="pink-900">
-
-## Interactive Rebase
-</slideTitle>
-
-<div class="mx-2">
-
-`git rebase -i` is a powerful tool that lets you **rewrite, reorder, and clean up** your commit history before sharing it with others.
-</div>
-<br>
-<div class="mx-2">
-<v-click>
-
-### Why use it?
-</v-click>
-
-<v-clicks>
-
--  Combine "Work in progress" commits into one logical feature.
-
-- Fix typos in commit messages or remove accidental file additions.
-
-- Keep a clean, readable project timeline.
-
-- Confidence to experiment freely, knowing you can "squash" the mess later.
-
-</v-clicks>
-</div>
 ---
 
 <slideTitle colour="pink-900">
@@ -1613,7 +1600,13 @@ You finished a feature, merged it, and <b>deleted the branch</b>.
 </slideTitle>
 <div class="mx-2">
 
+`git rebase -i` is a powerful tool that lets you **rewrite, reorder, and clean up** your commit history before sharing it with others.
+</div>
+<div class="mx-2">
+
 Your current `git log --oneline` looks a bit like a crime scene:
+
+<div class="w-90">
 
 ```bash
 e9ae60a (HEAD -> main) finally finished
@@ -1628,6 +1621,7 @@ e301f45 do step 3
 8d29336 feat: implement step 1
 ```
 </div>
+</div>
 ---
 
 <slideTitle colour="pink-900">
@@ -1636,12 +1630,14 @@ e301f45 do step 3
 </slideTitle>
 <div class="mx-2">
 
-- To start an interactive rebase we can run `git rebase -i` followed by what you want to rebase
+To start an interactive rebase we can run `git rebase -i` followed by what you want to rebase
 - This could be another branch `feature-x`
 - Or the current branch (use `HEAD~6` for the last 6 commits)
 - For the whole current branch use `--root`
 
 <v-click>
+
+<div class="w-90">
 
 ```bash
 pick 8d29336 feat: implement step 1
@@ -1654,9 +1650,8 @@ pick d5f50ae figured it out!!
 pick 4b877d0 temp for lunch
 pick b8f0c70 oops typo
 pick 0c76067 finally finished
-
-####
 ```
+</div>
 </v-click>
 </div>
 ---
@@ -1707,7 +1702,7 @@ f 0c76067 finally finished
 <v-click>
 
 - Walked through (like in a normal rebase)
-  - Any merge conflicts
+  - Any conflicts
   - Any squashed commits 
   - Any reworded commits 
 - Keep running `git rebase --continue`
@@ -1764,6 +1759,8 @@ a5f6ffb feat: implement step 2
 - No more "I forgot to lint" commits
 
 - Use edit to make monster commits into smaller ones
+
+- Confidence to experiment freely, knowing you can "squash" the mess later.
 
 </v-clicks>
 </div>
