@@ -773,7 +773,7 @@ layout: default
 
 <slideTitle colour="teal-800">
 
-## Conflicts
+## Resolving Conflicts
 </slideTitle>
 
 <div class="grid grid-cols-2 mx-2">
@@ -849,7 +849,7 @@ def calculate_circumference(radius):
 
 <slideTitle colour="teal-800">
 
-## Merge Conflicts
+## Resolving Conflicts
 </slideTitle>
 
 <div class="grid grid-cols-3 mx-2">
