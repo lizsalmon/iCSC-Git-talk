@@ -196,7 +196,7 @@ layout: section
 # Basic Git Commands
 </sectionTitle>
 
-## Understanding Git teminology
+## Understanding Git terminology
 
 ---
 
@@ -391,7 +391,7 @@ stateDiagram-v2
 </div>
 </div>
 
-<!-- branches arent folders -->
+<!-- branches aren't folders -->
 
 
 ---
@@ -777,7 +777,7 @@ git pull
 </div>
 
 <!--
-If you are on a busy project people may have pushed in between you resolving conflicts and merging - so some people just dont bother
+If you are on a busy project people may have pushed in between you resolving conflicts and merging - so some people just don't bother
 -->
 
 ---
@@ -1055,7 +1055,7 @@ layout: default
 ![Alt text](/gif/11-03-mergeeditor.gif)
 
 
-<!-- Loads of other options too - inlcluding meld which is free -->
+<!-- Loads of other options too - including meld which is free -->
 ---
 
 
@@ -1297,7 +1297,7 @@ layout: two-cols-header
 ---
 <slideTitle colour="pink-900">
 
-## `git rebase` onto main
+## `git rebase`
 </slideTitle>
 
 ::left::
@@ -1357,7 +1357,7 @@ gitGraph
 
 <slideTitle colour="pink-900">
 
-## Rebasing vs merging
+## Rebasing vs Merging
 </slideTitle>
 
 <div class="grid grid-cols-2">
@@ -1419,7 +1419,7 @@ gitGraph
   commit id: "bug-fix"
   branch feature
   checkout feature
-  commit id: "my-feat'"
+  commit id: "my-feat#"
   checkout main
 ```
 </div>
@@ -1430,7 +1430,7 @@ gitGraph
 gitGraph
   commit id: "init-commit"
   commit id: "bug-fix"
-  commit id: "my-feat'"
+  commit id: "my-feat#"
 
 ```
 
@@ -1796,7 +1796,7 @@ layout: default
 
 <slideTitle colour="pink-900">
 
-## `git push` with force
+## `git push` (with force)
 </slideTitle>
 
 <div class="grid grid-rows-2 mx-2">
@@ -1815,7 +1815,7 @@ The better option is `--force-with-lease`
 </div>
 <div v-click>
 
-| Command | Safety Level | Behavior |
+| Command | Safety Level | Behaviour |
 | :--- | :--- | :--- |
 | `--force` |  **Dangerous** | Overwrites the remote branch no matter what |
 |`--force-with-lease` | **Recommended** | It only works if **no one else** has pushed new commits to the remote branch since you last fetched. |
@@ -1831,10 +1831,10 @@ hideInToc: true
 
 <slideTitle colour="indigo-900">
 
-## Congratulations! You are now a Git Time Traveller
+## Congratulations! 
 </slideTitle>
-<p class="mt-2 mb-8 mx-2 italic">
-  (I told you so.)
+<p class="mt-2 mb-8 mx-2">
+  You are now a Git Time Traveller
 </p>
 
 <div class="grid grid-cols-2 gap-6 text-left mx-2">
