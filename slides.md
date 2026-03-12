@@ -6,11 +6,25 @@ layout: cover
 hideInToc: true
 ---
 
-<div class="bg-purple-900 w-100% py-2 px-2">
+<div class="h-full">
 
-# Git in Practice 
+<div class="bg-purple-900 w-full py-2 px-2">
 
-## Techniques for Collaborative Development
+<div class="flex flex-row">
+<h1>
+Git in Practice
+</h1>
+<h2 class="mt-8 ml-2">
+ Techniques for Collaborative Development
+</h2>
+</div>
+
+### Lizzie Salmon 
+### ICSC 2026
+
+</div>
+
+<img src="/images/logo.png" alt="Logo" class="h-20 absolute bottom-0" />
 
 </div>
 
@@ -1819,7 +1833,7 @@ hideInToc: true
 
 ## Congratulations! You are now a Git Time Traveller
 </slideTitle>
-<p class="opacity-80 mt-2 mb-8 mx-2 italic">
+<p class="mt-2 mb-8 mx-2 italic">
   (I told you so.)
 </p>
 
@@ -1830,7 +1844,7 @@ hideInToc: true
       <h3 class="p-0 m-0">The "Why"</h3>
     </div>
     <p class="text-sm opacity-80">
-      You're no longer just memorizing strings of text—you're manipulating a git graph with intent.
+      You're no longer just memorising commands, you're consciously making changes to the git graph.
     </p>
   </div>
 
@@ -1840,7 +1854,7 @@ hideInToc: true
       <h3 class="p-0 m-0">Conflict Mastery</h3>
     </div>
     <p class="text-sm opacity-80">
-      Conflicts aren't errors; they're conversations. You now have the tools to prevent and resolve them.
+      You now have the tools to prevent and resolve conflicts.
     </p>
   </div>
 
