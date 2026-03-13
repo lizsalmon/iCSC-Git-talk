@@ -10,18 +10,19 @@ hideInToc: true
 
 <div class="bg-purple-900 w-full py-2 px-2">
 
-<div class="flex flex-row">
-<h1>
+<h1 class="ma-0 py-0">
 Git in Practice
 </h1>
-<h2 class="mt-8 ml-2">
+
+<h2 class="opacity-90 -mt-8">
  Techniques for Collaborative Development
 </h2>
-</div>
+
+<div class="mt-6">
 
 ### Lizzie Salmon 
 ### ICSC 2026
-
+</div>
 </div>
 
 <img src="/images/logo.png" alt="Logo" class="h-20 absolute bottom-0" />
