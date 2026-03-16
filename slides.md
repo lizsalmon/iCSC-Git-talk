@@ -30,7 +30,37 @@ Git in Practice
 </div>
 
 <!-- We all know why we use git -->
+---
 
+<slideTitle colour="purple-900">
+
+## About me
+</slideTitle>
+
+<div class="grid grid-cols-2">
+<div>
+<v-clicks>
+
+- Undergraduate degree in Theoretical Physics at the Univerity of Birmingham
+- Joined the Graduate Scheme at STFC in the Scientific Computing Department
+- Attended the CERN School of Computing 2025 in Lund
+- Now working in the development team for DAFNI
+- Full-stack developer
+
+</v-clicks>
+
+
+<img v-click="2" src="/images/logo.png" alt="Logo" class="h-20 absolute bottom-0"/>
+<img v-click="4" src="/images/dafni.png"  class="h-20 absolute bottom-0 left-80"/>
+
+</div>
+<div v-click="6" class="grid grid-cols-2">
+<img src="/images/bike.jpg"/>
+<img src="/images/copenhagen.jpg"/>
+<img src="/images/group.jpg"/>
+<img src="/images/view.jpg"/>
+</div>
+</div>
 ---
 layout: section
 ---
