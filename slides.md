@@ -20,11 +20,17 @@ Git in Practice
 
 <div class="mt-6">
 
+<!-- <div v-click class="absolute bottom-40 right-2 bg-purple-500 px-6 py-4  text-lg border-t-4 border-purple-700 rotate-10">
+
+THANK YOU BOB!
+</div> -->
+
 ### Lizzie Salmon 
-### ICSC 2026
-</div>
+### Mentor: Bob Jacobson
+
 </div>
 
+</div>
 <img src="/images/logo.png" alt="Logo" class="h-20 absolute bottom-0" />
 
 </div>
@@ -208,6 +214,14 @@ layout: two-cols-header
 </div>
 
 ---
+layout: image
+
+image: /images/gitmeme.jpg
+backgroundSize: contain
+---
+
+
+---
 layout: default
 hideInToc: true
 ---
@@ -226,9 +240,6 @@ layout: section
 
 # Basic Git Commands
 </sectionTitle>
-
-## Understanding Git terminology
-
 ---
 
 <slideTitle colour="sky-800">
@@ -310,7 +321,7 @@ sequenceDiagram
 
 </div>
 
-<div v-click class="absolute bottom-40 left-2 bg-sky-500 px-6 py-4 rounded-sm text-lg border-t-4 border-sky-800 -rotate-2">
+<div v-click class="absolute bottom-40 left-2 bg-sky-500 px-6 py-4  text-lg border-t-4 border-sky-800 -rotate-2">
 
 `git pull` == `git fetch` + `git merge`
 </div>
@@ -944,7 +955,7 @@ gitGraph
 ```
 </div>
 
-<div v-click="4" v-show="$clicks===4">
+<div v-click="4" v-show="$clicks>=4">
 
 ```mermaid
 gitGraph
@@ -1865,7 +1876,7 @@ hideInToc: true
 ## Congratulations! 
 </slideTitle>
 <p class="mt-2 mb-8 mx-2">
-  You are now a Git Time Traveller
+  You are now a Git time traveller
 </p>
 
 <div class="grid grid-cols-2 gap-6 text-left mx-2">
