@@ -99,7 +99,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 `git reset --hard HEAD~1`
 
 
-<div class="bg-red-900/20 p-4 rounded border border-red-500/50 text-center">
+<div class="bg-red-700/20 p-4 rounded text-center">
 <carbon-trash-can class="text-3xl text-red-500 mx-auto mb-2" />
 <p class="text-md text-red-200">Files reverted to "initial" state.</p>
 

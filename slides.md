@@ -20,13 +20,9 @@ Git in Practice
 
 <div class="mt-6">
 
-<!-- <div v-click class="absolute bottom-40 right-2 bg-purple-500 px-6 py-4  text-lg border-t-4 border-purple-700 rotate-10">
-
-THANK YOU BOB!
-</div> -->
-
 ### Lizzie Salmon 
-### Mentor: Bob Jacobson
+### [lizzie.salmon@stfc.ac.uk](mailto:lizzie.salmon@stfc.ac.uk)
+### ICSC - 19th March 2026
 
 </div>
 
@@ -35,7 +31,10 @@ THANK YOU BOB!
 
 </div>
 
-<!-- We all know why we use git -->
+<!--
+We all know why we use git
+-->
+
 ---
 
 <slideTitle colour="purple-900">
@@ -60,13 +59,21 @@ THANK YOU BOB!
 <img v-click="4" src="/images/dafni.png"  class="h-20 absolute bottom-0 left-80"/>
 
 </div>
-<div v-click="6" class="grid grid-cols-2">
+<div v-click="3" class="grid grid-cols-2">
 <img src="/images/bike.jpg"/>
 <img src="/images/copenhagen.jpg"/>
 <img src="/images/group.jpg"/>
 <img src="/images/view.jpg"/>
 </div>
 </div>
+
+<!--
+Computing platform to allow researchers to collaborate, integrate their computational models and explore social/environmental impacts of changes in national infrastructure. 
+
+Deposit share and use data stored on the platorm and generated
+-->
+
+
 ---
 layout: section
 ---
@@ -76,11 +83,15 @@ layout: section
 # Why Git Hurts in Teams
 </sectionTitle>
 
+<!--
+This is why collaborative git should be a talk in itself.
+
+And if you are really not interested - feel free to just look for the fun science-y easter eggs that may appear
+-->
 
 ---
 layout: two-cols-header
 ---
-
 
 <slideTitle colour="green-900">
 
@@ -119,9 +130,14 @@ gitGraph
 </div>
 </div>
 
+<!--
+This may be your git experience.  In which case, I'm jealous! But this talk will still be useful - As you can use a lot of these techniques to make your lonely git repo look prettier.  And make your future self happy
+-->
+
 ---
 layout: default
 ---
+
 <slideTitle colour="green-900">
 
 ## The Team Reality
@@ -182,6 +198,10 @@ gitGraph
 </div>
 </div>
 
+<!--
+This may be your reality - I know it has been mine
+-->
+
 ---
 layout: two-cols-header
 ---
@@ -214,14 +234,6 @@ layout: two-cols-header
 </div>
 
 ---
-layout: image
-
-image: /images/gitmeme.jpg
-backgroundSize: contain
----
-
-
----
 layout: default
 hideInToc: true
 ---
@@ -236,10 +248,16 @@ hideInToc: true
 ---
 layout: section
 ---
+
 <sectionTitle colour="sky-800">
 
 # Basic Git Commands
 </sectionTitle>
+
+<!--
+So I'm just going to quickly run through a quick git refresher
+-->
+
 ---
 
 <slideTitle colour="sky-800">
@@ -327,9 +345,9 @@ sequenceDiagram
 </div>
 
 <!--
-make it just of a reminder that the staging area exists, nothing leaves local repo until it is pushed
-
 If you like sequence diagrams
+
+Nothing leaves your local area until you push.
 -->
 
 ---
@@ -619,7 +637,7 @@ There are lots of different ways to use git - some formulated methods include th
 
 Git is actually really flexible
 
-But people do it their own way
+But people do it their own way.  They make take a formulated version like this and then tweak it a bit to suit their team.
 -->
 
 ---
@@ -641,8 +659,9 @@ Even when you're working solo or without a remote
 <v-clicks class="mx-2">
 
 - Separate your work from the `main` branch 
-- It's harder for unstable code to be merged into the main branch
-- Gives you a chance to clean up your future git history before merging it into the main branch
+- It's harder for unstable code to be merged
+- Gives you a chance to clean up your future git history before merging
+- Separate unrelated changes
 
 - Make a new branch when you:
   - Make a new feature 
@@ -687,7 +706,6 @@ Okay maybe it is fine to commit to main if
 - Solo projects with discipline
 - Tiny obvious changes (README, config)
 - True emergency hotfixes
--
 -->
 
 ---
@@ -800,8 +818,8 @@ git switch -c feature # create your branch
 git add files
 git commit -m "feat: add new todo item"
 
-git fetch origin # update your local version of main
-git merge origin/main # (optionally!)
+git pull origin main # update your local version of main
+git merge main # (optionally!)
 
 # Push your branch to the remote
 git push origin feature
@@ -1055,6 +1073,10 @@ gitGraph
 [Thomas](https://en.wikipedia.org/wiki/Thomas_Edison),
 [Katherine](https://en.wikipedia.org/wiki/Katherine_Johnson)
 </div>
+
+<!--
+Explain the base incoming outgoing etc now
+-->
 
 ---
 
@@ -1337,6 +1359,7 @@ gitGraph
 ---
 layout: two-cols-header
 ---
+
 <slideTitle colour="pink-900">
 
 ## `git rebase`
@@ -1357,6 +1380,15 @@ layout: two-cols-header
 3. Cherry-picks B, then C, then D
 
 </v-clicks>
+
+<div v-click="7" class="absolute bottom-20 left-2 bg-pink-600 px-6 py-4  text-lg border-t-4 border-pink-900 -rotate-2">
+
+- Conflicts can happen in a `git rebase` too
+- Git stops rebasing at the conflict
+- Resolve any conflicts 
+- Run `git rebase --continue`
+</div>
+
 </div>
 ::right::
 <div class="mx-2">
@@ -1393,7 +1425,9 @@ gitGraph
 </v-clicks>
 </div>
 
-
+<!--
+(where these conflicts come from is a good question and I am happy to answer outside of this talk/if there is time at the end)
+-->
 
 ---
 
@@ -1559,7 +1593,6 @@ src: pages/reset.md
 layout: default
 ---
 
-
 <slideTitle colour="pink-900">
 
 ## `git reflog`
@@ -1588,12 +1621,6 @@ Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
 Date:   Tue Feb 3 15:47:03 2026 +0000
 
     feat: Add to do
-
-commit f6e25d1
-Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
-Date:   Mon Feb 2 17:12:44 2026 +0000
-
-    feat: new file (dont delete this)
 
 commit 9479df0
 Author: Lizzie Salmon <lizzie.salmon@stfc.ac.uk>
@@ -1646,12 +1673,12 @@ f6e25d1 HEAD@{7}: commit: feat: new file (dont delete this)
 </div>
 </div>
 
-<!-- When `git log` can't tell you what happened, `git reflog` can.
+<!--
+When `git log` can't tell you what happened, `git reflog` can.
 
-You finished a feature, merged it, and <b>deleted the branch</b>. 
-  Suddenly, you realize you missed a file. 
-  You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
-   -->
+- You finished a feature, merged it, and deleted the branch, suddenly, you realize you missed a file to add. 
+- You rebased your branch onto `main`, but you messed up the conflict resolution and the code is now broken.
+-->
 
 ---
 
@@ -1663,7 +1690,7 @@ You finished a feature, merged it, and <b>deleted the branch</b>.
 
 `git rebase -i` is a powerful tool that lets you **rewrite, reorder, and clean up** your commit history before sharing it with others.
 </div>
-<div class="mx-2">
+<div v-click class="mx-2">
 
 Your current `git log --oneline` looks a bit like a crime scene:
 
@@ -1682,13 +1709,18 @@ e301f45 do step 3
 8d29336 feat: implement step 1
 ```
 </div>
+
 </div>
+---
+layout: two-cols-header
 ---
 
 <slideTitle colour="pink-900">
 
 ## `git rebase -i`
 </slideTitle>
+
+::left::
 <div class="mx-2">
 
 To start an interactive rebase we can run `git rebase -i` followed by what you want to rebase
@@ -1698,7 +1730,16 @@ To start an interactive rebase we can run `git rebase -i` followed by what you w
 
 <v-click>
 
-<div class="w-90">
+`git rebase -i --root`
+</v-click>
+
+<v-click>
+</v-click>
+</div>
+
+::right::
+
+<div v-click=2 class="w-90">
 
 ```bash
 pick 8d29336 feat: implement step 1
@@ -1713,8 +1754,11 @@ pick b8f0c70 oops typo
 pick 0c76067 finally finished
 ```
 </div>
-</v-click>
-</div>
+
+<!--
+This is in the other direction, this is the order that git will apply your commits.
+-->
+
 ---
 
 <slideTitle colour="pink-900">
@@ -1733,6 +1777,13 @@ pick 0c76067 finally finished
 | **Edit** | `e` | Stop the rebase for amends | Lets you change files or split one commit into many |
 
 </div>
+
+<!--
+Be scared of edit. It esentially stops the rebase the moment after those commits are applied and lets you change the situation (stage files, remove etc).  Then you can continue.  
+
+If you want something even more granular you can use git add --patch which lets you  stage individual changes as opposed to files.
+-->
+
 ---
 layout: default
 ---
@@ -1762,8 +1813,8 @@ f 0c76067 finally finished
 <div class="mt-3">
 <v-click>
 
-- Walked through (like in a normal rebase)
-  - Any conflicts
+- Walked through
+  - Any conflicts (like in a normal rebase)
   - Any squashed commits 
   - Any reworded commits 
 - Keep running `git rebase --continue`

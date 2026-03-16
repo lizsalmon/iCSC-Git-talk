@@ -1,4 +1,3 @@
-
 <!-- LEFT: Concepts -->
 <slideTitle colour="sky-800">
 
@@ -41,19 +40,19 @@ Parent commit
 <div v-click="1" class="flex gap-4 items-start">
 <div class="flex-1 rounded-lg bg-blue-500/20 p-3 mt-10">
 ```python
-# file-one.py
+# idea.py
 ```
 ```python
-# file-two.py
+# big-lab.py
 ```
 ```python
-# file-three.py 
+# european-group.py 
 ```
 
 <div v-click="3" class="mt-2 text-sm">
-  <div><strong>Author:</strong> Lizzie</div>
+  <strong>Author:</strong> <a href="https://en.wikipedia.org/wiki/Louis_de_Broglie">Louis</a>
   <div><strong>Date:</strong> Today</div>
-  <div><strong>Message:</strong> “Changing my new files”</div>
+  <div><strong>Message:</strong> “I've got this idea”</div>
   <div class="text-xs opacity-70 mt-1">
     commit: c8e574257965d32614857467341f82b4d261510e
   </div>
@@ -72,4 +71,5 @@ A commit is a snapshot on the state of all files with some attached metadata
 - Each commit remembers which commit came before it 
 - Actions that change the parent (rebasing, cherry-pick) need a new ID
 - History forms a **DAG**
+Directed Acyclic Graph
 -->
